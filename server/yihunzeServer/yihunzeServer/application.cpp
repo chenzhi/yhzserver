@@ -2,7 +2,8 @@
 #include "application.h"
 #include "netWork.h"
 #include "playerManager.h"
-
+#include "NetWorkListener.h"
+#include "xLogManager.h"
 
 
 #define PrintWindID   99999
@@ -99,6 +100,10 @@ Application:: ~Application()
 	SafeDelete(m_pNetWork);
 
 
+	xLogMessager::getSingleton().logMessage("印魂者服务器退出...");
+	delete xLogMessager::getSingletonPtr();
+
+
 }
 
 void    Application::update(float time)
@@ -152,6 +157,13 @@ void    Application::go()
 bool	Application::init()
 {
 
+	if(initWindow(800,600)==false)
+		return false;
+
+
+	new xLogMessager("yhz.log");
+
+	xLogMessager::getSingleton().logMessage("印魂者服务器启动...");
 	
 	m_pNetWork=new NetWork();
 	if(m_pNetWork->initFromFile("networker.cfg")==false)
@@ -161,12 +173,12 @@ bool	Application::init()
 		return false;
 	}
 
+	netWorkListener* plistener=new ServerListener();
+	m_pNetWork->setListener(plistener);
 
 	m_pPlayerManager=new PlayerManager();
 
-
-
-	return initWindow(800,600);
+	return true;
 }
 
 //-----------------------------------------------------------------

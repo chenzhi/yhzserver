@@ -241,6 +241,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\NetWorkListener.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NetWorkListener.h"
+				>
+			</File>
+			<File
 				RelativePath=".\usermessage.h"
 				>
 			</File>
@@ -278,6 +286,14 @@
 			</File>
 			<File
 				RelativePath=".\Singleton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\xLogManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\xLogManager.h"
 				>
 			</File>
 		</Filter>

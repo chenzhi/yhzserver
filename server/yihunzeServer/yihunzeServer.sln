@@ -14,6 +14,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xMainlib", "Mainlib\NetWork.vcproj", "{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "accountServer", "accountServer\accountServer.vcproj", "{B170B29A-4B2F-400F-8615-70C8424F3230}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036} = {B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

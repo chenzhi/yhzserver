@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="RakNetLibStaticDebug.lib xmain_d.lib ws2_32.lib wxmsw28d_core.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib"
+				AdditionalDependencies="RakNetDLLDebug.lib xmain_d.lib ws2_32.lib wxmsw28d_core.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(WXWIDGETS2.8)\lib\vc_lib&quot;;../mainlib/lib"
@@ -90,7 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\SimulateClient\debug&quot; /y&#x0D;&#x0A;&#x0D;&#x0A;"
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot; &#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot; &#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot; "
 			/>
 		</Configuration>
 		<Configuration
@@ -124,7 +124,8 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -139,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="RakNetLibStatic.lib xmain.lib ws2_32.lib wxmsw28_core.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib winmm.lib comctl32.lib rpcrt4.lib"
+				AdditionalDependencies="RakNetDLL.lib xmain.lib ws2_32.lib wxmsw28_core.lib wxbase28.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregex.lib wxexpat.lib winmm.lib comctl32.lib rpcrt4.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(WXWIDGETS2.8)\lib\vc_lib&quot;;../mainlib/lib"
 				GenerateDebugInformation="true"
@@ -168,7 +169,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\SimulateClient\release\&quot; /y"
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\SimulateClient\release\&quot; &#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNet.dll&quot;  &quot;..\bin\SimulateClient\release\&quot; &#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;   &quot;..\bin\SimulateClient\release\&quot; "
 			/>
 		</Configuration>
 	</Configurations>
@@ -197,6 +198,14 @@
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="0"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -240,6 +249,14 @@
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"
 						PrecompiledHeaderThrough="pch.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
 			</File>

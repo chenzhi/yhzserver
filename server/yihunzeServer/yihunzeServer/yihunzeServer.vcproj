@@ -63,7 +63,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="RakNetLibStaticDebug.lib ws2_32.lib libmysql.lib xMain_d.lib"
+				AdditionalDependencies="RakNetDLLDebug.lib ws2_32.lib libmysql.lib xMain_d.lib"
 				OutputFile="../bin/yihumzeGameserver/debug/$(ProjectName)_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
@@ -91,7 +91,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\yihumzeGameserver\debug&quot;&#x0D;&#x0A;"
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\yihumzeGameserver\debug&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\yihumzeGameserver\debug&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\yihumzeGameserver\debug&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -125,7 +125,8 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -140,7 +141,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libmysql.lib RakNetLibStatic.lib ws2_32.lib xmain.lib"
+				AdditionalDependencies="libmysql.lib RakNetDLL.lib ws2_32.lib xmain.lib"
 				OutputFile="../bin/yihumzeGameserver/release/$(ProjectName).exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
@@ -170,7 +171,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\yihumzeGameserver\release&quot;"
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\yihumzeGameserver\release&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNet.dll&quot;   &quot;..\bin\yihumzeGameserver\release&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;   &quot;..\bin\yihumzeGameserver\release&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -217,6 +218,14 @@
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"

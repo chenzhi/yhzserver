@@ -21,7 +21,7 @@
 			OutputDirectory="lib/xMain_d.dll"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libmysql.lib RakNetLibStaticDebug.lib ws2_32.lib"
+				AdditionalDependencies="libmysql.lib RakNetDLLDebug.lib ws2_32.lib"
 				OutputFile="./lib/xMain_d.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;"
@@ -97,7 +97,7 @@
 			OutputDirectory="lib/xMain.dll"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -139,7 +139,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libmysql.lib RakNetLibStatic.lib ws2_32.lib"
+				AdditionalDependencies="libmysql.lib RakNetDLL.lib ws2_32.lib"
 				OutputFile="./lib/xMain.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;"

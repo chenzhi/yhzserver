@@ -34,8 +34,8 @@ bool PlayerManager::registerNetWorkMessage()
 
 	NetWork* pNetWork=NetWork::getSingletonPtr();
 
-
-	pNetWork->registerMessageHandle(GM_TEXT_MESSAGE,&PlayerManager::processTestMessage,this);
+	pNetWork->registerMessageHandle(GM_ACCOUNT_REQUEST,&PlayerManager::processTestMessage,this);
+	pNetWork->registerMessageHandle(GM_ACCOUNT_RESPOND,&PlayerManager::processAccountTest,this);
 
 	return true;
 
@@ -57,13 +57,37 @@ bool PlayerManager::unregisterNetWorkMessage()
 
 
 //--------------------------------------------------------
-void PlayerManager::processTestMessage(void* pdata)
+void PlayerManager::processTestMessage(NetPack* pPack)
 {
 
-	char* pmessage=(char*)pdata;
+	UserLogin* pmessage=(UserLogin*)pPack->getData();
 
-	Application::getSingletonPtr()->addPrintMessage(pmessage);
+	//Application::getSingletonPtr()->addPrintMessage(pmessage);
+
+	const std::string& serverip=Application::getSingleton().getAccountServer();
+	unsigned int port=Application::getSingleton().getAccountServerPort();
+	RakNet::SystemAddress address(serverip.c_str(),port);
+     
+	const char* sendip=pPack->getSendIP();
+	UserAccount account;
+	unsigned size=sizeof(UserAccount);
+	::ZeroMemory(&account,sizeof(UserAccount));
+
+	memcpy(account.m_account,pmessage->m_account,sizeof(account.m_account));
+	memcpy(account.m_password,pmessage->m_password,sizeof(account.m_password));
+	memcpy(account.m_ip,sendip,strlen(sendip));
+	NetWork::getSingleton().send(GM_ACCOUNT_REQUEST,account,address);
 
 	return ;
 
+}
+
+
+//---------------------------------------------------------------------
+void  PlayerManager::processAccountTest(NetPack* pdata)
+{
+
+
+
+	return ;
 }

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "netWork.h"
 #include <fstream>
-
+#include "xLogManager.h"
 
 
 
@@ -28,6 +28,9 @@ NetWork::NetWork()
 :m_pNetInterface(NULL),m_isServer(false),m_pLinstener(NULL)
 {
 
+	m_pNetInterface=RakNet::RakPeerInterface::GetInstance();
+	assert(m_pNetInterface);
+
 }
 
 
@@ -39,7 +42,8 @@ bool NetWork::initFromFile(const std::string& configFile)
 	if (file.fail())
 	{
 		std::string err="netWork can't find configFile filename is:"+configFile;
-	    throw (std::exception(err.c_str()));
+	   // throw (std::exception(err.c_str()))
+		xLogMessager::getSingleton().logMessage(err);
 		return false ;
 	}
 
@@ -112,11 +116,7 @@ bool NetWork::initFromFile(const std::string& configFile)
 	{
 		m_portNumber=atoi(ParamIterator->second.c_str());
 	}
-
-
-
-	m_pNetInterface=RakNet::RakPeerInterface::GetInstance();
-	assert(m_pNetInterface);
+	
 
 	///查找密码
 	ParamIterator=ParamList.find("password");
@@ -166,6 +166,31 @@ bool NetWork::initFromFile(const std::string& configFile)
 	return true;
 }
 
+
+
+//--------------------------------------------------------------------------------------------
+bool NetWork::startServer(unsigned int portNumber,const std::string& password)
+{
+
+	m_portNumber=portNumber;
+	m_isServer=true;
+
+	if(password.empty()==false)
+	{
+		m_pNetInterface->SetIncomingPassword(password.c_str(),password.length());
+	}
+
+	m_pNetInterface->SetTimeoutTime(NetWorkTimeOut,RakNet::UNASSIGNED_SYSTEM_ADDRESS);
+	m_pNetInterface->Startup(NetWorkMaxClientNumber ,&RakNet::SocketDescriptor(portNumber,0), 1);
+	m_pNetInterface->SetMaximumIncomingConnections(NetWorkMaxClientNumber);
+
+	m_pNetInterface->SetOccasionalPing(true);
+	m_pNetInterface->SetUnreliableTimeout(1000);
+
+	return true;
+
+}
+
 //--------------------------------------------------------------------------------------------
 NetWork::~NetWork()
 {
@@ -174,11 +199,6 @@ NetWork::~NetWork()
 	{
 		m_pNetInterface->Shutdown(300);
 		RakNet::RakPeerInterface::DestroyInstance(m_pNetInterface);
-	}
-
-	if(m_pLinstener!=NULL)
-	{
-		SafeDelete(m_pLinstener);
 	}
 
 
@@ -220,12 +240,7 @@ void NetWork::receive()
 			{
               m_pLinstener->onDisconnect(p);
 			}
-
-		
-			
-
 			break;
-
 
 		case ID_NEW_INCOMING_CONNECTION:  ///新玩家进入
 			// Somebody connected.  We have their IP now
@@ -290,7 +305,7 @@ void NetWork::receive()
 bool NetWork::conect(const std::string& ip,unsigned int serverPort,const std::string& password)
 {
 
-	RakNet::ConnectionAttemptResult res=m_pNetInterface->Connect(ip.c_str(), serverPort, password.c_str(), password.length()==RakNet::CONNECTION_ATTEMPT_STARTED);
+	RakNet::ConnectionAttemptResult res=m_pNetInterface->Connect(ip.c_str(), serverPort, password.c_str(), password.length());
 	
 	return res==RakNet::CONNECTION_ATTEMPT_STARTED;
 
@@ -442,6 +457,17 @@ void NetWork::setListener(netWorkListener* pListener)
 void NetWork::processGameMessage(RakNet::Packet* p)
 {
 
+	static NetPack pPack(p);
+	pPack.setRaknetPack(p);
+	fireMessage( pPack.getGameMessageID() ,&pPack );
+
+	return ;
+
+
+
+
+
+
 	unsigned long t = 0;
 	int msgInfoLenth = 0;
 
@@ -480,4 +506,27 @@ void NetWork::pingLan(short unsigned int portnumber)
 
 	}
 
+}
+
+
+//--------------------------------------------------------------------------------------------
+ void*  NetWork::getPackDataptr(RakNet::Packet* p)
+{
+	if(p==NULL)
+		return NULL;
+
+
+	//unsigned long t = 0;
+	//int msgInfoLenth = 0;
+
+	//unsigned char * pdata = NULL;
+
+	//构造数据流，并读取类型数据
+	//RakNet::BitStream bitStream( p->data , p->length ,false );
+	//bitStream.IgnoreBytes(sizeof(unsigned char));
+	//bitStream.Read( t );
+
+	//int size = bitStream.GetNumberOfBytesUsed()-( sizeof(DWORD) + sizeof(byte) );
+
+	return p->data+sizeof(DWORD) + sizeof(byte);
 }

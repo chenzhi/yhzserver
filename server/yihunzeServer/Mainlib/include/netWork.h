@@ -8,8 +8,19 @@
 
 
 
+#ifdef _DEBUG
+#define  NetWorkTimeOut         30000
+#define  NetWorkMaxClientNumber 1000
+
+#else
+
 #define  NetWorkMaxClientNumber 65535
-#define  NetWorkTimeOut         100000
+#define  NetWorkTimeOut         3000
+
+#endif
+
+
+
 
 #define  GM_User          ID_USER_PACKET_ENUM
 #define  GM_ACCEPTCOME    GM_User+1
@@ -49,6 +60,96 @@ public:
 
 
 
+/**网络包数据，
+*/
+class XClass NetPack
+{
+	friend class NetWork;
+
+protected:
+
+	NetPack(RakNet::Packet* p)
+		:m_pPack(p)
+	{
+
+	}
+
+	~NetPack(){}
+
+public:
+
+	/**获取网络包数据,
+	*@reutrn 如果没有数据返回空
+	*/
+	void * getData() const 
+	{
+		if(m_pPack==NULL)
+			return NULL;
+
+		return m_pPack->data+sizeof(DWORD) + sizeof(byte);
+
+	}
+
+
+	/**获取包的发送的的ip地址
+	*@pram portnumber 是否包含端口号
+	*/
+	const char* getSendIP(bool portnumber=false)
+	{
+		if(m_pPack==NULL)
+			return "";
+		return m_pPack->systemAddress.ToString(portnumber);
+	}
+
+
+
+	RakNet::RakNetGUID getSendGUID()const
+	{
+		assert(m_pPack);
+		return m_pPack->guid;
+
+	}
+
+
+	/**反回包中的游戏消息id*/
+	unsigned int getGameMessageID()
+	{
+		if(m_pPack==NULL)
+			return -1;///最大正整数
+
+		RakNet::BitStream bitStream( m_pPack->data , m_pPack->length ,false );
+		bitStream.IgnoreBytes(sizeof(unsigned char));
+		unsigned long t = 0;
+		bitStream.Read( t );
+		return t;
+	}
+
+	const RakNet::SystemAddress& getAddress()const
+	{
+		assert(m_pPack);
+		return  m_pPack->systemAddress;
+	}
+	
+
+
+
+protected:
+	void setRaknetPack(RakNet::Packet* p)
+	{
+		m_pPack;
+	}
+
+
+
+	
+protected:
+
+	RakNet::Packet* m_pPack;
+
+
+};
+
+
 
 
 class  XClass NetWork :public Singleton<NetWork>, public CEventManager
@@ -60,7 +161,6 @@ public:
 	*@param isClient 是客户端还是服务器端,true为客户端
 	*/
 	NetWork(bool isClient,unsigned int ClientPort);
-
 
 
 	NetWork();
@@ -76,6 +176,17 @@ public:
 	bool initFromFile(const std::string& configFile);
 
 
+	/**本机做为服务器开始启动网络
+	*@param portNumber 端口号
+	*@return 成功返回真，失败返回假
+	*/
+	bool startServer(unsigned int portNumber,const std::string& password);
+
+
+
+
+
+	/**开始一个客户端*/
 
 
 
@@ -123,8 +234,52 @@ public:
 	void send(unsigned int message,const  char* pData,unsigned int length,RakNet::SystemAddress& receiver);
 
 
+	/**
+	*发送信息给服务器的例程
+	*@param address 发送的地址
+	*@param msgType 消息id
+	*@param 发送数据
+	*/
+	template<typename T>
+	bool send( unsigned long msgType , const T & pdata,const  RakNet::SystemAddress& address )
+	{ 
+		if(m_pNetInterface==NULL)
+			return false;
+
+		static RakNet::BitStream streem;
+		streem.Reset();
+		streem.Write( (unsigned char)GM_User);
+		streem.Write( msgType );
+		streem.WriteBits( (unsigned char *)&pdata , sizeof( T ) * 8 );
+		m_pNetInterface->Send( &streem , HIGH_PRIORITY, RELIABLE_ORDERED, 0, address, false );
+		return true;
+	}
+
+
+
+
+
+
+
+
 	/**广播消息，此消息会发给所有的用户*/
 	void broadcastMessage(unsigned int mesage,const unsigned char* pdata,unsigned length);
+
+
+	/**广播消息，此消息会发给所有的用户*/
+	template<typename T>
+	bool broadcastMessage( unsigned long msgType , const T & pdata )
+	{ 
+		if(m_pNetInterface==NULL)
+			return false;
+		static RakNet::BitStream streem;
+		streem.Reset();
+		streem.Write( (unsigned char)GM_User);
+		streem.Write( msgType );
+		streem.WriteBits( (unsigned char *)&pdata , sizeof( T ) * 8 );
+		m_pNetInterface->Send( &streem , HIGH_PRIORITY, RELIABLE_ORDERED, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true );
+		return true;
+	}
 
 
 
@@ -132,6 +287,13 @@ public:
     *@param portnmuber 端口号
 	*/
 	void pingLan(short unsigned int portnumber);
+
+
+
+	/**获取消息包里的数据首地址
+	*/
+	static void* getPackDataptr(RakNet::Packet* pPacek);
+
 
 
 

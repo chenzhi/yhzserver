@@ -1,9 +1,12 @@
 #include "pch.h"
+#include "vld.h"
 #include "application.h"
 #include "netWork.h"
 #include "NetWorkListener.h"
 #include "xLogManager.h"
 #include "databaseInstance.h"
+#include  "helper.h"
+#include "accountManager.h"
 
 #define PrintWindID   99999
 
@@ -12,16 +15,6 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT)
 {
 
 
-	char pBuffer[1024];
-	ZeroMemory(pBuffer, 1024);
-	GetModuleFileName(NULL, pBuffer, 1024);
-
-	std::string	 dirname;
-	std::string cc=pBuffer;
-	std::string::size_type pos =cc.find_last_of("\\");
-	dirname = cc.substr(0,pos);
-	SetCurrentDirectory(dirname.c_str());
-/////
 
     Application* g_pApp=NULL;
 
@@ -83,10 +76,10 @@ template<> Application* Singleton<Application>::ms_Singleton=NULL;
 //-----------------------------------------------------------------
 Application::Application()
 :mInstance(NULL),mHwnd(NULL),m_pNetWork(NULL),m_PrintWind(NULL),
-m_pDatabaseInstance(NULL)
+m_pDatabaseInstance(NULL),m_pNetlistener(NULL),m_pAccountManager(NULL)
 {
 
-
+  Helper::setCurrentWorkPath();
 
 }
 
@@ -97,9 +90,11 @@ Application:: ~Application()
 
 	
 	SafeDelete(m_pNetWork);
+	SafeDelete(m_pNetlistener);
     SafeDelete(m_pDatabaseInstance);
+	SafeDelete(m_pAccountManager);
 
-	xLogMessager::getSingleton().logMessage("印魂者服务器退出...");
+	xLogMessager::getSingleton().logMessage("帐号服务器退出...");
 	delete xLogMessager::getSingletonPtr();
 
 
@@ -162,26 +157,82 @@ bool	Application::init()
 
 
 
-	new xLogMessager("yhz.log");
+	new xLogMessager("accountserver.log");
 
-	xLogMessager::getSingleton().logMessage("印魂者服务器启动...");
-	addPrintMessage("印魂者服务器启动...");
+	xLogMessager::getSingleton().logMessage("帐号服务器启动...");
+	addPrintMessage("帐号服务器启动...");
+
+
+
+
+	Config config;
+	if(config.loadfile("accountserver.cfg")==false)
+	{
+		::MessageBox(NULL,"读取 accountserver.cfg 配置文件错误，未找到文件","错误 ",MB_OK);
+		xLogMessager::getSingleton().logMessage("读取 accountserver.cfg 配置文件错误，未找到文件");
+		return false;
+	}
+
+
+
+	std::string portNumber;
+	std::string networkpassword;
+	unsigned    iport=0;
+	if(config.getValue("networkportnumber",portNumber))
+	{
+		iport=Helper::StringToInt(portNumber);
+
+	}else
+	{
+		::MessageBox(NULL,"读取 accountserver.cfg 文件错误,未找到端口号设置","错误 ",MB_OK);
+		xLogMessager::getSingleton().logMessage("读取 accountserver.cfg 文件错误,未找到端口号设置");
+		return false;
+	}
+
+	config.getValue("networkpassword",networkpassword);
+
 	
 	m_pNetWork=new NetWork();
-	if(m_pNetWork->initFromFile("networker.cfg")==false)
+	if(m_pNetWork->startServer(iport,networkpassword)==false)
 	{
 		::MessageBox(NULL,"初始化网络错误，请检查配置文件是否正确","错误",MB_OK);
 		SafeDelete(m_pNetWork);
 		return false;
 	}
+	m_pNetlistener=new ServerListener();
+	m_pNetWork->setListener(m_pNetlistener);
+
 
 
 	
-	Config config;
-	config.loadfile("database.cfg");
 
+
+	///数据库连接
+	std::string DataServer;
+	std::string DataName;
+	std::string DataUser;
+	std::string DataPassWord;
+	std::string DataPortNumber;
+	config.getValue("databaseserver",DataServer);
+	config.getValue("databasename",DataName);
+	config.getValue("databaseuser",DataUser);
+	config.getValue("databasepassword",DataPassWord);
+	config.getValue("databaseportnumber",DataPortNumber);
+
+
+	if(DataUser.empty()||DataServer.empty()||DataName.empty()||DataPassWord.empty()||DataPortNumber.empty())
+	{
+
+		std::string error="读取 accountserver.cfg 文件错误，数据库设置错误 ";
+		::MessageBox(NULL,error.c_str(),"错误 ",MB_OK);
+		xLogMessager::getSingleton().logMessage(error);
+		return false;
+
+	}
+
+	iport=Helper::StringToInt(DataPortNumber);
 	m_pDatabaseInstance=new DatabaseInstace();
-	if(	m_pDatabaseInstance->open("127.0.0.1","root","111","yinhunzedb",3306)==false)
+	if(	m_pDatabaseInstance->open(DataServer.c_str(),DataUser.c_str(),DataPassWord.c_str(),DataName.c_str(),iport)==false)
 	{
 		Application::getSingleton().addPrintMessage("打开数据库成功");
 		xLogMessager::getSingleton().logMessage("打开数据库成功...");
@@ -193,37 +244,9 @@ bool	Application::init()
 	}
 
 
-	CppMySQLQuery *query=NULL;
-	m_pDatabaseInstance->querySQL("select * from player",&query);
-
-	unsigned int row=query->numRow();
-	
-	while(!query->eof())
-	{
-		int playerid=query->getIntField("playerid",0);
-		std::string name=query->getStringField("name","");
-		query->nextRow();
-	}
-
-	//CppMySQLQuery* pQuery=NULL;
-	//m_pDatabaseInstance->execProcedurce("call query_student(17,@param2)" );
-
-	//	if(m_pDatabaseInstance->querySQL("select @param2",&pQuery))
-	//	{
-
-	//		while(!pQuery->eof())
-	//		{
-	//			int playerid=pQuery->getIntField("@param2",0);
-	//			pQuery->nextRow();
-	//		}
-
-	//	}
 
 
-
-	netWorkListener* plistener=new ServerListener();
-	m_pNetWork->setListener(plistener);
-
+	m_pAccountManager=new AccountManager();
 
 
 	return true;
@@ -251,7 +274,7 @@ bool Application::initWindow(int width, int height)
 
 	RegisterClassEx(&wcex);
 
-	mHwnd = CreateWindow("mainwindow", "印魂者服务器", WS_OVERLAPPEDWINDOW,
+	mHwnd = CreateWindow("mainwindow", "帐号服务器", WS_OVERLAPPEDWINDOW,
 		100, 100, 1024, 768, NULL, NULL, mInstance, NULL);
 
 	if (!mHwnd)
@@ -317,3 +340,4 @@ void    Application::addPrintMessage(const std::string& message)
 
 
 }
+

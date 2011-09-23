@@ -11,6 +11,8 @@ public:
 	virtual void emptyThisAddr(){}
 };
 
+
+
 template<typename T , typename T2>
 class CFunctionSlot : public CFunctionSlotBase
 {
@@ -138,6 +140,9 @@ public:
 		}
 		return ;
 	}
+
+
+
 protected:
 	//用于保存注册的函数地址
 	std::map< unsigned long , std::vector<CFunctionSlotBase* >* > m_msgMap;

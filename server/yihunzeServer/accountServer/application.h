@@ -3,8 +3,8 @@
 #include "Singleton.h"
 
 class NetWork;
-class PlayerManager;
 class DatabaseInstace;
+class AccountManager;
 
 
 class Application  :public Singleton<Application>
@@ -32,6 +32,8 @@ public:
 
 protected:
 
+
+
 	/**更新屏幕输出*/
 	void    printMessage();
 
@@ -53,6 +55,10 @@ private:
 	std::list<std::string>  m_LogMessage;
 
 	DatabaseInstace*        m_pDatabaseInstance; ///数据实例 
+
+	netWorkListener*        m_pNetlistener;    ///网络事件监听
+
+	AccountManager*         m_pAccountManager;
 
 };
 

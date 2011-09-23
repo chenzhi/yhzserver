@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "vld.h"
 #include "App.h"
 #include "SimulateClientMainFrame.h"
 #include "netWork.h"
@@ -23,20 +24,14 @@ IMPLEMENT_APP(MyApp)
 bool:: MyApp::OnInit()
 {
 
-	char pBuffer[1024];
-	ZeroMemory(pBuffer, 1024);
-	GetModuleFileName(NULL, pBuffer, 1024);
+	Helper::setCurrentWorkPath();
 
-	//设置当前目录为进程目录，防止通过文件关联打开程序的当前目录不正确
-	std::string	 dirname;
-	std::string cc=pBuffer;
-	std::string::size_type pos =cc.find_last_of("\\");
-	dirname = cc.substr(0,pos);
-	SetCurrentDirectory(dirname.c_str());
+	new xLogMessager("SimulateClient.log");
 
 
 	m_pNetWorker=new NetWork();
-	m_pNetWorker->initFromFile("networker.cfg");
+   if(m_pNetWorker->initFromFile("networker.cfg")==false)
+	   return false;
 
 	m_pNetWorkListener=new ServerListener();
 	m_pNetWorker->setListener(m_pNetWorkListener);
@@ -68,6 +63,8 @@ bool   MyApp::ProcessIdle()
 
 
 	 SafeDelete(m_pNetWorker);
+	 SafeDelete(m_pNetWorkListener);
+	 delete xLogMessager::getSingletonPtr();
 
 	
 	 return 0;

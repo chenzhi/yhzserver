@@ -6,6 +6,23 @@
 
 
 //-----------------------------------------------------------
+void Helper::setCurrentWorkPath()
+{
+
+	char pBuffer[1024];
+	ZeroMemory(pBuffer, 1024);
+	GetModuleFileName(NULL, pBuffer, 1024);
+
+	std::string	 dirname;
+	std::string cc=pBuffer;
+	std::string::size_type pos =cc.find_last_of("\\");
+	dirname = cc.substr(0,pos);
+	SetCurrentDirectory(dirname.c_str());
+
+}
+
+
+//-----------------------------------------------------------
 int Helper::StringToInt(const std::string& str)
 {
 	int i=0;

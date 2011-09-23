@@ -46,16 +46,19 @@ bool Config::loadfile(const std::string& configFile)
 		}
 		char key[256];
 		char val[256];
-		sscanf(tmpBuf,"%s = %s",key,val);
-		if(hasKey(key))
+		if(sscanf(tmpBuf,"%s = %s",key,val)>0)
 		{
-			std::string waring="Config::loadfile has same key: ";
-			waring+=+key;
-			waring+=" will user the first value";
-			xLogMessager::getSingleton().logMessage(waring);
-			continue;
+			if(hasKey(key))
+			{
+				std::string waring="Config::loadfile has same key: ";
+				waring+=+key;
+				waring+=" will user the first value";
+				xLogMessager::getSingleton().logMessage(waring);
+				continue;
+			}
+			m_Value.insert(std::make_pair(key,val));
 		}
-		m_Value.insert(std::make_pair(key,val));
+		
 	}
 
 	file.close();

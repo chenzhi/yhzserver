@@ -41,12 +41,32 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 	}
 
 	unsigned int  id=stringToMessageID(messageID.c_str());
-
 	RakNet::SystemAddress address;
 	address.SetBinaryAddress(serverName.c_str());
-	NetWork::getSingletonPtr()->send(id,message.c_str(),message.Length(),address);
-	m_MessageText->Clear();
-	addSendMessage(message);
+
+	if(id==GM_TEXT_MESSAGE)
+	{
+		NetWork::getSingletonPtr()->send(id,message.c_str(),message.Length(),address);
+		m_MessageText->Clear();
+		addSendMessage(message);
+	}else if(GM_ACCOUNT_REQUEST==id)
+	{
+         UserLogin userlogin;
+		 ::ZeroMemory(&userlogin,sizeof(userlogin));
+		 memcpy(userlogin.m_account,"palyer1",strlen("player1"));
+		 memcpy(userlogin.m_password,"palyer1",strlen("player1"));
+		 NetWork::getSingleton().send(id,userlogin,address);
+	}
+
+
+
+
+
+	return ;
+
+
+
+	
 
 }
 
@@ -81,6 +101,11 @@ void SimulateClientMainFrame::initMessageID()
 {
 
 	m_MessageMap["GM_TEXT_MESSAGE"]=GM_TEXT_MESSAGE;
+	m_MessageMap["GM_ACCOUNT_REQUEST"]=GM_ACCOUNT_REQUEST;
+
+
+
+
 
 
 	m_messagelist->Clear();

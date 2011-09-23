@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../Mainlib/include;&quot;$(MYSQL)/include&quot;;&quot;$(RakNet4.0)/Source&quot;"
+				AdditionalIncludeDirectories="../Mainlib/include;&quot;$(MYSQL)/include&quot;;&quot;$(RakNet4.0)/Source&quot;;../yihunzeserver"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="RakNetLibStaticDebug.lib ws2_32.lib libmysql.lib xMain_d.lib"
+				AdditionalDependencies="RakNetDLLDebug.lib ws2_32.lib libmysql.lib xMain_d.lib"
 				OutputFile="../bin/AccountServer/debug/accountServer_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
@@ -90,7 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\AccountServer\debug&quot;"
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\AccountServer\debug&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\AccountServer\debug\&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\AccountServer\debug\&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -120,11 +120,12 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="../Mainlib/include;&quot;$(MYSQL)/include&quot;;&quot;$(RakNet4.0)/Source&quot;"
+				AdditionalIncludeDirectories="../Mainlib/include;&quot;$(MYSQL)/include&quot;;&quot;$(RakNet4.0)/Source&quot;;../yihunzeserver"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -139,7 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="RakNetLibStatic.lib ws2_32.lib libmysql.lib xMain.lib"
+				AdditionalDependencies="RakNetDLL.lib ws2_32.lib libmysql.lib xMain.lib"
 				OutputFile="../bin/AccountServer/release/accountServer_d.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
@@ -169,7 +170,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain.dll&quot;  &quot;..\bin\AccountServer\release\&quot;"
+				CommandLine="copy &quot;..\mainlib\lib\xmain.dll&quot;  &quot;..\bin\AccountServer\release\&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNet.dll&quot;  &quot;..\bin\AccountServer\release\&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\AccountServer\release\&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -181,6 +182,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\accountManager.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\application.cpp"
 				>
@@ -200,6 +205,14 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -207,6 +220,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\accountManager.h"
+				>
+			</File>
 			<File
 				RelativePath=".\application.h"
 				>

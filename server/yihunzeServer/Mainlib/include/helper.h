@@ -15,6 +15,10 @@ public:
 	~Helper(){}
 
 
+	/**设置当前运行目录为工作目录*/
+	static void  setCurrentWorkPath();
+
+
 	/**@{字符串相关功能函数
 	*/
 	static int StringToInt(const std::string& str);

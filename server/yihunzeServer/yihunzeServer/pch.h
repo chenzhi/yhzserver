@@ -25,5 +25,8 @@
 #include <algorithm>
 
 
+#include "mysql.h"
+
+
 
 #define  SafeDelete(a) if(a!=NULL){delete a; a=NULL;}

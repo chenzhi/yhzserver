@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(WXWIDGETS2.8)\include\msvc&quot;;&quot;$(WXWIDGETS2.8)\include&quot;;&quot;$(RakNet4.0)/Source&quot;"
+				AdditionalIncludeDirectories="&quot;$(WXWIDGETS2.8)\include\msvc&quot;;&quot;$(WXWIDGETS2.8)\include&quot;;&quot;$(RakNet4.0)/Source&quot;;&quot;$(MYSQL)/include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,10 +63,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="RakNetLibStaticDebug.lib ws2_32.lib"
+				AdditionalDependencies="RakNetLibStaticDebug.lib ws2_32.lib libmysql.lib"
 				OutputFile="../bin/debug/$(ProjectName).exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="0"
 				TargetMachine="1"
@@ -260,6 +260,14 @@
 		<Filter
 			Name="sqlserver"
 			>
+			<File
+				RelativePath=".\databaseInstance.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\databaseInstance.h"
+				>
+			</File>
 			<File
 				RelativePath=".\TBADOFunc.cpp"
 				>

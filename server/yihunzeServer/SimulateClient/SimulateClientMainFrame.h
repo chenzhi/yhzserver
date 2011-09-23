@@ -22,6 +22,8 @@ class SimulateClientMainFrame : public MainFrame
 		void onSelectMessage( wxCommandEvent& event );
 		void OnSend( wxCommandEvent& event );
 
+		virtual void OnMessageTextKeyup( wxKeyEvent& event );
+
 
 public:
 

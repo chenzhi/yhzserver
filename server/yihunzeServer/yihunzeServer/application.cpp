@@ -4,7 +4,7 @@
 #include "playerManager.h"
 #include "NetWorkListener.h"
 #include "xLogManager.h"
-
+#include "databaseInstance.h"
 
 #define PrintWindID   99999
 
@@ -83,7 +83,8 @@ template<> Application* Singleton<Application>::ms_Singleton=NULL;
 
 //-----------------------------------------------------------------
 Application::Application()
-:mInstance(NULL),mHwnd(NULL),m_pNetWork(NULL),m_pPlayerManager(NULL),m_PrintWind(NULL)
+:mInstance(NULL),mHwnd(NULL),m_pNetWork(NULL),m_pPlayerManager(NULL),m_PrintWind(NULL),
+m_pDatabaseInstance(NULL)
 {
 
 
@@ -98,7 +99,7 @@ Application:: ~Application()
 	
 	SafeDelete(m_pPlayerManager);
 	SafeDelete(m_pNetWork);
-
+    SafeDelete(m_pDatabaseInstance);
 
 	xLogMessager::getSingleton().logMessage("印魂者服务器退出...");
 	delete xLogMessager::getSingletonPtr();
@@ -161,9 +162,12 @@ bool	Application::init()
 		return false;
 
 
+
+
 	new xLogMessager("yhz.log");
 
 	xLogMessager::getSingleton().logMessage("印魂者服务器启动...");
+	addPrintMessage("印魂者服务器启动...");
 	
 	m_pNetWork=new NetWork();
 	if(m_pNetWork->initFromFile("networker.cfg")==false)
@@ -172,6 +176,33 @@ bool	Application::init()
 		SafeDelete(m_pNetWork);
 		return false;
 	}
+
+
+	m_pDatabaseInstance=new DatabaseInstace();
+	if(	m_pDatabaseInstance->open("127.0.0.1","root","111","yhzdb",3306)==false)
+	{
+		Application::getSingleton().addPrintMessage("打开数据库成功");
+		xLogMessager::getSingleton().logMessage("打开数据库成功...");
+        return false;
+	}else
+	{
+		Application::getSingleton().addPrintMessage("打开数据库成功");
+		xLogMessager::getSingleton().logMessage("打开数据库成功...");
+	}
+
+
+	CppMySQLQuery&query=m_pDatabaseInstance->querySQL("select * from player");
+
+	unsigned int row=query.numRow();
+	
+	while(!query.eof())
+	{
+		int playerid=query.getIntField("playerid",0);
+		std::string playerName=query.getStringField("name","");
+		query.nextRow();
+	}
+
+
 
 	netWorkListener* plistener=new ServerListener();
 	m_pNetWork->setListener(plistener);

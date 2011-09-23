@@ -33,7 +33,7 @@ bool TBADOConnection::OpenConnect(const char* szProvider, const char* szDataSour
 	return OpenConn(szConn);
 }
 
-bool TBADOConnection::OnenConnect( const char* szDNSSource, const char* szUserID /*= NULL*/, 
+bool TBADOConnection::OpenConnect( const char* szDNSSource, const char* szUserID /*= NULL*/, 
 								   const char* szPassword /*= NULL*/ )
 {
 	char szConn[MAX_PATH];

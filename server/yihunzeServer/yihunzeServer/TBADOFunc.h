@@ -28,7 +28,7 @@ public:
 	bool			OpenConnect(const char* szProvider, const char* szDataSource, 
 								const char* szDB, const char* szUserID, const char* szPassword);
 
-	bool			OnenConnect(const char* szDNSSource, const char* szUserID = NULL, const char* szPassword = NULL);
+	bool			OpenConnect(const char* szDNSSource, const char* szUserID = NULL, const char* szPassword = NULL);
 
 	bool			OpenConn(const char* szConn);
 
@@ -41,6 +41,7 @@ public:
 	void			AddColumn( char* szTableName, volumn* pColumn, int nCnt );
 
 	_RecordsetPtr	ExecuteRS( char* szFormat, ... );
+
 	HRESULT			ExecuteNoRS( char* szFormat, ... );
 
 //-------------------- Members --------------------------------------

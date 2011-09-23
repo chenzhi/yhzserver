@@ -60,6 +60,7 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	this->Connect( wxEVT_KEY_DOWN, wxKeyEventHandler( MainFrame::onMainFrameKeyDown ) );
 	m_serverList->Connect( wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler( MainFrame::onSelectServer ), NULL, this );
 	m_messagelist->Connect( wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler( MainFrame::onSelectMessage ), NULL, this );
+	m_MessageText->Connect( wxEVT_KEY_UP, wxKeyEventHandler( MainFrame::OnMessageTextKeyup ), NULL, this );
 	m_send->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainFrame::OnSend ), NULL, this );
 }
 
@@ -69,6 +70,7 @@ MainFrame::~MainFrame()
 	this->Disconnect( wxEVT_KEY_DOWN, wxKeyEventHandler( MainFrame::onMainFrameKeyDown ) );
 	m_serverList->Disconnect( wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler( MainFrame::onSelectServer ), NULL, this );
 	m_messagelist->Disconnect( wxEVT_COMMAND_LISTBOX_SELECTED, wxCommandEventHandler( MainFrame::onSelectMessage ), NULL, this );
+	m_MessageText->Disconnect( wxEVT_KEY_UP, wxKeyEventHandler( MainFrame::OnMessageTextKeyup ), NULL, this );
 	m_send->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MainFrame::OnSend ), NULL, this );
 	
 }

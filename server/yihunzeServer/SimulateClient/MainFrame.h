@@ -44,6 +44,7 @@ class MainFrame : public wxFrame
 		virtual void onMainFrameKeyDown( wxKeyEvent& event ) { event.Skip(); }
 		virtual void onSelectServer( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onSelectMessage( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMessageTextKeyup( wxKeyEvent& event ) { event.Skip(); }
 		virtual void OnSend( wxCommandEvent& event ) { event.Skip(); }
 		
 	

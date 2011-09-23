@@ -50,6 +50,17 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 }
 
 
+void  SimulateClientMainFrame::OnMessageTextKeyup( wxKeyEvent& event )
+{
+
+	if(event.GetKeyCode()==WXK_RETURN)
+	{
+	   wxCommandEvent e;
+      OnSend(e);
+	}
+
+}
+
 //---------------------------------------------------------------------
 void SimulateClientMainFrame::updateServerList(const AddressVector& serverLister)
 {

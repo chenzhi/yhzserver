@@ -4,6 +4,8 @@
 
 class NetWork;
 class PlayerManager;
+class DatabaseInstace;
+
 
 class Application  :public Singleton<Application>
 {
@@ -50,6 +52,8 @@ private:
 	HWND                    m_PrintWind;           ///打印的多行文件框 
 
 	std::list<std::string>  m_LogMessage;
+
+	DatabaseInstace*        m_pDatabaseInstance; ///数据实例 
 
 };
 

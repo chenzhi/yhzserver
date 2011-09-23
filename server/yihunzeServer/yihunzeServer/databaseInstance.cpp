@@ -307,22 +307,20 @@ MYSQL* DatabaseInstace::getMysql()
 
 
 /* 处理返回多行的查询，返回影响的行数 */
-CppMySQLQuery& DatabaseInstace::querySQL(const char *sql)
+bool  DatabaseInstace::querySQL(const char *sql,CppMySQLQuery** pQuery)
 {
 	if ( !mysql_real_query( _db_ptr, sql, strlen(sql) ) )
 	{
 		_db_query._mysql_res = mysql_store_result( _db_ptr );
 		_db_query.seekRow(0);
-		//   _db_query._row =  mysql_fetch_row( _db_query._mysql_res );
-		//   _db_query._row_count = mysql_num_rows( _db_query._mysql_res ); 
-		//   //得到字段数量
-		//   _db_query._field_count = mysql_num_fields( _db_query._mysql_res );
+	    *pQuery=&_db_query;
 	}else
 	{
 		const char* perror=mysql_error(_db_ptr);
 		xLogMessager::getSingleton().logMessage(std::string("DatabaseInstace::querySQL failed ,")+perror);
+		return false;
 	}
-	return _db_query;
+	return true;
 }
 
 
@@ -342,23 +340,74 @@ int DatabaseInstace::execSQL(const char* sql)
 }
 
 
+/**运行一个非返回结果的存储过程*
+*
+*/
+bool  DatabaseInstace::execProcedurce(const char*  procedurceName)
+{
+	if(_db_ptr==NULL||procedurceName==NULL)
+		return false;
+
+	int ret=mysql_real_query(_db_ptr,procedurceName,strlen(procedurceName));
+	if(ret!=0)
+	{
+		const char* error=mysql_error(_db_ptr);
+		std::string strerror= "DatabaseInstace::execProcedurce failed :";
+		strerror+=error;
+		xLogMessager::getSingleton().logMessage(strerror);
+		return false;
+
+	}
+	
+	return true;
+
+}
+
+
+/**执行一个有返回结果的储存过程
+*/
+bool  DatabaseInstace::execProcedurce(const char* procedurceName,CppMySQLQuery** pQuery)
+{
+	if(_db_ptr==NULL||procedurceName==NULL)
+		return false;
+
+
+	if(mysql_real_query(_db_ptr,procedurceName,strlen(procedurceName))==0)
+	{
+		 _db_query._mysql_res = mysql_store_result(_db_ptr);
+		 _db_query.seekRow(0);
+		 *pQuery=&_db_query;
+		return true;
+	}else
+	{
+		const char* error=mysql_error(_db_ptr);
+		std::string strerror= "DatabaseInstace::execProcedurce failed :";
+		strerror+=error;
+		xLogMessager::getSingleton().logMessage(strerror);
+
+	}
+	return false;
+}
+
+
+
 /* 测试mysql服务器是否存活 */
-int DatabaseInstace::ping()
+bool  DatabaseInstace::ping()
 {
 	if( mysql_ping(_db_ptr) == 0 )
-		return 0;
+		return true;
 	else 
-		return -1; 
+		return false; 
 }
 
 
 /* 关闭mysql 服务器 */
-int DatabaseInstace::shutDown()
+bool  DatabaseInstace::shutDown()
 {
 	if( mysql_shutdown(_db_ptr,SHUTDOWN_DEFAULT) == 0 )
-		return 0;
+		return true;
 	else 
-		return -1;
+		return false;
 }
 
 

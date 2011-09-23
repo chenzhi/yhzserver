@@ -89,21 +89,37 @@ public:
 	/* 返回句柄 */
 	MYSQL* getMysql();
 
-	/* 处理返回多行的查询，返回影响的行数 */
-	//返回引用是因为在CppMySQLQuery的赋值构造函数中要把成员变量_mysql_res置为空
-	CppMySQLQuery& querySQL(const char *sql);
+	/* 处理返回多行的查询，
+	*@param pQuery 返回查询结果
+	*@return 成功返回真失败返回假
+	*/
+	bool  querySQL(const char *sql,CppMySQLQuery** pQuery);
 
 
 	/* 执行非返回结果查询,返回受影响的行数 */
 	int execSQL(const char* sql);
 
 
+	/**运行一个非返回结果的存储过程*
+	*
+	*/
+	bool  execProcedurce(const char*  procedurceName);
+
+
+	/**执行一个有返回结果的储存过程
+	*@param pQuery 注意是一个指向指针的参数。如果函数运行成功返回查询结果
+	*运行成功返回真，失败返回假
+	*@储存过程调用案例 ,"call querystudent (1,@ret,@ out_name,@ out_age)"
+	*/
+	bool  execProcedurce(const char* procedurceName,CppMySQLQuery** pQuery);
+
+
 	/* 测试mysql服务器是否存活 */
-	int ping();
+	bool  ping();
 
 
 	/* 关闭mysql 服务器 */
-	int shutDown();
+	bool shutDown();
 
 
 	/* 主要功能:重新启动mysql 服务器 */

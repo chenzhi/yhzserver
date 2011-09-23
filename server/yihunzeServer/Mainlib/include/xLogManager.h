@@ -27,7 +27,7 @@ enum LogLevel
 *这是一个单件类，用来写日志消息
 *
 */
-class  xLogMessager :public Singleton<xLogMessager>
+class  XClass  xLogMessager :public Singleton<xLogMessager>
 	//class _declspec(dllimport) Log
 {
 private:

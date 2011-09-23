@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SimulateClientMainFrame.h"
+#include "usermessage.h"
 
 SimulateClientMainFrame::SimulateClientMainFrame( wxWindow* parent )
 :
@@ -43,7 +44,7 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 
 	RakNet::SystemAddress address;
 	address.SetBinaryAddress(serverName.c_str());
-	NetWork::getSingletonPtr()->send((GameMessage)id,message.c_str(),message.Length(),address);
+	NetWork::getSingletonPtr()->send(id,message.c_str(),message.Length(),address);
 	m_MessageText->Clear();
 	addSendMessage(message);
 

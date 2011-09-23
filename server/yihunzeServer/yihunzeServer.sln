@@ -2,8 +2,18 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yihunzeServer", "yihunzeServer\yihunzeServer.vcproj", "{4071E315-09C7-4810-BFF5-669677C4E2BB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036} = {B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimulateClient", "SimulateClient\SimulateClient.vcproj", "{02EE31BC-3837-448C-82FE-5C76B060AE80}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036} = {B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xMainlib", "Mainlib\NetWork.vcproj", "{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "accountServer", "accountServer\accountServer.vcproj", "{B170B29A-4B2F-400F-8615-70C8424F3230}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +29,14 @@ Global
 		{02EE31BC-3837-448C-82FE-5C76B060AE80}.Debug|Win32.Build.0 = Debug|Win32
 		{02EE31BC-3837-448C-82FE-5C76B060AE80}.Release|Win32.ActiveCfg = Release|Win32
 		{02EE31BC-3837-448C-82FE-5C76B060AE80}.Release|Win32.Build.0 = Release|Win32
+		{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}.Debug|Win32.Build.0 = Debug|Win32
+		{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}.Release|Win32.ActiveCfg = Release|Win32
+		{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}.Release|Win32.Build.0 = Release|Win32
+		{B170B29A-4B2F-400F-8615-70C8424F3230}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B170B29A-4B2F-400F-8615-70C8424F3230}.Debug|Win32.Build.0 = Debug|Win32
+		{B170B29A-4B2F-400F-8615-70C8424F3230}.Release|Win32.ActiveCfg = Release|Win32
+		{B170B29A-4B2F-400F-8615-70C8424F3230}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

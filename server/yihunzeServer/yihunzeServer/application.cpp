@@ -178,8 +178,12 @@ bool	Application::init()
 	}
 
 
+	
+	Config config;
+	config.loadfile("database.cfg")
+
 	m_pDatabaseInstance=new DatabaseInstace();
-	if(	m_pDatabaseInstance->open("127.0.0.1","root","111","yhzdb",3306)==false)
+	if(	m_pDatabaseInstance->open("127.0.0.1","root","111","yinhunzedb",3306)==false)
 	{
 		Application::getSingleton().addPrintMessage("打开数据库成功");
 		xLogMessager::getSingleton().logMessage("打开数据库成功...");
@@ -191,29 +195,31 @@ bool	Application::init()
 	}
 
 
-	//CppMySQLQuery&query=m_pDatabaseInstance->querySQL("select * from player");
+	CppMySQLQuery *query=NULL;
+	m_pDatabaseInstance->querySQL("select * from player",&query);
 
-	//unsigned int row=query.numRow();
-	//
-	//while(!query.eof())
-	//{
-	//	int playerid=query.getIntField("playerid",0);
-	//	query.nextRow();
-	//}
+	unsigned int row=query->numRow();
+	
+	while(!query->eof())
+	{
+		int playerid=query->getIntField("playerid",0);
+		std::string name=query->getStringField("name","");
+		query->nextRow();
+	}
 
-	CppMySQLQuery* pQuery=NULL;
-	m_pDatabaseInstance->execProcedurce("call query_student(17,@param2)" );
+	//CppMySQLQuery* pQuery=NULL;
+	//m_pDatabaseInstance->execProcedurce("call query_student(17,@param2)" );
 
-		if(m_pDatabaseInstance->querySQL("select @param2",&pQuery))
-		{
+	//	if(m_pDatabaseInstance->querySQL("select @param2",&pQuery))
+	//	{
 
-			while(!pQuery->eof())
-			{
-				int playerid=pQuery->getIntField("@param2",0);
-				pQuery->nextRow();
-			}
+	//		while(!pQuery->eof())
+	//		{
+	//			int playerid=pQuery->getIntField("@param2",0);
+	//			pQuery->nextRow();
+	//		}
 
-		}
+	//	}
 
 
 

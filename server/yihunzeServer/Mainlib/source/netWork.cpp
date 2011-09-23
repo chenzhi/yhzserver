@@ -299,14 +299,14 @@ bool NetWork::conect(const std::string& ip,unsigned int serverPort,const std::st
 }
 
 //--------------------------------------------------------------------------------------------
-void NetWork::close(const RakNet::SystemAddress& paddress)
-{
-	if(m_pNetInterface!=NULL)
-	{
-      m_pNetInterface->CloseConnection(paddress,true);
-	}
-
-}
+//void NetWork::close(const RakNet::SystemAddress& paddress)
+//{
+//	if(m_pNetInterface!=NULL)
+//	{
+//      m_pNetInterface->CloseConnection(paddress,true);
+//	}
+//
+//}
 
 
 /**¹Ø±ÕÁ¬½Ó*/
@@ -373,7 +373,7 @@ unsigned int NetWork::getUserMessage(RakNet::Packet * p,unsigned char**pdata)
 
 
 		//unsigned int offset=sizeof(BYTE);
-		//usermessageid= *((GameMessage*)(p->data+offset));
+		//usermessageid= *((unsigned int*)(p->data+offset));
 		*pdata=p->data+sizeof(BYTE)+sizeof(unsigned int);
 
 	}
@@ -385,11 +385,11 @@ unsigned int NetWork::getUserMessage(RakNet::Packet * p,unsigned char**pdata)
 
 
 //--------------------------------------------------------------------------------------------
-void NetWork::send(GameMessage message,const  char* pData,unsigned int length,RakNet::RakNetGUID receiver)
+void NetWork::send(unsigned int message,const  char* pData,unsigned int length,RakNet::RakNetGUID receiver)
 {
 
 	unsigned int bitdatalenght=length<<3;
-	unsigned int mesagelenght=sizeof(byte)+sizeof(GameMessage)+length;
+	unsigned int mesagelenght=sizeof(byte)+sizeof(unsigned int)+length;
 
 	RakNet::BitStream stream;
 	stream.Write((byte)GM_User);
@@ -401,7 +401,7 @@ void NetWork::send(GameMessage message,const  char* pData,unsigned int length,Ra
 
 
 //--------------------------------------------------------------------------------------------
-void NetWork::send(GameMessage message,const  char* pData,unsigned int length,RakNet::SystemAddress& receiver)
+void NetWork::send(unsigned int message,const  char* pData,unsigned int length,RakNet::SystemAddress& receiver)
 {
 	if(m_pNetInterface==NULL)
 		return ;
@@ -414,14 +414,14 @@ void NetWork::send(GameMessage message,const  char* pData,unsigned int length,Ra
 
 
 //--------------------------------------------------------------------------------------------
-void  NetWork::broadcastMessage(GameMessage message,const unsigned  char* pdata,unsigned length)
+void  NetWork::broadcastMessage(unsigned int message,const unsigned  char* pdata,unsigned length)
 {
 	unsigned int bitdatalenght=length*8;
-	unsigned int mesagelenght=sizeof(byte)+sizeof(GameMessage)+length;
+	unsigned int mesagelenght=sizeof(byte)+sizeof(unsigned int)+length;
 
 	RakNet::BitStream stream;
 	stream.Write((unsigned char)GM_User);
-	stream.Write((GameMessage)message);
+	stream.Write((unsigned int)message);
 	stream.WriteBits(pdata,bitdatalenght);
 
 	bitdatalenght=stream.GetNumberOfBitsUsed();

@@ -33,7 +33,7 @@
 #include "pch.h"
 #include "databaseInstance.h"
 #include "xLogManager.h"
-
+#include "Config.h"
 
 
 //--------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ u_long CppMySQLQuery::numRow()
 }
 
 //--------------------------------------------------------------------------------
-int CppMySQLQuery::numFields()
+unsigned int CppMySQLQuery::numFields()
 {
 	if(_mysql_res==NULL)
 		return 0;
@@ -256,6 +256,8 @@ template<>DatabaseInstace* Singleton<DatabaseInstace>::ms_Singleton=NULL;
 DatabaseInstace::DatabaseInstace()
 {
 	_db_ptr = NULL;
+
+
 }
 
 //----------------------------------------------------------------------
@@ -274,6 +276,12 @@ bool  DatabaseInstace::open(const char* host, const char* user, const char* pass
 	if( NULL == _db_ptr ) 
 		return false;
 
+	//支持中文处理
+	mysql_options(_db_ptr, MYSQL_SET_CHARSET_NAME,"gbk");
+
+	mysql_options(_db_ptr, MYSQL_OPT_RECONNECT,"1");
+
+
 	//如果连接失败，返回NULL。对于成功的连接，返回值与第1个参数的值相同。
 	if ( NULL == mysql_real_connect( _db_ptr, host, user, passwd, db,port, NULL, client_flag) )
 		return false;
@@ -288,6 +296,40 @@ bool  DatabaseInstace::open(const char* host, const char* user, const char* pass
 
 	return true;
 }
+
+
+bool DatabaseInstace::open(const Config& config)
+{
+
+	std::string servername;
+	std::string portnumber;
+	std::string user;
+	std::string password;
+	std::string databasename;
+	config.getValue("servername",servername);
+	config.getValue("databaseportnumber ",portnumber);
+	config.getValue("databaseuser ",user);
+	config.getValue("databasepassword ",password);
+	config.getValue("databasename ",databasename);
+
+	if(servername.empty()||portnumber.empty()||user.empty()||password.empty()||databasename.empty())
+	{
+		xLogMessager::getSingleton().logMessage("DatabaseInstace::open 失败，数据库配置文件错误");
+		return false;
+	}
+
+	return open(servername.c_str(),user.c_str(),password.c_str(),)
+
+
+
+
+
+
+	return true;
+
+
+}
+
 
 //----------------------------------------------------------------------
 void DatabaseInstace::close()

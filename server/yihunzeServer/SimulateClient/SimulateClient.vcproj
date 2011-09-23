@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(RakNet4.0)/Source&quot;;&quot;$(WXWIDGETS2.8)/include/msvc&quot;;&quot;$(WXWIDGETS2.8)/include&quot;"
+				AdditionalIncludeDirectories="&quot;$(RakNet4.0)/Source&quot;;&quot;$(WXWIDGETS2.8)/include/msvc&quot;;../mainlib/include;&quot;$(MYSQL)/include&quot;;&quot;$(WXWIDGETS2.8)/include&quot;;../yihunzeServer"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -62,9 +62,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="RakNetLibStaticDebug.lib ws2_32.lib wxmsw28d_core.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib"
+				AdditionalDependencies="RakNetLibStaticDebug.lib xmain_d.lib ws2_32.lib wxmsw28d_core.lib wxbase28d.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexd.lib wxexpatd.lib winmm.lib comctl32.lib rpcrt4.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(WXWIDGETS2.8)\lib\vc_lib&quot;"
+				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(WXWIDGETS2.8)\lib\vc_lib&quot;;../mainlib/lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -89,6 +89,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\ClientBin\debug&quot; /y&#x0D;&#x0A;copy $(MYSQL)\lib\libmysql.dll    &quot;..\ClientBin\debug&quot; "
 			/>
 		</Configuration>
 		<Configuration
@@ -251,14 +252,6 @@
 		<Filter
 			Name="network"
 			>
-			<File
-				RelativePath="..\yihunzeServer\netWork.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\yihunzeServer\netWork.h"
-				>
-			</File>
 			<File
 				RelativePath=".\NetWorkListener.cpp"
 				>

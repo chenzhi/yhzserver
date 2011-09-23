@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="yihunzeServer"
-	ProjectGUID="{4071E315-09C7-4810-BFF5-669677C4E2BB}"
-	RootNamespace="yihunzeServer"
+	Name="accountServer"
+	ProjectGUID="{B170B29A-4B2F-400F-8615-70C8424F3230}"
+	RootNamespace="accountServer"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -21,8 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			UseOfMFC="0"
-			CharacterSet="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -42,13 +41,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(RakNet4.0)/Source&quot;;../Mainlib/include;&quot;$(MYSQL)/include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="pch.h"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -63,12 +60,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="RakNetLibStaticDebug.lib ws2_32.lib libmysql.lib xMain_d.lib"
-				OutputFile="../bin/debug/$(ProjectName).exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
 				GenerateDebugInformation="true"
-				SubSystem="0"
+				SubSystem="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -91,7 +85,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\debug\&quot; &#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -177,78 +170,18 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath=".\application.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\application.h"
-				>
-			</File>
-			<File
-				RelativePath=".\player.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\player.h"
-				>
-			</File>
-			<File
-				RelativePath=".\playermanager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\playerManager.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath=".\pch.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath=".\pch.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="资源文件"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-		</Filter>
-		<Filter
-			Name="netWork"
-			>
-			<File
-				RelativePath=".\NetWorkListener.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\NetWorkListener.h"
-				>
-			</File>
-			<File
-				RelativePath=".\usermessage.h"
-				>
-			</File>
-			<File
-				RelativePath=".\userstruct.h"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>

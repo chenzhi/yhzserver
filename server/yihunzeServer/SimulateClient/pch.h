@@ -22,15 +22,11 @@
 #include "BitStream.h"
 #include "RakSleep.h"
 #include "PacketLogger.h"
-
-
-
-
 #include "wx/wxprec.h"
 #include "wx/wx.h"
 
-
-
+#include "mysql.h"
+#include "xmain.h"
 
 
 

@@ -4,21 +4,22 @@
 /*******************************************
 mysql 的连接类
 **********************************************************/
-#include "mysql.h"
-#include "Singleton.h"
 
+#include "Singleton.h"
 
 
 
 typedef unsigned int u_int;
 typedef unsigned long u_long;
-typedef MYSQL*  DB_HANDLE;
+
+class Config;
+//typedef MYSQL*  DB_HANDLE;
 
 
 class DatabaseInstace;
 
 
-class CppMySQLQuery
+class XClass CppMySQLQuery
 {
 	friend class DatabaseInstace;
 public:
@@ -30,7 +31,7 @@ public:
 	virtual ~CppMySQLQuery();
 	u_long numRow();//多少行
 
-	int numFields();//多少列
+	unsigned int numFields();//多少列
 
 	int fieldIndex(const char* szField);
 
@@ -70,7 +71,7 @@ private:
 
 
 
-class DatabaseInstace :public Singleton<DatabaseInstace>
+class  XClass  DatabaseInstace :public Singleton<DatabaseInstace>
 {
 public:
 
@@ -82,6 +83,9 @@ public:
 	*/
 	bool open(const char* host, const char* user, const char* passwd, const char* db,
 		unsigned int port = 0, unsigned long client_flag = 0);
+
+
+	bool open(const Config& config);
 	
 	/**关闭数据库*/
 	void close();

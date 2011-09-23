@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="yihunzeServer"
-	ProjectGUID="{4071E315-09C7-4810-BFF5-669677C4E2BB}"
-	RootNamespace="yihunzeServer"
+	Name="xMainlib"
+	ProjectGUID="{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}"
+	RootNamespace="NetWork"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -18,11 +18,10 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="lib/xMain_d.dll"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
-			UseOfMFC="0"
-			CharacterSet="2"
+			ConfigurationType="2"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -42,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(RakNet4.0)/Source&quot;;../Mainlib/include;&quot;$(MYSQL)/include&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
+				AdditionalIncludeDirectories="&quot;$(MYSQL)/include&quot;;./include;&quot;$(RakNet4.0)/Source&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;XMAIN_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -63,12 +62,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="RakNetLibStaticDebug.lib ws2_32.lib libmysql.lib xMain_d.lib"
-				OutputFile="../bin/debug/$(ProjectName).exe"
+				AdditionalDependencies="libmysql.lib RakNetLibStaticDebug.lib ws2_32.lib"
+				OutputFile="./lib/xMain_d.dll"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
+				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;"
 				GenerateDebugInformation="true"
-				SubSystem="0"
+				SubSystem="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -91,14 +90,13 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\debug\&quot; &#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -121,10 +119,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;NETWORK_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -178,37 +176,27 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\application.cpp"
+				RelativePath=".\source\Config.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\application.h"
+				RelativePath=".\source\databaseInstance.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\player.cpp"
+				RelativePath=".\source\EventManager.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\player.h"
+				RelativePath=".\source\helper.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\playermanager.cpp"
+				RelativePath=".\source\netWork.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\playerManager.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="头文件"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
-			<File
-				RelativePath=".\pch.cpp"
+				RelativePath=".\source\pch.cpp"
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -220,7 +208,49 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\pch.h"
+				RelativePath=".\source\xLogManager.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="头文件"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
+			<File
+				RelativePath=".\include\Config.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\databaseInstance.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\EventManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\helper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\netWork.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\pch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\Singleton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\xLogManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\xmain.h"
 				>
 			</File>
 		</Filter>
@@ -230,26 +260,10 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 		</Filter>
-		<Filter
-			Name="netWork"
+		<File
+			RelativePath=".\ReadMe.txt"
 			>
-			<File
-				RelativePath=".\NetWorkListener.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\NetWorkListener.h"
-				>
-			</File>
-			<File
-				RelativePath=".\usermessage.h"
-				>
-			</File>
-			<File
-				RelativePath=".\userstruct.h"
-				>
-			</File>
-		</Filter>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

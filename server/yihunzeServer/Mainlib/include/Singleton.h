@@ -34,6 +34,7 @@ public:
 
 	static T* getSingletonPtr( void )
 	{ return ms_Singleton; }
+
 };
 
 

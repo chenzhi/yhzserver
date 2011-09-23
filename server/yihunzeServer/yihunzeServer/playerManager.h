@@ -4,6 +4,8 @@
 玩家管理类
 ******************************************************/
 
+#pragma once
+
 #include "Singleton.h"
 #include "player.h"
 

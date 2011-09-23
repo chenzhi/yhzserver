@@ -1,7 +1,7 @@
 
 #pragma  once
 
-#include "../yihunzeServer/netWork.h"
+#include "netWork.h"
 
 
 

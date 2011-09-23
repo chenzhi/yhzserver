@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "App.h"
 #include "SimulateClientMainFrame.h"
-#include "../yihunzeServer/netWork.h"
+#include "netWork.h"
 #include "netWorkListener.h"
 
 

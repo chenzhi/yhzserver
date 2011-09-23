@@ -2,8 +2,8 @@
 
 #include "Singleton.h"
 #include "EventManager.h"
-#include "usermessage.h"
-#include "userstruct.h"
+//#include "usermessage.h"
+//#include "userstruct.h"
 
 
 
@@ -11,12 +11,20 @@
 #define  NetWorkMaxClientNumber 65535
 #define  NetWorkTimeOut         100000
 
+#define  GM_User          ID_USER_PACKET_ENUM
+#define  GM_ACCEPTCOME    GM_User+1
+
+
+
+
+
+
 
 
 /**
 网络事件监听者，会回调网络事件。
 */
-class netWorkListener
+class XClass netWorkListener
 {
 public:
 
@@ -25,14 +33,17 @@ public:
 
 	virtual ~netWorkListener(){};
 
-     /**当一个玩家进入*/
+ //    /**当一个玩家进入*/
 	virtual void onConnect(RakNet::Packet* p)=0;
 
-	/**玩家离开*/
+	///**玩家离开*/
 	virtual void onDisconnect(RakNet::Packet* p)=0;
 
-	/**玩家掉线*/
+	///**玩家掉线*/
 	virtual void  onConnectlost(RakNet::Packet* p)=0;
+
+	    /**当一个玩家进入*/
+
 
 };
 
@@ -40,7 +51,7 @@ public:
 
 
 
-class NetWork :public Singleton<NetWork>, public CEventManager
+class  XClass NetWork :public Singleton<NetWork>, public CEventManager
 {
 
 public:
@@ -78,7 +89,7 @@ public:
 
 
 	/**关闭连接*/
-	void close(const RakNet::SystemAddress& paddress);
+	//void close(const RakNet::SystemAddress& paddress);
 
 	/**关闭连接
 	*@param portnumber 端口号
@@ -103,18 +114,17 @@ public:
 	*@param length 消息内容的长度
 	*@param receiver接收者的id，
 	*/
-	void send(GameMessage message,const  char* pData,unsigned int length,RakNet::RakNetGUID receiver);
+	void send(unsigned int message,const  char* pData,unsigned int length,RakNet::RakNetGUID receiver);
 
 
 	/**
 	*@see send;
 	*/
-	void send(GameMessage message,const  char* pData,unsigned int length,RakNet::SystemAddress& receiver);
+	void send(unsigned int message,const  char* pData,unsigned int length,RakNet::SystemAddress& receiver);
 
 
 	/**广播消息，此消息会发给所有的用户*/
-	void broadcastMessage(GameMessage mesage,const unsigned char* pdata,unsigned length);
-
+	void broadcastMessage(unsigned int mesage,const unsigned char* pdata,unsigned length);
 
 
 

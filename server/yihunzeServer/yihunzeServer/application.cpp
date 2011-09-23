@@ -180,7 +180,7 @@ bool	Application::init()
 
 	
 	Config config;
-	config.loadfile("database.cfg")
+	config.loadfile("database.cfg");
 
 	m_pDatabaseInstance=new DatabaseInstace();
 	if(	m_pDatabaseInstance->open("127.0.0.1","root","111","yinhunzedb",3306)==false)

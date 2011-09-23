@@ -34,6 +34,7 @@
 #include "databaseInstance.h"
 #include "xLogManager.h"
 #include "Config.h"
+#include "helper.h"
 
 
 //--------------------------------------------------------------------------------
@@ -318,7 +319,8 @@ bool DatabaseInstace::open(const Config& config)
 		return false;
 	}
 
-	return open(servername.c_str(),user.c_str(),password.c_str(),)
+	unsigned int iport=Helper::StringToInt(portnumber);
+	return open(servername.c_str(),user.c_str(),password.c_str(),databasename.c_str(),iport);
 
 
 

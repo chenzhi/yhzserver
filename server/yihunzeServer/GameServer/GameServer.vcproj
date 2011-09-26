@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="stateServer"
-	ProjectGUID="{4071E315-09C7-4810-BFF5-669677C4E2BB}"
-	RootNamespace="yihunzeServer"
+	Name="GameServer"
+	ProjectGUID="{9776E602-F90F-43EA-BDDD-5DF828BCCF6E}"
+	RootNamespace="GameServer"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -21,7 +21,6 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			UseOfMFC="0"
 			CharacterSet="2"
 			>
 			<Tool
@@ -42,13 +41,12 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(RakNet4.0)/Source&quot;;../Mainlib/include;&quot;$(MYSQL)/include&quot;"
+				AdditionalIncludeDirectories="../Mainlib/include;&quot;$(MYSQL)/include&quot;;&quot;$(RakNet4.0)/Source&quot;;../yihunzeserver"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="pch.h"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -64,11 +62,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="RakNetDLLDebug.lib ws2_32.lib libmysql.lib xMain_d.lib"
-				OutputFile="../bin/stateserver/debug/$(ProjectName)_d.exe"
+				OutputFile="../bin/gameserver/debug/gameserver_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
 				GenerateDebugInformation="true"
-				SubSystem="0"
+				SubSystem="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -91,7 +89,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\stateserver\debug&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\stateserver\debug&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\stateserver\debug&quot;&#x0D;&#x0A;"
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\gameserver\debug&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\gameserver\debug&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\gameserver\debug&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -99,7 +97,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="2"
+			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -121,12 +119,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(RakNet4.0)/Source&quot;;../Mainlib/include;&quot;$(MYSQL)/include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
-				PrecompiledHeaderThrough="pch.h"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -141,10 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libmysql.lib RakNetDLL.lib ws2_32.lib xmain.lib"
-				OutputFile="../bin/stateserver/release/$(ProjectName).exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -171,7 +164,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\stateserver\release&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNet.dll&quot;   &quot;..\bin\stateserver\release&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;   &quot;..\bin\stateserver\release&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -188,27 +180,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\application.h"
+				RelativePath=".\NetWorkListener.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\GameServer.cpp"
+				RelativePath=".\pch.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\GameServerManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\player.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\playermanager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\playerManager.h"
+				RelativePath=".\stateServer.cpp"
 				>
 			</File>
 		</Filter>
@@ -218,39 +198,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\GameServer.h"
+				RelativePath=".\application.h"
 				>
 			</File>
 			<File
-				RelativePath=".\GameServerManager.h"
+				RelativePath=".\NetWorkListener.h"
 				>
-			</File>
-			<File
-				RelativePath=".\pch.cpp"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\pch.h"
 				>
 			</File>
 			<File
-				RelativePath=".\player.h"
+				RelativePath=".\Stateserver.h"
 				>
 			</File>
 		</Filter>
@@ -259,26 +219,6 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-		</Filter>
-		<Filter
-			Name="netWork"
-			>
-			<File
-				RelativePath=".\NetWorkListener.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\NetWorkListener.h"
-				>
-			</File>
-			<File
-				RelativePath=".\usermessage.h"
-				>
-			</File>
-			<File
-				RelativePath=".\userstruct.h"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>

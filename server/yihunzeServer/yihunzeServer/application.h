@@ -5,6 +5,7 @@
 class NetWork;
 class PlayerManager;
 class DatabaseInstace;
+class GameServerManager;
 
 
 class Application  :public Singleton<Application>
@@ -80,6 +81,9 @@ private:
 	unsigned int            m_accountServerPortnumber;//帐号服务器端口号
 
 	unsigned int            m_gameServerPortnumber;  //游戏服务器端口号
+
+
+	GameServerManager*      m_GameSreverManager;      //游戏服务器管理器
 
 };
 

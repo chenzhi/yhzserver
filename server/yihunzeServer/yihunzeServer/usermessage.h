@@ -14,6 +14,14 @@ enum GameMessage
 	GM_ACCOUNT_REQUEST,   ///验证是否有这个帐号
 	GM_ACCOUNT_RESPOND,   //回应验证消息
 
+
+
+
+
+	///状态服务器消息定义
+	GM_GAMESERVER_CONNECT,   ///游戏服务器连接
+	GM_GAMESERVER_DISCONNECT, ///游戏服务器断开
+
 };
 
 
@@ -66,5 +74,15 @@ struct RespondAccount
 struct NetByte
 {
 	char  m_byte;
+};
+#pragma pack(pop)
+
+
+
+///一个字符串结构
+#pragma pack(push, 1)
+struct NetString
+{
+	char  m_char[UserNameLength];
 };
 #pragma pack(pop)

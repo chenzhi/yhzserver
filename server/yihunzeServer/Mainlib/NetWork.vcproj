@@ -247,6 +247,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\iteratorWapper.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\netWork.h"
 				>
 			</File>

@@ -3,6 +3,9 @@
 读取配置文件类
 *****************************************************/
 
+#include "iteratorWapper.h"
+
+
 class XClass Config
 {
 
@@ -27,7 +30,7 @@ public:
 
 
 	/**判断是有指定的值*/
-	bool hasKey(const std::string& key);
+	bool hasKey(const std::string& key) const ;
 
 
 protected:
@@ -35,5 +38,47 @@ protected:
 	typedef std::map<std::string,std::string> ValueMap;
 
 	ValueMap m_Value;///配置文件里的key和值列表
+
+};
+
+
+
+
+/**分层配置文件，可以读取中括号分层*/
+class XClass CategoryCofig
+{
+
+	
+public:
+
+	
+
+	typedef  std::map<std::string,std::map<std::string,std::string> > CategoryMap;
+
+	typedef  MapIterator< CategoryMap> SectionIterator; 
+
+
+
+public:
+
+	CategoryCofig();
+
+
+	~CategoryCofig();
+
+
+	bool loadfile(const std::string& file);
+
+
+
+	SectionIterator getSectionIterator(){ return  SectionIterator(m_CategoryMap.begin(),m_CategoryMap.end());}
+
+
+
+protected:
+
+
+    CategoryMap                   m_CategoryMap;
+
 
 };

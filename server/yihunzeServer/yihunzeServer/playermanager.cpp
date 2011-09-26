@@ -114,7 +114,6 @@ void  PlayerManager::processAccountTest(NetPack* pdata)
 
 	}
 
-	
 	RakNet::RakNetGUID  address;
 	address.FromString(prespond->m_userip);
 	NetWork::getSingleton().send(GM_ACCOUNT_RESPOND,netbyte,address);

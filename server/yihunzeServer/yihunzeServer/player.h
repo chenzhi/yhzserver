@@ -39,7 +39,7 @@ protected:
 
 };
 
-typedef std::map<unsigned int,Player*> PlayerIDMap;
+typedef stdext::hash_map<unsigned int,Player*> PlayerIDMap;
 
 
 

@@ -23,4 +23,4 @@
 #include "databaseInstance.h"
 #include "Config.h"
 #include "helper.h"
-
+#include "iteratorWapper.h"

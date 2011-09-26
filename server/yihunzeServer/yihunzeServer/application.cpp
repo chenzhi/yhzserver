@@ -6,6 +6,10 @@
 #include "NetWorkListener.h"
 #include "xLogManager.h"
 #include "databaseInstance.h"
+#include "GameServerManager.h"
+
+
+#define ServerName       "印魂者状态服务器"
 
 #define PrintWindID   99999
 
@@ -76,7 +80,7 @@ template<> Application* Singleton<Application>::ms_Singleton=NULL;
 //-----------------------------------------------------------------
 Application::Application()
 :mInstance(NULL),mHwnd(NULL),m_pNetWork(NULL),m_pPlayerManager(NULL),m_PrintWind(NULL),
-m_pDatabaseInstance(NULL),m_pNetlistener(NULL)
+m_pDatabaseInstance(NULL),m_pNetlistener(NULL),m_GameSreverManager(NULL)
 {
 
 
@@ -94,8 +98,9 @@ Application:: ~Application()
 	SafeDelete(m_pNetWork);
 	SafeDelete(m_pNetlistener);
     SafeDelete(m_pDatabaseInstance);
+	SafeDelete(m_GameSreverManager);
 
-	xLogMessager::getSingleton().logMessage("印魂者服务器退出...");
+	xLogMessager::getSingleton().logMessage("服务器退出...");
 	delete xLogMessager::getSingletonPtr();
 
 
@@ -158,14 +163,20 @@ bool	Application::init()
 
 
 
+
+
+
+
+
+
 	new xLogMessager("yhz.log");
 
-	xLogMessager::getSingleton().logMessage("印魂者服务器启动...");
-	addPrintMessage("印魂者服务器启动...");
+	xLogMessager::getSingleton().logMessage("印魂者状态服务器启动...");
+	addPrintMessage("印魂者状态服务器启动...");
 
 
 	Config config;
-	config.loadfile("yihuzegameserver.cfg");
+	config.loadfile("stateserver.cfg");
 
 	std::string portNumber;
 	std::string networkpassword;
@@ -277,6 +288,7 @@ bool	Application::init()
 	m_pNetWork->setListener(m_pNetlistener);
 
 	m_pPlayerManager=new PlayerManager();
+	m_GameSreverManager=new GameServerManager("gameserver.cfg");
 
 	return true;
 }

@@ -89,10 +89,13 @@ Application:: ~Application()
 {
 
 	
+	
+    SafeDelete(m_pAccountManager);
+
 	SafeDelete(m_pNetWork);
 	SafeDelete(m_pNetlistener);
     SafeDelete(m_pDatabaseInstance);
-	SafeDelete(m_pAccountManager);
+
 
 	xLogMessager::getSingleton().logMessage("ÕÊºÅ·þÎñÆ÷ÍË³ö...");
 	delete xLogMessager::getSingletonPtr();
@@ -256,6 +259,7 @@ bool	Application::init()
 
 		}
 	}
+
 
 
 

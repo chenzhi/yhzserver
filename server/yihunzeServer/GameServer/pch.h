@@ -24,7 +24,6 @@
 #include <list>
 #include <algorithm>
 #include "mysql.h"
-#include <hash_map>
 
 
 

@@ -6,7 +6,7 @@
 #include "xLogManager.h"
 #include "databaseInstance.h"
 #include  "helper.h"
-
+#include "Stateserver.h"
 
 #define PrintWindID   99999
 
@@ -76,7 +76,7 @@ template<> Application* Singleton<Application>::ms_Singleton=NULL;
 //-----------------------------------------------------------------
 Application::Application()
 :mInstance(NULL),mHwnd(NULL),m_pNetWork(NULL),m_PrintWind(NULL),
-m_pDatabaseInstance(NULL),m_pNetlistener(NULL),m_pAccountManager(NULL)
+m_pDatabaseInstance(NULL),m_pNetlistener(NULL),m_pAccountManager(NULL),m_pStateServer(NULL)
 {
 
   Helper::setCurrentWorkPath();
@@ -88,7 +88,9 @@ m_pDatabaseInstance(NULL),m_pNetlistener(NULL),m_pAccountManager(NULL)
 Application:: ~Application()
 {
 
-	
+	SafeDelete(m_pStateServer);
+
+
 	SafeDelete(m_pNetWork);
 	SafeDelete(m_pNetlistener);
     SafeDelete(m_pDatabaseInstance);
@@ -105,6 +107,12 @@ void    Application::update(float time)
 	if(m_pNetWork!=NULL)
 	{
 		m_pNetWork->update();
+	}
+
+	
+	if(	m_pStateServer!=NULL)
+	{
+		m_pStateServer->update(time);
 	}
 
 	return ;
@@ -157,16 +165,16 @@ bool	Application::init()
 
 
 
-	new xLogMessager("accountserver.log");
+	new xLogMessager("gameserver.log");
 
-	xLogMessager::getSingleton().logMessage("帐号服务器启动...");
-	addPrintMessage("帐号服务器启动...");
-
-
+	xLogMessager::getSingleton().logMessage("印魂者逻辑服务器启动...");
+	addPrintMessage("印魂者逻辑服务器启动...");
 
 
-	Config config;
-	if(config.loadfile("accountserver.cfg")==false)
+
+
+	
+	if(m_Config.loadfile("gameserver.cfg")==false)
 	{
 		::MessageBox(NULL,"读取 accountserver.cfg 配置文件错误，未找到文件","错误 ",MB_OK);
 		xLogMessager::getSingleton().logMessage("读取 accountserver.cfg 配置文件错误，未找到文件");
@@ -178,7 +186,7 @@ bool	Application::init()
 	std::string portNumber;
 	std::string networkpassword;
 	unsigned    iport=0;
-	if(config.getValue("networkportnumber",portNumber))
+	if(m_Config.getValue("networkportnumber",portNumber))
 	{
 		iport=Helper::StringToInt(portNumber);
 
@@ -189,7 +197,7 @@ bool	Application::init()
 		return false;
 	}
 
-	config.getValue("networkpassword",networkpassword);
+	m_Config.getValue("networkpassword",networkpassword);
 
 	
 	m_pNetWork=new NetWork();
@@ -213,11 +221,11 @@ bool	Application::init()
 	std::string DataUser;
 	std::string DataPassWord;
 	std::string DataPortNumber;
-	config.getValue("databaseserver",DataServer);
-	config.getValue("databasename",DataName);
-	config.getValue("databaseuser",DataUser);
-	config.getValue("databasepassword",DataPassWord);
-	config.getValue("databaseportnumber",DataPortNumber);
+	m_Config.getValue("databaseserver",DataServer);
+	m_Config.getValue("databasename",DataName);
+	m_Config.getValue("databaseuser",DataUser);
+	m_Config.getValue("databasepassword",DataPassWord);
+	m_Config.getValue("databaseportnumber",DataPortNumber);
 
 
 	if(DataUser.empty()||DataServer.empty()||DataName.empty()||DataPassWord.empty()||DataPortNumber.empty())
@@ -259,8 +267,7 @@ bool	Application::init()
 
 
 
-
-
+	m_pStateServer = new StateServer(m_Config);///创建状态服务器
 
 	return true;
 }
@@ -317,7 +324,7 @@ bool Application::initWindow(int width, int height)
 
 
 /**输入信息到窗口*/
-void    Application::printMessage()
+void    Application::printMessage( )
 {
 	if(m_PrintWind==NULL)
 		return ;
@@ -337,10 +344,12 @@ void    Application::printMessage()
 
 	SetWindowText(m_PrintWind,message.c_str());
 
+
+
 }
 
 
-void    Application::addPrintMessage(const std::string& message)
+void    Application::addPrintMessage(const std::string& message,bool outlog)
 {
 
 	m_LogMessage.push_back(message);
@@ -351,6 +360,27 @@ void    Application::addPrintMessage(const std::string& message)
 
 	printMessage();
 
+	if(outlog)
+	{
+		xLogMessager::getSingleton().logMessage(message);
+	}
+
+
 
 }
 
+//----------------------------------------------------------------------------
+//bool   Application::connectStateServer()
+//{
+//
+//
+//}
+//
+//
+//
+////----------------------------------------------------------------------------
+//bool   Application::disConnectStateServer()
+//{
+//
+//	return true;
+//}

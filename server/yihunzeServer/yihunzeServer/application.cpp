@@ -173,6 +173,7 @@ bool	Application::init()
 	if(config.getValue("networkportnumber",portNumber))
 	{
 		iport=Helper::StringToInt(portNumber);
+		m_gameServerPortnumber=iport;
 
 	}else
 	{
@@ -302,7 +303,7 @@ bool Application::initWindow(int width, int height)
 
 	RegisterClassEx(&wcex);
 
-	mHwnd = CreateWindow("mainwindow", "印魂者服务器", WS_OVERLAPPEDWINDOW,
+	mHwnd = CreateWindow("mainwindow", "印魂者全局服务器", WS_OVERLAPPEDWINDOW,
 		100, 100, 1024, 768, NULL, NULL, mInstance, NULL);
 
 	if (!mHwnd)

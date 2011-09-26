@@ -20,6 +20,8 @@ enum GameMessage
 
 
 
+#define IPaddressLength  30///定义ip地址需要少空间
+#define UserNameLength   20//用户名长度
 
 
 
@@ -29,8 +31,8 @@ enum GameMessage
 #pragma pack(push, 1)
 struct UserLogin
 {
-	char  m_account[20];
-	char  m_password[20];
+	char  m_account[UserNameLength];
+	char  m_password[UserNameLength];
 
 };
 
@@ -42,9 +44,9 @@ struct UserLogin
 #pragma pack(push, 1)
 struct UserAccount
 {
-	char  m_account[20];  //用户名
-	char  m_password[20]; //密码
-	char  m_ip      [10];  //ip地址
+	char  m_account[UserNameLength];  //用户名
+	char  m_password[UserNameLength]; //密码
+	char  m_ip      [IPaddressLength];  //ip地址
 };
 #pragma pack(pop)
 
@@ -53,7 +55,16 @@ struct UserAccount
 #pragma pack(push, 1)
 struct RespondAccount
 {
-	char   m_userip[20];  //用户ip
+	char   m_userip[IPaddressLength];  //用户ip
 	char   m_login;       //是否登入,0表示帐号用户名不对，1表示同意登入
+};
+#pragma pack(pop)
+
+
+///返回一个字节一般用来表是否成功
+#pragma pack(push, 1)
+struct NetByte
+{
+	char  m_byte;
 };
 #pragma pack(pop)

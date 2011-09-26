@@ -4,7 +4,7 @@
 #include "SimulateClientMainFrame.h"
 #include "netWork.h"
 #include "netWorkListener.h"
-
+#include "MessageReceive.h"
 
 
 
@@ -39,6 +39,9 @@ bool:: MyApp::OnInit()
 	m_pframe = new SimulateClientMainFrame(NULL);
 	m_pframe->Show(true);
 
+
+	new MessageReceive();
+
 	return true;
 }
 
@@ -60,6 +63,8 @@ bool   MyApp::ProcessIdle()
 
  int MyApp::OnExit()
  {
+
+	 delete MessageReceive::getSingletonPtr();
 
 
 	 SafeDelete(m_pNetWorker);

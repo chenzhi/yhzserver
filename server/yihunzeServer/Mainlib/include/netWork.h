@@ -69,24 +69,42 @@ class XClass NetPack
 protected:
 
 	NetPack(RakNet::Packet* p)
-		:m_pPack(p)
+		:m_pPack(p),m_pData(NULL),m_length(2048)
 	{
 
+		m_pData = (char*)malloc(m_length);
 	}
 
-	~NetPack(){}
+	~NetPack()
+	{
+        free(m_pData);
+		m_pData=NULL;
+
+	}
 
 public:
 
 	/**获取网络包数据,
 	*@reutrn 如果没有数据返回空
 	*/
-	void * getData() const 
+	void * getData()  
 	{
 		if(m_pPack==NULL)
 			return NULL;
 
-		return m_pPack->data+sizeof(DWORD) + sizeof(byte);
+		if(m_pPack->length>=m_length)
+		{
+			free(m_pData);
+
+			m_length=m_pPack->length+1;
+
+			m_pData=(char*)malloc(m_length);
+		}
+
+		memset(m_pData,0,m_length);
+		memcpy(m_pData,m_pPack->data,m_pPack->length);
+
+		return m_pData+sizeof(DWORD) + sizeof(byte);
 
 	}
 
@@ -94,12 +112,12 @@ public:
 	/**获取包的发送的的ip地址
 	*@pram portnumber 是否包含端口号
 	*/
-	const char* getSendIP(bool portnumber=false)
+	/*const char* getSendIP(bool portnumber=false)
 	{
 		if(m_pPack==NULL)
-			return "";
+			return NULL;
 		return m_pPack->systemAddress.ToString(portnumber);
-	}
+	}*/
 
 
 
@@ -145,6 +163,9 @@ protected:
 protected:
 
 	RakNet::Packet* m_pPack;
+
+	char*           m_pData;
+	unsigned int    m_length;
 
 
 };
@@ -257,6 +278,23 @@ public:
 
 
 
+	
+	template<typename T>
+	bool send( unsigned long msgType , const T & pdata,const  RakNet::RakNetGUID& guid )
+	{ 
+		if(m_pNetInterface==NULL)
+			return false;
+
+		static RakNet::BitStream streem;
+		streem.Reset();
+		streem.Write( (unsigned char)GM_User);
+		streem.Write( msgType );
+		streem.WriteBits( (unsigned char *)&pdata , sizeof( T ) * 8 );
+		m_pNetInterface->Send( &streem , HIGH_PRIORITY, RELIABLE_ORDERED, 0, guid, false );
+		return true;
+	}
+
+
 
 
 
@@ -324,7 +362,6 @@ private:
 
 	bool                     m_isServer; ///是否是服务器
     short unsigned int       m_portNumber;///端口号
-
 	/*raknet 连接实例指针*/
 	RakNet::RakPeerInterface *m_pNetInterface;
 

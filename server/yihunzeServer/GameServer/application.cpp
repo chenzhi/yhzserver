@@ -6,7 +6,7 @@
 #include "xLogManager.h"
 #include "databaseInstance.h"
 #include  "helper.h"
-#include "accountManager.h"
+
 
 #define PrintWindID   99999
 
@@ -92,7 +92,7 @@ Application:: ~Application()
 	SafeDelete(m_pNetWork);
 	SafeDelete(m_pNetlistener);
     SafeDelete(m_pDatabaseInstance);
-	SafeDelete(m_pAccountManager);
+
 
 	xLogMessager::getSingleton().logMessage("帐号服务器退出...");
 	delete xLogMessager::getSingletonPtr();
@@ -260,7 +260,6 @@ bool	Application::init()
 
 
 
-	m_pAccountManager=new AccountManager();
 
 
 	return true;
@@ -288,7 +287,7 @@ bool Application::initWindow(int width, int height)
 
 	RegisterClassEx(&wcex);
 
-	mHwnd = CreateWindow("mainwindow", "帐号服务器", WS_OVERLAPPEDWINDOW,
+	mHwnd = CreateWindow("mainwindow", "印魂者游戏服务器", WS_OVERLAPPEDWINDOW,
 		100, 100, 1024, 768, NULL, NULL, mInstance, NULL);
 
 	if (!mHwnd)

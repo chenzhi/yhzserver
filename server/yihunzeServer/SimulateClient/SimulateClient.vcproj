@@ -90,7 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot; &#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot; &#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot; "
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -169,7 +169,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\SimulateClient\release\&quot; &#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNet.dll&quot;  &quot;..\bin\SimulateClient\release\&quot; &#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;   &quot;..\bin\SimulateClient\release\&quot; "
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\SimulateClient\release\&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNet.dll&quot;  &quot;..\bin\SimulateClient\release\&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;   &quot;..\bin\SimulateClient\release\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -218,6 +218,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MessageReceive.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SimulateClientMainFrame.cpp"
 				>
 				<FileConfiguration
@@ -239,6 +243,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\MessageReceive.h"
+				>
+			</File>
 			<File
 				RelativePath=".\pch.cpp"
 				>

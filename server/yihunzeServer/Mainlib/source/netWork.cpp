@@ -458,6 +458,8 @@ void NetWork::processGameMessage(RakNet::Packet* p)
 {
 
 	static NetPack pPack(p);
+
+
 	pPack.setRaknetPack(p);
 	fireMessage( pPack.getGameMessageID() ,&pPack );
 

@@ -68,17 +68,31 @@ void PlayerManager::processTestMessage(NetPack* pPack)
 	unsigned int port=Application::getSingleton().getAccountServerPort();
 	RakNet::SystemAddress address(serverip.c_str(),port);
      
-	const char* sendip=pPack->getSendIP();
+	const char* sendip=pPack->getSendGUID().ToString();
+	unsigned len=strlen(sendip);
 	UserAccount account;
 	unsigned size=sizeof(UserAccount);
 	::ZeroMemory(&account,sizeof(UserAccount));
 
-	memcpy(account.m_account,pmessage->m_account,sizeof(account.m_account));
-	memcpy(account.m_password,pmessage->m_password,sizeof(account.m_password));
-	memcpy(account.m_ip,sendip,strlen(sendip));
+	strcpy(account.m_account,pmessage->m_account);
+	strcpy(account.m_password,pmessage->m_password);
+	strcpy(account.m_ip,sendip);
+
+
 	NetWork::getSingleton().send(GM_ACCOUNT_REQUEST,account,address);
 
 	return ;
+
+ //   NetByte netbyte;
+	//netbyte.m_byte = 0;
+
+	//RakNet::RakNetGUID netguid;
+	//netguid.FromString(sendip);
+	//NetWork::getSingleton().send(GM_ACCOUNT_RESPOND,netbyte,netguid);
+
+
+
+	//return ;
 
 }
 
@@ -87,7 +101,23 @@ void PlayerManager::processTestMessage(NetPack* pPack)
 void  PlayerManager::processAccountTest(NetPack* pdata)
 {
 
+	RespondAccount* prespond=reinterpret_cast<RespondAccount*>(pdata->getData());
 
+	NetByte netbyte;
+	netbyte.m_byte=prespond->m_login;
+	if(prespond->m_login==0)
+	{
+		
+
+	}else
+	{
+
+	}
+
+	
+	RakNet::RakNetGUID  address;
+	address.FromString(prespond->m_userip);
+	NetWork::getSingleton().send(GM_ACCOUNT_RESPOND,netbyte,address);
 
 	return ;
 }

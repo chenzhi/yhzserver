@@ -3,8 +3,8 @@
 #include "Singleton.h"
 
 class NetWork;
-class PlayerManager;
 class DatabaseInstace;
+class AccountManager;
 
 
 class Application  :public Singleton<Application>
@@ -30,28 +30,12 @@ public:
 
 
 
-	/**获取到帐号服务器地址*/
-	const std::string&  getAccountServer()const{return m_accountServer;}
-
-	/**获取帐号服务器端口号*/
-	unsigned int   getAccountServerPort()const {return m_accountServerPortnumber;}
-
-
-	/**获取游戏服务器端口号*/
-	unsigned int   getGameserverPort()const {return m_gameServerPortnumber;}
-
-
-
-
-
 protected:
+
+
 
 	/**更新屏幕输出*/
 	void    printMessage();
-
-	/**连接到帐号服务器*/
-	bool connectAccountServer(const Config& config);
-
 
 
 private:
@@ -65,7 +49,6 @@ private:
 
 	NetWork*                m_pNetWork;///网络实例 
 	
-	PlayerManager*          m_pPlayerManager; ////用户管理器
 
 	HWND                    m_PrintWind;           ///打印的多行文件框 
 
@@ -75,11 +58,7 @@ private:
 
 	netWorkListener*        m_pNetlistener;    ///网络事件监听
 
-	std::string             m_accountServer;    ///帐号服务器ip
-
-	unsigned int            m_accountServerPortnumber;//帐号服务器端口号
-
-	unsigned int            m_gameServerPortnumber;  //游戏服务器端口号
+	AccountManager*         m_pAccountManager;
 
 };
 

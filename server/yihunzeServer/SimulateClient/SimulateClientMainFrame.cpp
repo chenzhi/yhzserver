@@ -34,11 +34,11 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 	wxString messageID=m_messagelist->GetStringSelection();
 	wxString message= m_MessageText->GetValue();
 
-	if(serverName.empty()||messageID.empty()||messageID.empty())
-	{
-		wxMessageBox("请选择服务器，消息id，和消息内容");
-		return ;
-	}
+	//if(serverName.empty()||messageID.empty()||messageID.empty())
+	//{
+	//	wxMessageBox("请选择服务器，消息id，和消息内容");
+	//	return ;
+	//}
 
 	unsigned int  id=stringToMessageID(messageID.c_str());
 	RakNet::SystemAddress address;
@@ -51,11 +51,22 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 		addSendMessage(message);
 	}else if(GM_ACCOUNT_REQUEST==id)
 	{
-         UserLogin userlogin;
-		 ::ZeroMemory(&userlogin,sizeof(userlogin));
-		 memcpy(userlogin.m_account,"palyer1",strlen("player1"));
-		 memcpy(userlogin.m_password,"palyer1",strlen("player1"));
-		 NetWork::getSingleton().send(id,userlogin,address);
+
+	    UserLogin userlogin;
+		::ZeroMemory(&userlogin,sizeof(userlogin));
+	    if(sscanf(message.c_str(),"%s = %s",userlogin.m_account,userlogin.m_password)>0)
+		{
+           NetWork::getSingleton().send(id,userlogin,address);
+		}else
+		{
+            wxMessageBox("格式不正确请用;分格开用户名和密码");
+		}
+
+
+      
+		// memcpy(userlogin.m_account,"palyer1",strlen("player1"));
+		// memcpy(userlogin.m_password,"palyer1",strlen("player1"));
+		
 	}
 
 

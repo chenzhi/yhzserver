@@ -17,6 +17,24 @@ public:
 
 	~AccountManager();
 
+
+	/**创建一个用户
+	*@param 帐户名
+	*@param password 密码
+	*@return 创建成功返回真，失败返回假，如果已有了帐号不能再创建
+	*/
+	bool createAccount(const std::string& accountName,const std::string& password);
+
+
+
+	/**判断帐号密码是否正确
+	*@return 如果有些帐号密码返回真，无返回false
+	*/
+	bool checkAccount(const std::string& accountName,const std::string& password);
+
+
+
+
 protected:
 
 
@@ -30,6 +48,9 @@ protected:
 
 	/**消毁*/
 	void destroy();
+
+
+
 
 
 

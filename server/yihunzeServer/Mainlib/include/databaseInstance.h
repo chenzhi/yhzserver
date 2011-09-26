@@ -51,8 +51,8 @@ public:
 	//0...n-1ап
 	const char* getStringField(int nField, const char* szNullValue="");
 	const char* getStringField(const char* szField, const char* szNullValue="");
-	const unsigned char* getBlobField(int nField, int& nLen);
-	const unsigned char* getBlobField(const char* szField, int& nLen);
+	//const unsigned char* getBlobField(int nField, int& nLen);
+	//const unsigned char* getBlobField(const char* szField, int& nLen);
 	bool fieldIsNull(int nField);
 	bool fieldIsNull(const char* szField);
 	bool eof();

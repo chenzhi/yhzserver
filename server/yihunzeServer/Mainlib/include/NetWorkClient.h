@@ -1,11 +1,12 @@
 
 
 /**********************************
-网络客户端，
+网络客户端，在一个时间段内只能连接一个服务器
 ***********************************/
+#include "network.h"
 
 
-class NetWorkClient
+class XClass NetWorkClient : public Singleton<NetWorkClient>, public NetWork
 {
 
 public:
@@ -25,7 +26,7 @@ public:
 	*@param  password   连接密码
 	*@return 连接成功返回真。失败返回假
 	*/
-	bool connect(const std::string& ip,unsigned int serverPort,const std::string& password);
+	virtual bool connect(const std::string& ip,unsigned int serverPort,const std::string& password);
 
 
 
@@ -34,7 +35,7 @@ public:
 
 
 	/**每帧更新*/
-	void  update(float time);
+	virtual  void update();
 
 
 	/**断开连接*/
@@ -42,7 +43,47 @@ public:
 
 
 
+	/**
+	*发送信息给服务器的例程
+	*@param address 发送的地址
+	*@param msgType 消息id
+	*@param 发送数据
+	*/
+	template<typename T>
+	bool send( unsigned long msgType , const T & pdata )
+	{ 
+		if(m_pNetInterface==NULL)
+			return false;
+
+		static RakNet::BitStream streem;
+		streem.Reset();
+		streem.Write( (unsigned char)GM_User);
+		streem.Write( msgType );
+		streem.WriteBits( (unsigned char *)&pdata , sizeof( T ) * 8 );
+		m_pNetInterface->Send( &streem , HIGH_PRIORITY, RELIABLE_ORDERED, 0, m_ServerAddress, false );
+		return true;
+	}
+
+
+	/**
+	*@see send;
+	*/
+	void send(unsigned int message,const  char* pData,unsigned int length);
+
+
+
+
 protected:
+
+	std::string         m_ServerIP ;         //远程服务器ip
+
+	unsigned int        m_PortNumber;        ///远程端口号
+
+	std::string         m_PassWord;          //密码
+
+	RakNet::SystemAddress m_ServerAddress;   ///远程地址
+
+
 
 
 

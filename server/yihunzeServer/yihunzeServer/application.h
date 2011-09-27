@@ -2,7 +2,7 @@
 
 #include "Singleton.h"
 
-class NetWork;
+class NetWorkServer;
 class PlayerManager;
 class DatabaseInstace;
 class GameServerManager;
@@ -64,7 +64,7 @@ private:
 	
 	HWND                    mHwnd;///窗口句柄
 
-	NetWork*                m_pNetWork;///网络实例 
+	NetWorkServer*                m_pNetWork;///网络实例 
 	
 	PlayerManager*          m_pPlayerManager; ////用户管理器
 

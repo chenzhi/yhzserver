@@ -32,7 +32,7 @@ bool PlayerManager::registerNetWorkMessage()
 {
 
 
-	NetWork* pNetWork=NetWork::getSingletonPtr();
+	NetWorkServer* pNetWork=NetWorkServer::getSingletonPtr();
 
 	pNetWork->registerMessageHandle(GM_ACCOUNT_REQUEST,&PlayerManager::processTestMessage,this);
 	pNetWork->registerMessageHandle(GM_ACCOUNT_RESPOND,&PlayerManager::processAccountTest,this);
@@ -45,7 +45,7 @@ bool PlayerManager::registerNetWorkMessage()
 //--------------------------------------------------------
 bool PlayerManager::unregisterNetWorkMessage()
 {
-	NetWork* pNetWork=NetWork::getSingletonPtr();
+	NetWorkServer* pNetWork=NetWorkServer::getSingletonPtr();
 
 
 
@@ -79,7 +79,7 @@ void PlayerManager::processTestMessage(NetPack* pPack)
 	strcpy(account.m_ip,sendip);
 
 
-	NetWork::getSingleton().send(GM_ACCOUNT_REQUEST,account,address);
+	NetWorkServer::getSingleton().send(GM_ACCOUNT_REQUEST,account,address);
 
 	return ;
 
@@ -110,7 +110,7 @@ void  PlayerManager::processAccountTest(NetPack* pdata)
 	{
 		NetByte netbyte;
 		netbyte.m_byte=prespond->m_login;
-		NetWork::getSingleton().send(GM_ACCOUNT_RESPOND_FAILED,netbyte,address);
+		NetWorkServer::getSingleton().send(GM_ACCOUNT_RESPOND_FAILED,netbyte,address);
 
 	
 	}else
@@ -126,7 +126,7 @@ void  PlayerManager::processAccountTest(NetPack* pdata)
 			strcpy(gameserver.m_GameServerIP,pGameserver->getIP().c_str());
 			strcpy(gameserver.m_GameServerPassWord,pGameserver->getPassWord().c_str());
 			gameserver.m_PortNumber=pGameserver->getPortNumber();
-			NetWork::getSingleton().send(GM_ACCOUNT_RESPOND_SUCCEED,gameserver,address);
+			NetWorkServer::getSingleton().send(GM_ACCOUNT_RESPOND_SUCCEED,gameserver,address);
 		}
 
 

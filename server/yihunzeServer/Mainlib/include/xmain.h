@@ -24,3 +24,5 @@
 #include "Config.h"
 #include "helper.h"
 #include "iteratorWapper.h"
+#include "NetWorkClient.h"
+#include "NetWorkServer.h"

@@ -2,7 +2,7 @@
 
 #include "Singleton.h"
 
-class NetWork;
+class NetWorkServer;
 class DatabaseInstace;
 class AccountManager;
 
@@ -47,7 +47,7 @@ private:
 	
 	HWND                    mHwnd;///窗口句柄
 
-	NetWork*                m_pNetWork;///网络实例 
+	NetWorkServer*                m_pNetWork;///网络实例 
 	
 
 	HWND                    m_PrintWind;           ///打印的多行文件框 

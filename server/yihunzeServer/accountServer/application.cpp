@@ -197,7 +197,7 @@ bool	Application::init()
 	config.getValue("networkpassword",networkpassword);
 
 	
-	m_pNetWork=new NetWork();
+	m_pNetWork=new NetWorkServer();
 	if(m_pNetWork->startServer(iport,networkpassword)==false)
 	{
 		::MessageBox(NULL,"初始化网络错误，请检查配置文件是否正确","错误",MB_OK);

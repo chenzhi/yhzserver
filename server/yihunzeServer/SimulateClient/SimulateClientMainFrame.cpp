@@ -46,7 +46,7 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 
 	if(id==GM_TEXT_MESSAGE)
 	{
-		NetWork::getSingletonPtr()->send(id,message.c_str(),message.Length(),address);
+		NetWorkClient::getSingletonPtr()->send(id,message.c_str(),message.Length());
 		m_MessageText->Clear();
 		addSendMessage(message);
 	}else if(GM_ACCOUNT_REQUEST==id)
@@ -56,7 +56,7 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 		::ZeroMemory(&userlogin,sizeof(userlogin));
 	    if(sscanf(message.c_str(),"%s = %s",userlogin.m_account,userlogin.m_password)>0)
 		{
-           NetWork::getSingleton().send(id,userlogin,address);
+           NetWorkClient::getSingleton().send(id,userlogin);
 		}else
 		{
             wxMessageBox("格式不正确请用;分格开用户名和密码");

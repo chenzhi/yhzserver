@@ -30,7 +30,7 @@ AccountManager::~AccountManager()
 //---------------------------------------------------------------------
 void AccountManager::init()
 {
-	NetWork* pNetWork=NetWork::getSingletonPtr();
+	NetWorkServer* pNetWork=NetWorkServer::getSingletonPtr();
 	assert(pNetWork);
 
 	pNetWork->registerMessageHandle(GM_ACCOUNT_REQUEST,&AccountManager::processAccountTest,this);
@@ -43,7 +43,7 @@ void AccountManager::destroy()
 {
 
 
-	NetWork* pNetWork=NetWork::getSingletonPtr();
+	NetWorkServer* pNetWork=NetWorkServer::getSingletonPtr();
 	if(pNetWork!=NULL)
 	{
       pNetWork->unregisterMessageHandle(GM_ACCOUNT_REQUEST,this);
@@ -71,7 +71,8 @@ void AccountManager::processAccountTest(NetPack* pPack)
 	{
        	respond.m_login=0;
 	}
-	NetWork::getSingleton().send( GM_ACCOUNT_RESPOND,respond,pPack->getAddress());
+	NetWorkServer::getSingleton().send( GM_ACCOUNT_RESPOND,respond,pPack->getAddress());
+
 	return ;
 }
 

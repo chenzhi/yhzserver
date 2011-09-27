@@ -60,13 +60,13 @@ StateServer::~StateServer()
 bool  StateServer::connect()
 {
 
-	m_IsConnect=NetWork::getSingleton().conect(m_StateServerIP,m_StateServerPort,m_StatePassWord);
+	m_IsConnect=NetWorkServer::getSingleton().connect(m_StateServerIP,m_StateServerPort,m_StatePassWord);
 
 	///如果连接成功，发送注册游戏服务器
 	if(m_IsConnect==true)
 	{
 		RakNet::SystemAddress address(m_StateServerIP.c_str(),m_StateServerPort);
-		NetWork::getSingleton().send(GM_GAMESERVER_CONNECT,m_GameServerName.c_str(),m_GameServerName.length(),address);
+		NetWorkServer::getSingleton().send(GM_GAMESERVER_CONNECT,m_GameServerName.c_str(),m_GameServerName.length(),address);
 	}
 
 	return m_IsConnect;
@@ -83,9 +83,9 @@ void  StateServer::disConnect()
 	{
 
 		RakNet::SystemAddress address(m_StateServerIP.c_str(),m_StateServerPort);
-		NetWork::getSingleton().send(GM_GAMESERVER_DISCONNECT,m_GameServerName.c_str(),m_GameServerName.length(),address);
+		NetWorkServer::getSingleton().send(GM_GAMESERVER_DISCONNECT,m_GameServerName.c_str(),m_GameServerName.length(),address);
 
-		NetWork::getSingleton().close(m_StateServerIP.c_str(),m_StateServerPort);   
+		NetWorkServer::getSingleton().close(m_StateServerIP.c_str(),m_StateServerPort);   
 	}
 
 	m_IsConnect=false;
@@ -121,7 +121,7 @@ void StateServer::update(float time)
 bool  StateServer::isConnect()
 {
 
-	RakNet::ConnectionState stat=NetWork::getSingleton().getConnectState(RakNet::SystemAddress(m_StateServerIP.c_str(),m_StateServerPort));
+	RakNet::ConnectionState stat=NetWorkServer::getSingleton().getConnectState(RakNet::SystemAddress(m_StateServerIP.c_str(),m_StateServerPort));
 
 	return stat==RakNet::IS_CONNECTED;
 

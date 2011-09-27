@@ -188,16 +188,16 @@ const GameServer*  GameServerManager::getBestGameServer()const
 void   GameServerManager::registerMessage()
 {
 
-	NetWork::getSingleton().registerMessageHandle(GM_GAMESERVER_CONNECT,&GameServerManager::onGameServerConnect,this);
-	NetWork::getSingleton().registerMessageHandle(GM_GAMESERVER_DISCONNECT,&GameServerManager::onGameServerDisConnect,this);
+	NetWorkServer::getSingleton().registerMessageHandle(GM_GAMESERVER_CONNECT,&GameServerManager::onGameServerConnect,this);
+	NetWorkServer::getSingleton().registerMessageHandle(GM_GAMESERVER_DISCONNECT,&GameServerManager::onGameServerDisConnect,this);
 
 }
 
 ///×¢ÏúÍøÂçÏûÏ¢
 void  GameServerManager::unregisterMessage()
 {
-	NetWork::getSingleton().unregisterMessageHandle(GM_GAMESERVER_CONNECT,this);
-	NetWork::getSingleton().unregisterMessageHandle(GM_GAMESERVER_DISCONNECT,this);
+	NetWorkServer::getSingleton().unregisterMessageHandle(GM_GAMESERVER_CONNECT,this);
+	NetWorkServer::getSingleton().unregisterMessageHandle(GM_GAMESERVER_DISCONNECT,this);
 
 }
 

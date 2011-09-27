@@ -175,7 +175,7 @@ protected:
 
 
 
-class  XClass NetWork :public Singleton<NetWork>, public CEventManager
+class  XClass NetWork : public CEventManager
 {
 
 public:
@@ -183,27 +183,27 @@ public:
 	/**构造函数
 	*@param isClient 是客户端还是服务器端,true为客户端
 	*/
-	NetWork(bool isClient,unsigned int ClientPort);
+//	NetWork(bool isClient,unsigned int ClientPort);
 
 
 	NetWork();
 
 
-	~NetWork();
+	virtual ~NetWork();
 
 
 	/**构造函数，从配置文件里读取内容
     *@param configFile 配置文件
     *@return 成功返回真失败返回假
 	*/
-	bool initFromFile(const std::string& configFile);
+	//bool initFromFile(const std::string& configFile);
 
 
 	/**本机做为服务器开始启动网络
 	*@param portNumber 端口号
 	*@return 成功返回真，失败返回假
 	*/
-	bool startServer(unsigned int portNumber,const std::string& password);
+	//bool startServer(unsigned int portNumber,const std::string& password);
 
 
 
@@ -221,9 +221,9 @@ public:
 	*@param  password   连接密码
 	*@return 连接成功返回真。失败返回假
 	*/
-	bool conect(const std::string& ip,unsigned int serverPort,const std::string& password);
+	virtual bool  connect(const std::string& ip,unsigned int serverPort,const std::string& password);
 
-
+ 
 	/**关闭连接*/
 	//void close(const RakNet::SystemAddress& paddress);
 
@@ -236,96 +236,12 @@ public:
 	void close(const  RakNet::SystemAddress& address);
 
 
-
-
 	/**设置监听者*/
 	void setListener(netWorkListener* pListener);
 
 
 	/**每帧更新*/
-    void update();
-
-
-
-	/**发包函数,把消息发给指定的用户
-	*@param message 消息id
-	*@param pdata 消息内容
-	*@param length 消息内容的长度
-	*@param receiver接收者的id，
-	*/
-	void send(unsigned int message,const  char* pData,unsigned int length,RakNet::RakNetGUID receiver);
-
-
-	/**
-	*@see send;
-	*/
-	void send(unsigned int message,const  char* pData,unsigned int length,RakNet::SystemAddress& receiver);
-
-
-	/**
-	*发送信息给服务器的例程
-	*@param address 发送的地址
-	*@param msgType 消息id
-	*@param 发送数据
-	*/
-	template<typename T>
-	bool send( unsigned long msgType , const T & pdata,const  RakNet::SystemAddress& address )
-	{ 
-		if(m_pNetInterface==NULL)
-			return false;
-
-		static RakNet::BitStream streem;
-		streem.Reset();
-		streem.Write( (unsigned char)GM_User);
-		streem.Write( msgType );
-		streem.WriteBits( (unsigned char *)&pdata , sizeof( T ) * 8 );
-		m_pNetInterface->Send( &streem , HIGH_PRIORITY, RELIABLE_ORDERED, 0, address, false );
-		return true;
-	}
-
-
-
-	
-	template<typename T>
-	bool send( unsigned long msgType , const T & pdata,const  RakNet::RakNetGUID& guid )
-	{ 
-		if(m_pNetInterface==NULL)
-			return false;
-
-		static RakNet::BitStream streem;
-		streem.Reset();
-		streem.Write( (unsigned char)GM_User);
-		streem.Write( msgType );
-		streem.WriteBits( (unsigned char *)&pdata , sizeof( T ) * 8 );
-		m_pNetInterface->Send( &streem , HIGH_PRIORITY, RELIABLE_ORDERED, 0, guid, false );
-		return true;
-	}
-
-
-
-
-
-
-
-	/**广播消息，此消息会发给所有的用户*/
-	void broadcastMessage(unsigned int mesage,const unsigned char* pdata,unsigned length);
-
-
-	/**广播消息，此消息会发给所有的用户*/
-	template<typename T>
-	bool broadcastMessage( unsigned long msgType , const T & pdata )
-	{ 
-		if(m_pNetInterface==NULL)
-			return false;
-		static RakNet::BitStream streem;
-		streem.Reset();
-		streem.Write( (unsigned char)GM_User);
-		streem.Write( msgType );
-		streem.WriteBits( (unsigned char *)&pdata , sizeof( T ) * 8 );
-		m_pNetInterface->Send( &streem , HIGH_PRIORITY, RELIABLE_ORDERED, 0, RakNet::UNASSIGNED_SYSTEM_ADDRESS, true );
-		return true;
-	}
-
+     virtual  void update();
 
 
 	/**在局域网内寻找其它机器
@@ -334,15 +250,8 @@ public:
 	void pingLan(short unsigned int portnumber);
 
 
-
-	/**获取消息包里的数据首地址
-	*/
-	static void* getPackDataptr(RakNet::Packet* pPacek);
-
-
-
 	/**判断是否连接到了指定的机器*/
-	 RakNet::ConnectionState    getConnectState(const RakNet::SystemAddress& address);
+	RakNet::ConnectionState    getConnectState(const RakNet::SystemAddress& address) const ;
 
 
 
@@ -350,6 +259,12 @@ public:
 protected:
 
 	
+	/**获取消息包里的数据首地址
+	*/
+	static void* getPackDataptr(RakNet::Packet* pPacek);
+
+
+
 
 
 protected:
@@ -370,10 +285,9 @@ protected:
 
 
 
-private:
+protected:
 
 	bool                     m_isServer; ///是否是服务器
-    short unsigned int       m_portNumber;///端口号
 	/*raknet 连接实例指针*/
 	RakNet::RakPeerInterface *m_pNetInterface;
 

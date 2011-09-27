@@ -11,9 +11,9 @@ MessageReceive* Singleton<MessageReceive>::ms_Singleton=NULL;
 
 MessageReceive::MessageReceive()
 {
-	NetWork::getSingleton().registerMessageHandle(GM_ACCEPTCOME,&MessageReceive::processConnectRemoteServer,this);
-	NetWork::getSingleton().registerMessageHandle(GM_ACCOUNT_RESPOND_FAILED,&MessageReceive::processAccountFaild,this);
-	NetWork::getSingleton().registerMessageHandle(GM_ACCOUNT_RESPOND_SUCCEED,&MessageReceive::processAccountSucceed,this);
+	NetWorkClient::getSingleton().registerMessageHandle(GM_ACCEPTCOME,&MessageReceive::processConnectRemoteServer,this);
+	NetWorkClient::getSingleton().registerMessageHandle(GM_ACCOUNT_RESPOND_FAILED,&MessageReceive::processAccountFaild,this);
+	NetWorkClient::getSingleton().registerMessageHandle(GM_ACCOUNT_RESPOND_SUCCEED,&MessageReceive::processAccountSucceed,this);
 
 }
 
@@ -21,8 +21,8 @@ MessageReceive::MessageReceive()
 MessageReceive::~MessageReceive()
 {
 
-	NetWork::getSingleton().unregisterMessageHandle(GM_ACCOUNT_RESPOND_FAILED,this);
-	NetWork::getSingleton().unregisterMessageHandle(GM_ACCOUNT_RESPOND_SUCCEED,this);
+	NetWorkClient::getSingleton().unregisterMessageHandle(GM_ACCOUNT_RESPOND_FAILED,this);
+	NetWorkClient::getSingleton().unregisterMessageHandle(GM_ACCOUNT_RESPOND_SUCCEED,this);
 
 }
 
@@ -50,9 +50,9 @@ void MessageReceive::processAccountSucceed(NetPack* pPack)
 
 	GameServerInfor* pGameserver=(GameServerInfor*) pPack->getData();
 
-	NetWork::getSingleton().close(pPack->getAddress());
+	NetWorkClient::getSingleton().close(pPack->getAddress());
 
-	NetWork::getSingleton().conect(pGameserver->m_GameServerIP,pGameserver->m_PortNumber,pGameserver->m_GameServerPassWord); 
+	NetWorkClient::getSingleton(). connect(pGameserver->m_GameServerIP,pGameserver->m_PortNumber,pGameserver->m_GameServerPassWord); 
 
 	
 

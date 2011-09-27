@@ -6,23 +6,21 @@
 
 
 
-template<> NetWork*  Singleton<NetWork>::ms_Singleton=NULL;
-
 //-----------------------------------------------
-NetWork::NetWork(bool isClient,unsigned int ClientPort)
-:m_pNetInterface(NULL),m_isServer(false),m_pLinstener(NULL)
-{
-
-	m_pNetInterface=RakNet::RakPeerInterface::GetInstance();
-	assert(m_pNetInterface);
-	if(isClient)
-	{
-		RakNet::SocketDescriptor socketDescriptor(ClientPort,0);
-		m_pNetInterface->Startup(8,&socketDescriptor, 1);
-		m_pNetInterface->SetOccasionalPing(true);
-	}
-
-}
+//NetWork::NetWork(bool isClient,unsigned int ClientPort)
+//:m_pNetInterface(NULL),m_isServer(false),m_pLinstener(NULL)
+//{
+//
+//	m_pNetInterface=RakNet::RakPeerInterface::GetInstance();
+//	assert(m_pNetInterface);
+//	if(isClient)
+//	{
+//		RakNet::SocketDescriptor socketDescriptor(ClientPort,0);
+//		m_pNetInterface->Startup(8,&socketDescriptor, 1);
+//		m_pNetInterface->SetOccasionalPing(true);
+//	}
+//
+//}
 
 //--------------------------------------------------------------------------------------------
 NetWork::NetWork()
@@ -34,7 +32,7 @@ NetWork::NetWork()
 
 }
 
-
+/*
 //--------------------------------------------------------------------------------------------
 bool NetWork::initFromFile(const std::string& configFile)
 {
@@ -166,9 +164,10 @@ bool NetWork::initFromFile(const std::string& configFile)
 
 	return true;
 }
+//*/
 
 
-
+/*
 //--------------------------------------------------------------------------------------------
 bool NetWork::startServer(unsigned int portNumber,const std::string& password)
 {
@@ -191,6 +190,7 @@ bool NetWork::startServer(unsigned int portNumber,const std::string& password)
 	return true;
 
 }
+//*/
 
 //--------------------------------------------------------------------------------------------
 NetWork::~NetWork()
@@ -202,7 +202,6 @@ NetWork::~NetWork()
 		RakNet::RakPeerInterface::DestroyInstance(m_pNetInterface);
 		m_pNetInterface=NULL;
 	}
-
 
 }
 
@@ -255,10 +254,12 @@ void NetWork::receive()
 
 			if(m_isServer)
 			{
-				//char tem[2];
-				//tem[0]=GM_ACCEPTCOME;
-				//m_pNetInterface->Send(tem,2,HIGH_PRIORITY, RELIABLE,0,p->guid,false);
-				this->send(GM_ACCEPTCOME,0,p->guid);
+				///如果是服务器就回一消息组客户端
+				RakNet::BitStream stream;
+				stream.Write((byte)GM_User);
+				stream.Write((unsigned int)GM_ACCEPTCOME);
+				m_pNetInterface->Send(&stream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, p->guid, false);
+				//this->send(GM_ACCEPTCOME,0,p->guid);
 			}
 			//玩家进入后发一条确认信息
 
@@ -305,7 +306,7 @@ void NetWork::receive()
 }
 
 //--------------------------------------------------------------------------------------------
-bool NetWork::conect(const std::string& ip,unsigned int serverPort,const std::string& password)
+bool NetWork:: connect(const std::string& ip,unsigned int serverPort,const std::string& password)
 {
 
 	RakNet::ConnectionAttemptResult res=m_pNetInterface->Connect(ip.c_str(), serverPort, password.c_str(), password.length());
@@ -414,52 +415,6 @@ unsigned int NetWork::getUserMessage(RakNet::Packet * p,unsigned char**pdata)
 
 
 //--------------------------------------------------------------------------------------------
-void NetWork::send(unsigned int message,const  char* pData,unsigned int length,RakNet::RakNetGUID receiver)
-{
-
-	unsigned int bitdatalenght=length<<3;
-	unsigned int mesagelenght=sizeof(byte)+sizeof(unsigned int)+length;
-
-	RakNet::BitStream stream;
-	stream.Write((byte)GM_User);
-	stream.Write((unsigned int)message);
-	stream.WriteBits((const unsigned char*)pData,bitdatalenght);
-
-	m_pNetInterface->Send(&stream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, receiver, false,1);
-}
-
-
-//--------------------------------------------------------------------------------------------
-void NetWork::send(unsigned int message,const  char* pData,unsigned int length,RakNet::SystemAddress& receiver)
-{
-	if(m_pNetInterface==NULL)
-		return ;
-
-	RakNet::RakNetGUID id=m_pNetInterface->GetGuidFromSystemAddress(receiver);
-	send(message,pData,length,id);
-    return ;
-
-}
-
-
-//--------------------------------------------------------------------------------------------
-void  NetWork::broadcastMessage(unsigned int message,const unsigned  char* pdata,unsigned length)
-{
-	unsigned int bitdatalenght=length*8;
-	unsigned int mesagelenght=sizeof(byte)+sizeof(unsigned int)+length;
-
-	RakNet::BitStream stream;
-	stream.Write((unsigned char)GM_User);
-	stream.Write((unsigned int)message);
-	stream.WriteBits(pdata,bitdatalenght);
-
-	bitdatalenght=stream.GetNumberOfBitsUsed();
-	m_pNetInterface->Send(&stream, HIGH_PRIORITY, RELIABLE_ORDERED, 0,RakNet::UNASSIGNED_SYSTEM_ADDRESS , true);
-
-}
-
-
-//--------------------------------------------------------------------------------------------
 void NetWork::setListener(netWorkListener* pListener)
 {
 	SafeDelete(m_pLinstener);
@@ -549,7 +504,7 @@ void NetWork::pingLan(short unsigned int portnumber)
 
 
 //--------------------------------------------------------------------------------------------
- RakNet::ConnectionState   NetWork::getConnectState(const RakNet::SystemAddress& address)
+ RakNet::ConnectionState   NetWork::getConnectState(const RakNet::SystemAddress& address) const 
  {
 	 if(m_pNetInterface==NULL)
 		 return RakNet::IS_NOT_CONNECTED;

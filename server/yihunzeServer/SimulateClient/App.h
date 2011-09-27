@@ -3,7 +3,7 @@
 
 
 class MainFrame;
-class NetWork;
+class NetWorkClient;
 class ServerListener;
 class SimulateClientMainFrame;
 
@@ -39,7 +39,7 @@ public:
 protected:
 
 
-	NetWork* m_pNetWorker;
+	NetWorkClient* m_pNetWorker;
 
 
 	ServerListener*  m_pNetWorkListener;

@@ -3,6 +3,7 @@
 #include "RemoteServer.h"
 #include "netWork.h"
 
+/*
 //-----------------------------------------------------------------------------
 RemoteServer::RemoteServer(const std::string& serverip,unsigned int portnumber,const std::string& password)
 :m_RemoteIP(serverip),m_PortNumber(portnumber),m_PassWord(password)
@@ -26,7 +27,8 @@ bool RemoteServer::connect()
 		closeConnect();
 	}
 
-	return  NetWork::getSingleton().conect(m_RemoteIP,m_PortNumber,m_PassWord);
+	return true;
+	//return  NetWork::getSingleton(). connect(m_RemoteIP,m_PortNumber,m_PassWord);
 
 }
 
@@ -36,7 +38,7 @@ bool RemoteServer::hasConnnect() const
 {
 
 	RakNet::SystemAddress address(m_RemoteIP.c_str(),m_PortNumber);
-   return 	NetWork::getSingleton().getConnectState(address)==RakNet::IS_CONNECTED;
+    return 	NetWork::getSingleton().getConnectState(address)==RakNet::IS_CONNECTED;
 
 }
 
@@ -71,3 +73,5 @@ RakNet::SystemAddress RemoteServer::getRakNetAddress()const
 	return RakNet::SystemAddress(m_RemoteIP.c_str(),m_PortNumber);
 
 }
+
+//*/

@@ -29,8 +29,24 @@ bool:: MyApp::OnInit()
 	new xLogMessager("SimulateClient.log");
 
 
-	m_pNetWorker=new NetWork();
-   if(m_pNetWorker->initFromFile("networker.cfg")==false)
+	Config config;
+	assert(config.loadfile("networker.cfg"));
+
+	std::string serverip;
+	std::string password;
+	unsigned int portnubmer;
+
+	assert(config.getValue("serverip",serverip));
+	assert(config.getValue("portnumber",password));
+	portnubmer=Helper::StringToInt(password);
+	assert(config.getValue("password",password));
+
+
+
+
+	m_pNetWorker=new NetWorkClient();
+
+   if(m_pNetWorker-> connect(serverip,portnubmer,password)==false)
 	   return false;
 
 	m_pNetWorkListener=new ServerListener();

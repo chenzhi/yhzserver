@@ -69,6 +69,7 @@
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
 				GenerateDebugInformation="true"
 				SubSystem="0"
+				DataExecutionPrevention="1"
 				TargetMachine="1"
 			/>
 			<Tool

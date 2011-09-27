@@ -2,6 +2,7 @@
 #include "netWork.h"
 #include <fstream>
 #include "xLogManager.h"
+#include "usermessage.h"
 
 
 
@@ -199,6 +200,7 @@ NetWork::~NetWork()
 	{
 		m_pNetInterface->Shutdown(300);
 		RakNet::RakPeerInterface::DestroyInstance(m_pNetInterface);
+		m_pNetInterface=NULL;
 	}
 
 
@@ -253,20 +255,21 @@ void NetWork::receive()
 
 			if(m_isServer)
 			{
-				char tem[2];
-				tem[0]=GM_ACCEPTCOME;
-				m_pNetInterface->Send(tem,2,HIGH_PRIORITY, RELIABLE,0,p->guid,false);
+				//char tem[2];
+				//tem[0]=GM_ACCEPTCOME;
+				//m_pNetInterface->Send(tem,2,HIGH_PRIORITY, RELIABLE,0,p->guid,false);
+				this->send(GM_ACCEPTCOME,0,p->guid);
 			}
 			//玩家进入后发一条确认信息
 
 			break;
 
-		case   GM_ACCEPTCOME :
+	/*	case   GM_ACCEPTCOME :
 			if(m_pLinstener!=NULL)
 			{
 				m_pLinstener->onConnect(p);
 			}
-			break;
+			break;*/
 
 		case ID_INCOMPATIBLE_PROTOCOL_VERSION:
 			printf("ID_INCOMPATIBLE_PROTOCOL_VERSION\n");
@@ -331,6 +334,17 @@ void NetWork::close(const char* pAddress,short unsigned int portnumber)
 	if(m_pNetInterface!=NULL)
 	{
 		m_pNetInterface->CloseConnection(RakNet::SystemAddress(pAddress,portnumber),true);
+	}
+
+}
+
+//--------------------------------------------------------------------------------------------
+void NetWork::close(const  RakNet::SystemAddress& address)
+{
+	
+	if(m_pNetInterface!=NULL)
+	{
+		m_pNetInterface->CloseConnection(address,true);
 	}
 
 }
@@ -411,7 +425,7 @@ void NetWork::send(unsigned int message,const  char* pData,unsigned int length,R
 	stream.Write((unsigned int)message);
 	stream.WriteBits((const unsigned char*)pData,bitdatalenght);
 
-	m_pNetInterface->Send(&stream, HIGH_PRIORITY, RELIABLE, 0, receiver, false);
+	m_pNetInterface->Send(&stream, HIGH_PRIORITY, RELIABLE_ORDERED, 0, receiver, false,1);
 }
 
 
@@ -440,7 +454,7 @@ void  NetWork::broadcastMessage(unsigned int message,const unsigned  char* pdata
 	stream.WriteBits(pdata,bitdatalenght);
 
 	bitdatalenght=stream.GetNumberOfBitsUsed();
-	m_pNetInterface->Send(&stream, HIGH_PRIORITY, RELIABLE, 0,RakNet::UNASSIGNED_SYSTEM_ADDRESS , true);
+	m_pNetInterface->Send(&stream, HIGH_PRIORITY, RELIABLE_ORDERED, 0,RakNet::UNASSIGNED_SYSTEM_ADDRESS , true);
 
 }
 
@@ -532,3 +546,16 @@ void NetWork::pingLan(short unsigned int portnumber)
 
 	return p->data+sizeof(DWORD) + sizeof(byte);
 }
+
+
+//--------------------------------------------------------------------------------------------
+ RakNet::ConnectionState   NetWork::getConnectState(const RakNet::SystemAddress& address)
+ {
+	 if(m_pNetInterface==NULL)
+		 return RakNet::IS_NOT_CONNECTED;
+
+	 RakNet::AddressOrGUID temadd(address);
+	 return  m_pNetInterface->GetConnectionState(RakNet::AddressOrGUID(temadd));
+
+
+ }

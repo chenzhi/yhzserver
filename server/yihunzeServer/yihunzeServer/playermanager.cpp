@@ -103,27 +103,37 @@ void  PlayerManager::processAccountTest(NetPack* pdata)
 
 	RespondAccount* prespond=reinterpret_cast<RespondAccount*>(pdata->getData());
 
-	NetByte netbyte;
-	netbyte.m_byte=prespond->m_login;
+	RakNet::RakNetGUID  address;
+	address.FromString(prespond->m_userip);
+
 	if(prespond->m_login==0)
 	{
-		
+		NetByte netbyte;
+		netbyte.m_byte=prespond->m_login;
+		NetWork::getSingleton().send(GM_ACCOUNT_RESPOND_FAILED,netbyte,address);
 
+	
 	}else
 	{
 		///发送消息给游戏逻辑服务器，通知有客户端需要联接
 		const GameServer* pGameserver=GameServerManager::getSingleton().getBestGameServer();
 		if(pGameserver!=NULL)
 		{
+			///把游戏服务器的地址发给客户端，让客户端连接游戏服务器
 
+			GameServerInfor gameserver;
+			ZeroMemory(&gameserver,sizeof(GameServerInfor));
+			strcpy(gameserver.m_GameServerIP,pGameserver->getIP().c_str());
+			strcpy(gameserver.m_GameServerPassWord,pGameserver->getPassWord().c_str());
+			gameserver.m_PortNumber=pGameserver->getPortNumber();
+			NetWork::getSingleton().send(GM_ACCOUNT_RESPOND_SUCCEED,gameserver,address);
 		}
+
+
 
 
 	}
 
-	RakNet::RakNetGUID  address;
-	address.FromString(prespond->m_userip);
-	NetWork::getSingleton().send(GM_ACCOUNT_RESPOND,netbyte,address);
 
 	return ;
 }

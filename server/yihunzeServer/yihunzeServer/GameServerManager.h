@@ -13,6 +13,7 @@ public:
 	GameServerManager(const std::string& configFile);
 
 
+
 	~GameServerManager();
 
 
@@ -32,7 +33,7 @@ public:
 
 
 	/**加入一新的游戏服务器*/
-	bool     addGameServer(const std::string& ip,const std::string& name);
+//	bool     addGameServer(const std::string& ip,const std::string& name);
 
 
 	/**判断是否有指定ip的游戏服务器*/
@@ -46,6 +47,14 @@ public:
     const GameServer*  getBestGameServer()const;
 	
 
+	/**有游戏服务器进入*/
+	void onGameServerConnect(RakNet::Packet* p);
+
+
+	/**游戏服务器离开*/
+	void onGameServerDisConnect(RakNet::Packet* p);
+
+
 
 
 protected:
@@ -58,13 +67,6 @@ protected:
 	void unregisterMessage();
 
 
-
-	/**有游戏服务器进入*/
-	void onGameServerConnect(NetPack* pPacek);
-
-
-	/**游戏服务器离开*/
-	void onGameServerDisConnect(NetPack* pPack);
 
 
 

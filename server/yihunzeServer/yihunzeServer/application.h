@@ -11,7 +11,7 @@ class GameServerManager;
 class Application  :public Singleton<Application>
 {
 public:
-	Application();
+	Application( HINSTANCE  Instance);
 
 
 	virtual ~Application();
@@ -72,7 +72,7 @@ private:
 
 	std::list<std::string>  m_LogMessage;
 
-	DatabaseInstace*        m_pDatabaseInstance; ///数据实例 
+	//DatabaseInstace*        m_pDatabaseInstance; ///数据实例 
 
 	netWorkListener*        m_pNetlistener;    ///网络事件监听
 

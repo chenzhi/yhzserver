@@ -44,6 +44,9 @@ public:
 	void  update(float time);
 
 
+	/**是否连接到了状态服务器*/
+	bool  isConnect();
+
 
 protected:
 

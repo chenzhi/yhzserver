@@ -23,7 +23,7 @@
 
 
 #define  GM_User          ID_USER_PACKET_ENUM
-#define  GM_ACCEPTCOME    GM_User+1
+//#define  GM_ACCEPTCOME    GM_User+1
 
 
 
@@ -149,6 +149,8 @@ public:
 	}
 	
 
+	RakNet::Packet* getRakNetPack()const {return m_pPack; }
+
 
 
 protected:
@@ -211,7 +213,9 @@ public:
 
 
 
-	/**连接到指定的服务器，
+
+
+	/**连接到指定的服务器，无论是服务器或客户端都可以调用接口连接远程计算机
 	*@param  ip 连接对方的ip地址
 	*@param  serverPort 端口号
 	*@param  password   连接密码
@@ -227,6 +231,9 @@ public:
 	*@param portnumber 端口号
 	*/
 	void close(const char* pAddress,short unsigned int portnumber);
+
+
+	void close(const  RakNet::SystemAddress& address);
 
 
 
@@ -334,6 +341,11 @@ public:
 
 
 
+	/**判断是否连接到了指定的机器*/
+	 RakNet::ConnectionState    getConnectState(const RakNet::SystemAddress& address);
+
+
+
 
 protected:
 
@@ -366,12 +378,5 @@ private:
 	RakNet::RakPeerInterface *m_pNetInterface;
 
 	netWorkListener*          m_pLinstener;   ///监听者
-
-
-
-
-
-
-
 
 };

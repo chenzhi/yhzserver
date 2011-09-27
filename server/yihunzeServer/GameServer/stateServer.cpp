@@ -95,9 +95,10 @@ void  StateServer::disConnect()
 void StateServer::update(float time)
 {
 
-	if(m_IsConnect==false)
+	if(isConnect()==false)
 	{
 		connect();
+		return ;
 	}
 
 	m_CurrentTime+=time;
@@ -112,6 +113,17 @@ void StateServer::update(float time)
 	}
 
 
+
+}
+
+
+/**是否连接到了状态服务器*/
+bool  StateServer::isConnect()
+{
+
+	RakNet::ConnectionState stat=NetWork::getSingleton().getConnectState(RakNet::SystemAddress(m_StateServerIP.c_str(),m_StateServerPort));
+
+	return stat==RakNet::IS_CONNECTED;
 
 }
 

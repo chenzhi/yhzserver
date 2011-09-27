@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(MYSQL)/include&quot;;./include;&quot;$(RakNet4.0)/Source&quot;"
+				AdditionalIncludeDirectories="&quot;$(MYSQL)/include&quot;;./include;&quot;$(RakNet4.0)/Source&quot;;../yihunzeServer"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;XMAIN_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -201,6 +201,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\NetWorkClient.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\NetWorkServer.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\pch.cpp"
 				>
 				<FileConfiguration
@@ -219,6 +227,10 @@
 						UsePrecompiledHeader="1"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\source\RemoteServer.cpp"
+				>
 			</File>
 			<File
 				RelativePath=".\source\xLogManager.cpp"
@@ -255,7 +267,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\NetWorkClient.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\NetWorkServer.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\pch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\RemoteServer.h"
 				>
 			</File>
 			<File

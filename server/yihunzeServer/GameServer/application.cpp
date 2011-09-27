@@ -88,9 +88,12 @@ m_pDatabaseInstance(NULL),m_pNetlistener(NULL),m_pAccountManager(NULL),m_pStateS
 Application:: ~Application()
 {
 
+	if(mHwnd!=NULL)
+	{
+		DestroyWindow(mHwnd);
+		mHwnd=NULL;
+	}
 	SafeDelete(m_pStateServer);
-
-
 	SafeDelete(m_pNetWork);
 	SafeDelete(m_pNetlistener);
     SafeDelete(m_pDatabaseInstance);

@@ -9,10 +9,15 @@
 
 enum GameMessage
 {
-	GM_TEXT_MESSAGE=100,   ///文字消息
+	///
+	GM_ACCEPTCOME=100,      ///连接到远程计算机服务器后成功后。远程返回的消息,远程只有服务器才会返回此消息
+
+	GM_TEXT_MESSAGE,   ///文字消息
 
 	GM_ACCOUNT_REQUEST,   ///验证是否有这个帐号
-	GM_ACCOUNT_RESPOND,   //回应验证消息
+	GM_ACCOUNT_RESPOND,   ///帐号服务发给全局服务器的帐号验证消息
+	GM_ACCOUNT_RESPOND_FAILED,   //回应验证消息,未能验证的用户名和密码
+	GM_ACCOUNT_RESPOND_SUCCEED,    //回应验证消息,正确的用户名和密码,并把游戏服务器
 
 
 
@@ -60,7 +65,7 @@ struct UserLogin
 #pragma pack(push, 1)
 struct UserAccount
 {
-	char  m_account[UserNameLength];  //用户名
+	char  m_account [UserNameLength];  //用户名
 	char  m_password[UserNameLength]; //密码
 	char  m_ip      [IPaddressLength];  //ip地址
 };
@@ -94,3 +99,16 @@ struct NetString
 	char  m_char[UserNameLength];
 };
 #pragma pack(pop)
+
+
+
+///允许客户端连接游戏服器
+#pragma pack(push, 1)
+struct GameServerInfor
+{
+	char  m_GameServerIP[IPaddressLength];          ///游戏服务器地址和端口号
+	char  m_GameServerPassWord[UserNameLength];     ///游戏服务器密码
+	unsigned int m_PortNumber;                      ///端品号
+};
+#pragma pack(pop)
+

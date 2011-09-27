@@ -7,7 +7,7 @@
 
 typedef std::vector<RakNet::SystemAddress> AddressVector;
 
-class  ServerListener :public netWorkListener
+class  ServerListener :public netWorkListener ,public Singleton<ServerListener>
 {
 
 public:

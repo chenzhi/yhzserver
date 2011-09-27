@@ -12,6 +12,8 @@ void ServerListener::onConnect(RakNet::Packet* p)
 	tem+=": 登入";
 	Application::getSingleton().addPrintMessage(tem);
 
+	GameServerManager::getSingleton().onGameServerConnect(p);
+
 	return ;
 }
 
@@ -25,7 +27,8 @@ void ServerListener::onDisconnect(RakNet::Packet* p)
 
 
 	///通知有游戏服务器管理员
-	GameServerManager::getSingleton().removeGameServerByIP(p->systemAddress.ToString(false));
+	//GameServerManager::getSingleton().removeGameServerByIP(p->systemAddress.ToString(false));
+	GameServerManager::getSingleton().onGameServerDisConnect(p);
 	
 	return ;
 }
@@ -39,7 +42,8 @@ void  ServerListener::onConnectlost(RakNet::Packet* p)
 
 
 	///通知有游戏服务器管理员
-	GameServerManager::getSingleton().removeGameServerByIP(p->systemAddress.ToString(false));
+	//GameServerManager::getSingleton().removeGameServerByIP(p->systemAddress.ToString(false));
+	GameServerManager::getSingleton().onGameServerDisConnect(p);
 
 	return ;
 

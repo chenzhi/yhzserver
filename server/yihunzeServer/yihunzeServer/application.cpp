@@ -18,14 +18,12 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR strCmdLine, INT)
 {
 
 
-	
-
     Application* g_pApp=NULL;
 
 	try
 	{
 
-		g_pApp= new  Application();
+		g_pApp= new  Application(hInst);
 		g_pApp->go();
 		
 
@@ -78,13 +76,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 template<> Application* Singleton<Application>::ms_Singleton=NULL;
 
 //-----------------------------------------------------------------
-Application::Application()
-:mInstance(NULL),mHwnd(NULL),m_pNetWork(NULL),m_pPlayerManager(NULL),m_PrintWind(NULL),
-m_pDatabaseInstance(NULL),m_pNetlistener(NULL),m_GameSreverManager(NULL)
+Application::Application(HINSTANCE  Instance)
+:mInstance(Instance),mHwnd(NULL),m_pNetWork(NULL),m_pPlayerManager(NULL),m_PrintWind(NULL),
+/*m_pDatabaseInstance(NULL),*/m_pNetlistener(NULL),m_GameSreverManager(NULL)
 {
 
 
 	Helper::setCurrentWorkPath();
+
+	new xLogMessager("stateserver.log");
+	xLogMessager::getSingleton().logMessage("印魂者状态服务器启动...");
 
 }
 
@@ -93,12 +94,14 @@ m_pDatabaseInstance(NULL),m_pNetlistener(NULL),m_GameSreverManager(NULL)
 Application:: ~Application()
 {
 
-	
+
+	SafeDelete(m_GameSreverManager);
 	SafeDelete(m_pPlayerManager);
 	SafeDelete(m_pNetWork);
+
 	SafeDelete(m_pNetlistener);
-    SafeDelete(m_pDatabaseInstance);
-	SafeDelete(m_GameSreverManager);
+    //SafeDelete(m_pDatabaseInstance);
+	
 
 	xLogMessager::getSingleton().logMessage("服务器退出...");
 	delete xLogMessager::getSingletonPtr();
@@ -122,6 +125,7 @@ void    Application::go()
 {
 
 
+
 	if(init()==false)
 		return ;
 
@@ -135,7 +139,7 @@ void    Application::go()
 		{ 
 			// 如果是退出消息,退出
 			if(msg.message == WM_QUIT) 
-				return;
+				return ;
 
 			// 处理其他消息
 			TranslateMessage(&msg);
@@ -157,23 +161,10 @@ void    Application::go()
 bool	Application::init()
 {
 
+
+	
 	if(initWindow(800,600)==false)
 		return false;
-
-
-
-
-
-
-
-
-
-
-	new xLogMessager("yhz.log");
-
-	xLogMessager::getSingleton().logMessage("印魂者状态服务器启动...");
-	addPrintMessage("印魂者状态服务器启动...");
-
 
 	Config config;
 	config.loadfile("stateserver.cfg");
@@ -209,6 +200,7 @@ bool	Application::init()
 
 	
 
+	/*
 	///数据库连接
 	std::string DataServer;
 	std::string DataName;
@@ -243,6 +235,8 @@ bool	Application::init()
 		Application::getSingleton().addPrintMessage("打开数据库成功");
 		xLogMessager::getSingleton().logMessage("打开数据库成功...");
 	}
+
+	//*/
 
 
 
@@ -288,6 +282,7 @@ bool	Application::init()
 	m_pNetWork->setListener(m_pNetlistener);
 
 	m_pPlayerManager=new PlayerManager();
+
 	m_GameSreverManager=new GameServerManager("gameserver.cfg");
 
 	return true;
@@ -300,6 +295,7 @@ bool Application::initWindow(int width, int height)
 	WNDCLASSEX wcex;
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
+	//::ZeroMemory(&wcex,wcex.cbSize);
 
 	wcex.style			= CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc	= WndProc;
@@ -307,16 +303,16 @@ bool Application::initWindow(int width, int height)
 	wcex.cbWndExtra		= 0;
 	wcex.hInstance		= mInstance;
 	wcex.hIcon			= 0;
-	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
+	wcex.hCursor		= NULL;
 	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
 	wcex.lpszMenuName	= 0;
-	wcex.lpszClassName	= "mainwindow";
+	wcex.lpszClassName	= "yhzwindow";
 	wcex.hIconSm		= 0;
 
 	RegisterClassEx(&wcex);
 
-	mHwnd = CreateWindow("mainwindow", "印魂者全局服务器", WS_OVERLAPPEDWINDOW,
-		100, 100, 1024, 768, NULL, NULL, mInstance, NULL);
+	mHwnd = CreateWindow(wcex.lpszClassName, "印魂者全局服务器", WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,/*100, 100, 1024, 768,*/ NULL, NULL, mInstance, NULL);
 
 	if (!mHwnd)
 	{
@@ -327,19 +323,16 @@ bool Application::initWindow(int width, int height)
 	///创建一个多行消息框
 	m_PrintWind=CreateWindow( "edit", "",
 		WS_VISIBLE|WS_CHILD|WS_BORDER|WS_VSCROLL|WS_HSCROLL|
-		ES_MULTILINE|ES_WANTRETURN|ES_AUTOHSCROLL|ES_AUTOVSCROLL|ES_READONLY,
+		ES_MULTILINE/*|ES_WANTRETURN*/|ES_AUTOHSCROLL|ES_AUTOVSCROLL|ES_READONLY,
 		0, 0, 1000, 700, mHwnd, (HMENU)PrintWindID, mInstance, NULL);
 
 
 
-
-
-	 ShowWindow(m_PrintWind,1);
-
-
-
+	ShowWindow(m_PrintWind,1);
 	ShowWindow(mHwnd, 1);
 	UpdateWindow(mHwnd);
+
+	addPrintMessage("印魂者状态服务器启动...");
 	return true;
 }
 

@@ -187,10 +187,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\GameServer\application.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\application.cpp"
 				>
 			</File>

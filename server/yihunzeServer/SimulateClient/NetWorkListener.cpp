@@ -4,6 +4,8 @@
 #include "App.h"
 
 
+template<> ServerListener* Singleton<ServerListener>::ms_Singleton=NULL;
+
 //----------------------------------------------------------------
 void ServerListener::onConnect(RakNet::Packet* p)
 {

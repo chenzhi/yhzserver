@@ -87,11 +87,13 @@ m_pDatabaseInstance(NULL),m_pNetlistener(NULL),m_pAccountManager(NULL)
 //-----------------------------------------------------------------
 Application:: ~Application()
 {
-
-	
+	if(mHwnd!=NULL)
+	{
+		DestroyWindow(mHwnd);
+		mHwnd=NULL;
+	}
 	
     SafeDelete(m_pAccountManager);
-
 	SafeDelete(m_pNetWork);
 	SafeDelete(m_pNetlistener);
     SafeDelete(m_pDatabaseInstance);
@@ -248,17 +250,17 @@ bool	Application::init()
 
 
 
-	CppMySQLQuery* pQuery=NULL;
-	if(m_pDatabaseInstance->querySQL("select * from account",&pQuery))
-	{
-		while(pQuery->eof()==false)
-		{
-			std::string username=pQuery->getStringField("name","");
-            username=username;
-			pQuery->nextRow();
+	//CppMySQLQuery* pQuery=NULL;
+	//if(m_pDatabaseInstance->querySQL("select * from account",&pQuery))
+	//{
+	//	while(pQuery->eof()==false)
+	//	{
+	//		std::string username=pQuery->getStringField("name","");
+ //           username=username;
+	//		pQuery->nextRow();
 
-		}
-	}
+	//	}
+	//}
 
 
 

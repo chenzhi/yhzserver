@@ -2,6 +2,7 @@
 #include "pch.h"
 #include "MessageReceive.h"
 #include "usermessage.h"
+#include "NetWorkListener.h"
 
 template<>
 MessageReceive* Singleton<MessageReceive>::ms_Singleton=NULL;
@@ -10,7 +11,9 @@ MessageReceive* Singleton<MessageReceive>::ms_Singleton=NULL;
 
 MessageReceive::MessageReceive()
 {
-	NetWork::getSingleton().registerMessageHandle(GM_ACCOUNT_RESPOND,&MessageReceive::processAccount,this);
+	NetWork::getSingleton().registerMessageHandle(GM_ACCEPTCOME,&MessageReceive::processConnectRemoteServer,this);
+	NetWork::getSingleton().registerMessageHandle(GM_ACCOUNT_RESPOND_FAILED,&MessageReceive::processAccountFaild,this);
+	NetWork::getSingleton().registerMessageHandle(GM_ACCOUNT_RESPOND_SUCCEED,&MessageReceive::processAccountSucceed,this);
 
 }
 
@@ -18,13 +21,14 @@ MessageReceive::MessageReceive()
 MessageReceive::~MessageReceive()
 {
 
-	NetWork::getSingleton().unregisterMessageHandle(GM_ACCOUNT_RESPOND,this);
+	NetWork::getSingleton().unregisterMessageHandle(GM_ACCOUNT_RESPOND_FAILED,this);
+	NetWork::getSingleton().unregisterMessageHandle(GM_ACCOUNT_RESPOND_SUCCEED,this);
 
 }
 
 
 ///处理登入消息
-void MessageReceive::processAccount(NetPack* pPack)
+void MessageReceive::processAccountFaild(NetPack* pPack)
 {
 	NetByte* puser=reinterpret_cast<NetByte*>(pPack->getData());
 	if(puser->m_byte==0)
@@ -36,4 +40,39 @@ void MessageReceive::processAccount(NetPack* pPack)
 	}
 
 	return ;
+}
+
+
+
+///处理登入成功消息
+void MessageReceive::processAccountSucceed(NetPack* pPack)
+{
+
+	GameServerInfor* pGameserver=(GameServerInfor*) pPack->getData();
+
+	NetWork::getSingleton().close(pPack->getAddress());
+
+	NetWork::getSingleton().conect(pGameserver->m_GameServerIP,pGameserver->m_PortNumber,pGameserver->m_GameServerPassWord); 
+
+	
+
+	///记录游戏服务器地址
+	RakNet::SystemAddress  tem(pGameserver->m_GameServerIP,pGameserver->m_PortNumber);
+	m_GameServerAdderss=tem;
+    m_GameServerPassWord=pGameserver->m_GameServerPassWord;
+
+
+}
+
+///成功连接远程计算机
+void MessageReceive::processConnectRemoteServer(NetPack* pPack)
+{
+	if(pPack->getAddress()==m_GameServerAdderss)
+	{
+		::MessageBox(NULL,"登入游戏服务器成功","",MB_OK);
+	}
+
+	ServerListener::getSingleton().onConnect(pPack->getRakNetPack());
+
+
 }

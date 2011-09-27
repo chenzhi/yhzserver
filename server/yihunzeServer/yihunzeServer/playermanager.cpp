@@ -3,7 +3,7 @@
 #include "netWork.h"
 #include "application.h"
 #include "usermessage.h"
-
+#include "GameServerManager.h"
 
 
 template<> PlayerManager* Singleton<PlayerManager>::ms_Singleton=NULL;
@@ -111,6 +111,13 @@ void  PlayerManager::processAccountTest(NetPack* pdata)
 
 	}else
 	{
+		///发送消息给游戏逻辑服务器，通知有客户端需要联接
+		const GameServer* pGameserver=GameServerManager::getSingleton().getBestGameServer();
+		if(pGameserver!=NULL)
+		{
+
+		}
+
 
 	}
 

@@ -161,15 +161,30 @@ bool      GameServerManager::hasGameServer(const std::string& ip)
 }
 
 
+//------------------------------------------------------------
+const GameServer*  GameServerManager::getBestGameServer()const
+{
+	if(m_GameServerCollect.empty())
+		return NULL;
+	return m_GameServerCollect[0];
+
+}
+
+
 ///注册网络消息
 void   GameServerManager::registerMessage()
 {
+
+	NetWork::getSingleton().registerMessageHandle(GM_GAMESERVER_CONNECT,&GameServerManager::onGameServerConnect,this);
+	NetWork::getSingleton().registerMessageHandle(GM_GAMESERVER_DISCONNECT,&GameServerManager::onGameServerDisConnect,this);
 
 }
 
 ///注销网络消息
 void  GameServerManager::unregisterMessage()
 {
+	NetWork::getSingleton().unregisterMessageHandle(GM_GAMESERVER_CONNECT,this);
+	NetWork::getSingleton().unregisterMessageHandle(GM_GAMESERVER_DISCONNECT,this);
 
 }
 
@@ -177,12 +192,12 @@ void  GameServerManager::unregisterMessage()
 /**有游戏服务器进入*/
 void GameServerManager::onGameServerConnect(NetPack* pPack)
 {
-	NetString* pServerName=(NetString*)pPack->getData();
-	if(addGameServer(pServerName->m_char,pPack->getAddress().ToString(false)))
+	char* pServerName=(char*)pPack->getData();
+	if(addGameServer(pServerName,pPack->getAddress().ToString(false)))
 	{
 		char message[512];
 		::ZeroMemory(message,512);
-		_snprintf(message,512,"游戏服务器登入，server name: %s, ip: %s",pServerName->m_char,pPack->getAddress().ToString(false));
+		_snprintf(message,512,"游戏服务器登入，server name: %s, ip: %s",pServerName,pPack->getAddress().ToString(false));
 		Application::getSingleton().addPrintMessage(message);
 		xLogMessager::getSingleton().logMessage(message);
 	}

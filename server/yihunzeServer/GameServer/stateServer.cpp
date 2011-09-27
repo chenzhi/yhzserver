@@ -17,7 +17,7 @@ m_CurrentTime(0.0f)
 
 //----------------------------------------------------------------------------------------------
 StateServer::StateServer(const Config& config)
-:m_StateServerPort(0),m_CurrentTime(0.0f)
+:m_StateServerPort(0),m_CurrentTime(0.0f),m_IsConnect(false)
 {
 	std::string Value;
 	if(config.getValue("stateserverip",m_StateServerIP)==false)

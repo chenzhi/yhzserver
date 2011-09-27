@@ -21,6 +21,14 @@ enum GameMessage
 	///状态服务器消息定义
 	GM_GAMESERVER_CONNECT,   ///游戏服务器连接
 	GM_GAMESERVER_DISCONNECT, ///游戏服务器断开
+    GM_STATESERVER_CLIENT_CONNECT,///状态服务器通知游戏服务器有客户端需要连接,必须在一分钟内联接
+
+
+
+
+	///客户端消息
+	GM_CLIENT_CONNECT_GAMESERVER,///客户端请求连接游戏服务器
+
 
 };
 

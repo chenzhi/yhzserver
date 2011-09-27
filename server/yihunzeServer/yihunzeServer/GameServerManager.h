@@ -40,6 +40,14 @@ public:
 
 
 
+	/**获取现在最空的游戏服务器,
+	*@return 如果没找到，返回空
+	*/
+    const GameServer*  getBestGameServer()const;
+	
+
+
+
 protected:
 
 

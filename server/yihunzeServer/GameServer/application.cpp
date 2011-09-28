@@ -209,8 +209,6 @@ bool	Application::init()
 	}
 
 	m_Config.getValue("networkpassword",networkpassword);
-
-	
 	m_pNetWork=new NetWorkServer();
 	if(m_pNetWork->startServer(iport,networkpassword)==false)
 	{
@@ -224,8 +222,7 @@ bool	Application::init()
 
 
 
-	m_pStateServer = new StateServer(m_Config);///创建状态服务器
-
+	m_pStateServer = new    StateServer(m_Config);///创建状态服务器
 	m_pDatabaseServer = new DatabaserServer(m_Config);
 
 	return true;
@@ -268,14 +265,7 @@ bool Application::initWindow(int width, int height)
 		ES_MULTILINE|ES_WANTRETURN|ES_AUTOHSCROLL|ES_AUTOVSCROLL|ES_READONLY,
 		0, 0, 1000, 700, mHwnd, (HMENU)PrintWindID, mInstance, NULL);
 
-
-
-
-
-	 ShowWindow(m_PrintWind,1);
-
-
-
+	ShowWindow(m_PrintWind,1);
 	ShowWindow(mHwnd, 1);
 	UpdateWindow(mHwnd);
 	return true;

@@ -15,7 +15,7 @@ DatabaserServer::DatabaserServer(const Config& config)
     std::string tem;
 	assert(config.getValue("gamedatabaseserver",m_RemoteIP));
 	assert(config.getValue("gamedatabaseserverpassword",m_PassWord));
-	assert(config.getValue("gamedatabaseserverportnumbe",tem));
+	assert(config.getValue("gamedatabaseserverportnumber",tem));
 	m_PortNumber=Helper::StringToInt(tem);
 	m_Address=RakNet::SystemAddress(m_RemoteIP.c_str(),m_PortNumber);
 	return ;

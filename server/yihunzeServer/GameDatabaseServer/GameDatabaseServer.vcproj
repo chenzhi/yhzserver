@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="GameServer"
-	ProjectGUID="{9776E602-F90F-43EA-BDDD-5DF828BCCF6E}"
-	RootNamespace="GameServer"
+	Name="GameDatabaseServer"
+	ProjectGUID="{D7EDD0FC-6768-4217-B04B-262353746CAF}"
+	RootNamespace="GameDatabaseServer"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -46,7 +46,8 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="pch.h"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -62,7 +63,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="RakNetDLLDebug.lib ws2_32.lib libmysql.lib xMain_d.lib"
-				OutputFile="../bin/gameserver/debug/gameserver_d.exe"
+				OutputFile="../bin/GameDatabaseServer/debug/GameDataServer_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
 				GenerateDebugInformation="true"
@@ -89,7 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\gameserver\debug&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\gameserver\debug&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\gameserver\debug&quot;&#x0D;&#x0A;"
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;"
 			/>
 		</Configuration>
 		<Configuration
@@ -97,7 +98,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -137,7 +138,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="RakNetDLL.lib ws2_32.lib libmysql.lib xMain.lib"
+				OutputFile="../bin/GameDatabaseServer/release/GameDataServer.exe"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -164,6 +168,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;..\mainlib\lib\xmain.dll&quot;  &quot;..\bin\GameDatabaseServer\release&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNet.dll&quot;   &quot;..\bin\GameDatabaseServer\release&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;   &quot;..\bin\GameDatabaseServer\release&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -180,20 +185,20 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DatebaserServer.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\NetWorkListener.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\pch.cpp"
 				>
-			</File>
-			<File
-				RelativePath=".\stateServer.cpp"
-				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -206,19 +211,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DatabaseServer.h"
-				>
-			</File>
-			<File
 				RelativePath=".\NetWorkListener.h"
 				>
 			</File>
 			<File
 				RelativePath=".\pch.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Stateserver.h"
 				>
 			</File>
 		</Filter>

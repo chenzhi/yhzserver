@@ -1,21 +1,23 @@
 
 #include "pch.h"
 #include "RemoteServer.h"
-#include "netWork.h"
 
-/*
+
+
+//*
 //-----------------------------------------------------------------------------
 RemoteServer::RemoteServer(const std::string& serverip,unsigned int portnumber,const std::string& password)
 :m_RemoteIP(serverip),m_PortNumber(portnumber),m_PassWord(password)
 {
 
+	m_Address=RakNet::SystemAddress(m_RemoteIP.c_str(),m_PortNumber);
 
 }
 
 //-----------------------------------------------------------------------------
 RemoteServer::~RemoteServer()
 {
-
+   closeConnect();
 }
 
 
@@ -28,7 +30,7 @@ bool RemoteServer::connect()
 	}
 
 	return true;
-	//return  NetWork::getSingleton(). connect(m_RemoteIP,m_PortNumber,m_PassWord);
+
 
 }
 
@@ -38,7 +40,7 @@ bool RemoteServer::hasConnnect() const
 {
 
 	RakNet::SystemAddress address(m_RemoteIP.c_str(),m_PortNumber);
-    return 	NetWork::getSingleton().getConnectState(address)==RakNet::IS_CONNECTED;
+    return 	NetWorkServer::getSingleton().getConnectState(address)==RakNet::IS_CONNECTED;
 
 }
 
@@ -46,8 +48,8 @@ bool RemoteServer::hasConnnect() const
 //-----------------------------------------------------------------------------
 void RemoteServer::closeConnect()
 {
-		RakNet::SystemAddress address(m_RemoteIP.c_str(),m_PortNumber);
-        NetWork::getSingleton().close(address);
+	
+        NetWorkServer::getSingleton().close(m_Address);
 }
 
 
@@ -58,6 +60,8 @@ void RemoteServer::setNetParament(const std::string& serverip,unsigned int portn
 	m_PortNumber=portnumber;
 	m_PassWord=password;
 
+	m_Address=RakNet::SystemAddress(m_RemoteIP.c_str(),m_PortNumber);
+
 	if(hasConnnect())
 	{
 		closeConnect();
@@ -67,10 +71,10 @@ void RemoteServer::setNetParament(const std::string& serverip,unsigned int portn
 
 
 //-----------------------------------------------------------------------------
-RakNet::SystemAddress RemoteServer::getRakNetAddress()const
+const  RakNet::SystemAddress& RemoteServer::getRakNetAddress()const
 {
 
-	return RakNet::SystemAddress(m_RemoteIP.c_str(),m_PortNumber);
+	return m_Address;
 
 }
 

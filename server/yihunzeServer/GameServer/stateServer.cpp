@@ -8,8 +8,7 @@
 
 //----------------------------------------------------------------------------------------------
 StateServer::StateServer(const std::string& gameserverName,const std::string& stateserverip,unsigned int portnumber,const std::string& password)
-:m_GameServerName(gameserverName),m_StateServerIP(stateserverip),m_StatePassWord(password),m_StateServerPort(portnumber),m_IsConnect(false),
-m_CurrentTime(0.0f)
+:RemoteServer(stateserverip,portnumber,password),m_GameServerName(gameserverName),m_CurrentTime(0.0f)
 {
 
 
@@ -17,10 +16,9 @@ m_CurrentTime(0.0f)
 
 //----------------------------------------------------------------------------------------------
 StateServer::StateServer(const Config& config)
-:m_StateServerPort(0),m_CurrentTime(0.0f),m_IsConnect(false)
 {
 	std::string Value;
-	if(config.getValue("stateserverip",m_StateServerIP)==false)
+	if(config.getValue("stateserverip",m_RemoteIP)==false)
 	{
 		Application::getSingleton().addPrintMessage("未找到状态服务器ip设置",true);
 	}
@@ -30,7 +28,7 @@ StateServer::StateServer(const Config& config)
 	{
 		Application::getSingleton().addPrintMessage("未找到状态服务器端口号设置",true);
 	}
-	m_StateServerPort=Helper::StringToInt(temValue);
+	m_PortNumber=Helper::StringToInt(temValue);
 
 	if(config.getValue("gameservername",m_GameServerName)==false)
 	{
@@ -38,12 +36,13 @@ StateServer::StateServer(const Config& config)
 	
 	}
 
-	if(config.getValue("statserverpassword",m_StatePassWord)==false)
+	if(config.getValue("statserverpassword",m_PassWord)==false)
 	{
 		Application::getSingleton().addPrintMessage("未找到状态服务器 游戏服务器线路名设置",true);
 
 	}
 
+	m_Address=RakNet::SystemAddress(m_RemoteIP.c_str(),m_PortNumber);
 
 
 }
@@ -52,54 +51,33 @@ StateServer::StateServer(const Config& config)
 //----------------------------------------------------------------------------------------------
 StateServer::~StateServer()
 {
-	disConnect();
-
-}
-
-//----------------------------------------------------------------------------------------------
-bool  StateServer::connect()
-{
-
-	m_IsConnect=NetWorkServer::getSingleton().connect(m_StateServerIP,m_StateServerPort,m_StatePassWord);
-
-	///如果连接成功，发送注册游戏服务器
-	if(m_IsConnect==true)
-	{
-		RakNet::SystemAddress address(m_StateServerIP.c_str(),m_StateServerPort);
-		NetWorkServer::getSingleton().send(GM_GAMESERVER_CONNECT,m_GameServerName.c_str(),m_GameServerName.length(),address);
-	}
-
-	return m_IsConnect;
+	
+	///向状态服务器发送注销游戏服务器
+	send(GM_GAMESERVER_DISCONNECT,m_GameServerName.c_str(),m_GameServerName.length());
 
 }
 
 
-/**断开状态服务器连接*/
-void  StateServer::disConnect()
-{
 
-	///
-	if(m_IsConnect)
-	{
-
-		RakNet::SystemAddress address(m_StateServerIP.c_str(),m_StateServerPort);
-		NetWorkServer::getSingleton().send(GM_GAMESERVER_DISCONNECT,m_GameServerName.c_str(),m_GameServerName.length(),address);
-
-		NetWorkServer::getSingleton().close(m_StateServerIP.c_str(),m_StateServerPort);   
-	}
-
-	m_IsConnect=false;
-}
 
 //----------------------------------------------------------------------------------------------
 void StateServer::update(float time)
 {
 
-	if(isConnect()==false)
+	if(hasConnnect()==false)
 	{
 		connect();
 		return ;
 	}
+
+	static bool b=false;
+	if(b==false)
+	{
+	    ///向状态服务器发送游戏服务器注册消息
+		send(GM_GAMESERVER_CONNECT,m_GameServerName.c_str(),m_GameServerName.length());
+		b=true;
+	}
+
 
 	m_CurrentTime+=time;
 
@@ -110,20 +88,11 @@ void StateServer::update(float time)
 		m_CurrentTime-=60*minute;
 		///在这发送信息组状态服务器
 		setInformationToStateServer();
+
+		m_CurrentTime=0.0f;
 	}
 
 
-
-}
-
-
-/**是否连接到了状态服务器*/
-bool  StateServer::isConnect()
-{
-
-	RakNet::ConnectionState stat=NetWorkServer::getSingleton().getConnectState(RakNet::SystemAddress(m_StateServerIP.c_str(),m_StateServerPort));
-
-	return stat==RakNet::IS_CONNECTED;
 
 }
 

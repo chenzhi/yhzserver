@@ -5,10 +5,11 @@
 
 
 #pragma  once
+#include "RemoteServer.h"
 
 
 
-class StateServer
+class StateServer :public RemoteServer
 {
 
 public:
@@ -30,22 +31,11 @@ public:
 	~StateServer();
 
 
-	/**连接状态服务器
-	*@return 成功返回真
-	*/
-	bool  connect();
-
-
-	/**断开状态服务器连接*/
-	void  disConnect();
-
+	
 
 	/**每帧更新，发自身的一些信息发给状态服务器*/
-	void  update(float time);
+	virtual void  update(float time);
 
-
-	/**是否连接到了状态服务器*/
-	bool  isConnect();
 
 
 protected:
@@ -57,18 +47,9 @@ protected:
 protected:
 
 	std::string             m_GameServerName;///当前游戏服务器的名字
-	
-	std::string             m_StateServerIP; ///状态服务器的ip
-
-	std::string             m_StatePassWord;///状态服务密码
-
-	unsigned int            m_StateServerPort;///状态服务器端口号
 
 
-	bool                    m_IsConnect;       ///是否连接到了状态服务器
-
-
-	float                    m_CurrentTime;     ///距上一次发消息的时间
+	float                   m_CurrentTime;     ///距上一次发消息的时间
 
 
 

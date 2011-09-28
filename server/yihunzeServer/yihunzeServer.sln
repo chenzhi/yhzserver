@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yihunzeServer", "yihunzeServer\yihunzeServer.vcproj", "{4071E315-09C7-4810-BFF5-669677C4E2BB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stateServer", "yihunzeServer\yihunzeServer.vcproj", "{4071E315-09C7-4810-BFF5-669677C4E2BB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036} = {B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}
 	EndProjectSection
@@ -19,6 +19,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "accountServer", "accountSer
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameServer", "GameServer\GameServer.vcproj", "{9776E602-F90F-43EA-BDDD-5DF828BCCF6E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036} = {B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameDatabaseServer", "GameDatabaseServer\GameDatabaseServer.vcproj", "{D7EDD0FC-6768-4217-B04B-262353746CAF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036} = {B2D0BF1F-BD7A-4D3B-9B5D-DA187DE01036}
 	EndProjectSection
@@ -49,6 +54,10 @@ Global
 		{9776E602-F90F-43EA-BDDD-5DF828BCCF6E}.Debug|Win32.Build.0 = Debug|Win32
 		{9776E602-F90F-43EA-BDDD-5DF828BCCF6E}.Release|Win32.ActiveCfg = Release|Win32
 		{9776E602-F90F-43EA-BDDD-5DF828BCCF6E}.Release|Win32.Build.0 = Release|Win32
+		{D7EDD0FC-6768-4217-B04B-262353746CAF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D7EDD0FC-6768-4217-B04B-262353746CAF}.Debug|Win32.Build.0 = Debug|Win32
+		{D7EDD0FC-6768-4217-B04B-262353746CAF}.Release|Win32.ActiveCfg = Release|Win32
+		{D7EDD0FC-6768-4217-B04B-262353746CAF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

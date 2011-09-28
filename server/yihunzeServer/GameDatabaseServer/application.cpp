@@ -6,8 +6,6 @@
 #include "xLogManager.h"
 #include "databaseInstance.h"
 #include  "helper.h"
-#include "Stateserver.h"
-#include "DatabaseServer.h"
 
 
 #define PrintWindID   99999
@@ -78,7 +76,7 @@ template<> Application* Singleton<Application>::ms_Singleton=NULL;
 //-----------------------------------------------------------------
 Application::Application()
 :mInstance(NULL),mHwnd(NULL),m_pNetWork(NULL),m_PrintWind(NULL),
-m_pNetlistener(NULL),m_pStateServer(NULL),m_pDatabaseServer(NULL)
+m_pDatabaseInstance(NULL),m_pNetlistener(NULL)
 {
 
   Helper::setCurrentWorkPath();
@@ -89,20 +87,19 @@ m_pNetlistener(NULL),m_pStateServer(NULL),m_pDatabaseServer(NULL)
 //-----------------------------------------------------------------
 Application:: ~Application()
 {
-
 	if(mHwnd!=NULL)
 	{
 		DestroyWindow(mHwnd);
 		mHwnd=NULL;
 	}
-	SafeDelete(m_pDatabaseServer);
-	SafeDelete(m_pStateServer);
+	
+  
 	SafeDelete(m_pNetWork);
 	SafeDelete(m_pNetlistener);
-  //  SafeDelete(m_pDatabaseInstance);
+    SafeDelete(m_pDatabaseInstance);
 
 
-	xLogMessager::getSingleton().logMessage("游戏逻辑服务器退出...");
+	xLogMessager::getSingleton().logMessage("游戏数据库服务器...");
 	delete xLogMessager::getSingletonPtr();
 
 
@@ -113,17 +110,6 @@ void    Application::update(float time)
 	if(m_pNetWork!=NULL)
 	{
 		m_pNetWork->update();
-	}
-
-	
-	if(	m_pStateServer!=NULL)
-	{
-		m_pStateServer->update(time);
-	}
-
-	if(m_pDatabaseServer!=NULL)
-	{
-		m_pDatabaseServer->update(time);
 	}
 
 	return ;
@@ -176,16 +162,16 @@ bool	Application::init()
 
 
 
-	new xLogMessager("gameserver.log");
+	new xLogMessager("GameDatabaseServer.log");
 
-	xLogMessager::getSingleton().logMessage("印魂者逻辑服务器启动...");
-	addPrintMessage("印魂者逻辑服务器启动...");
-
-
+	xLogMessager::getSingleton().logMessage("游戏数据库服务器启动..");
+	addPrintMessage("游戏数据库服务器启动..");
 
 
-	
-	if(m_Config.loadfile("gameserver.cfg")==false)
+
+
+	Config config;
+	if(config.loadfile("GameDatabaseServer.cfg")==false)
 	{
 		::MessageBox(NULL,"读取 accountserver.cfg 配置文件错误，未找到文件","错误 ",MB_OK);
 		xLogMessager::getSingleton().logMessage("读取 accountserver.cfg 配置文件错误，未找到文件");
@@ -197,7 +183,7 @@ bool	Application::init()
 	std::string portNumber;
 	std::string networkpassword;
 	unsigned    iport=0;
-	if(m_Config.getValue("networkportnumber",portNumber))
+	if(config.getValue("networkportnumber",portNumber))
 	{
 		iport=Helper::StringToInt(portNumber);
 
@@ -208,7 +194,7 @@ bool	Application::init()
 		return false;
 	}
 
-	m_Config.getValue("networkpassword",networkpassword);
+	config.getValue("networkpassword",networkpassword);
 
 	
 	m_pNetWork=new NetWorkServer();
@@ -223,10 +209,52 @@ bool	Application::init()
 
 
 
+	
 
-	m_pStateServer = new StateServer(m_Config);///创建状态服务器
 
-	m_pDatabaseServer = new DatabaserServer(m_Config);
+	///数据库连接
+	std::string DataServer;
+	std::string DataName;
+	std::string DataUser;
+	std::string DataPassWord;
+	std::string DataPortNumber;
+	config.getValue("databaseserver",DataServer);
+	config.getValue("databasename",DataName);
+	config.getValue("databaseuser",DataUser);
+	config.getValue("databasepassword",DataPassWord);
+	config.getValue("databaseportnumber",DataPortNumber);
+
+
+	if(DataUser.empty()||DataServer.empty()||DataName.empty()||DataPassWord.empty()||DataPortNumber.empty())
+	{
+
+		std::string error="读取 accountserver.cfg 文件错误，数据库设置错误 ";
+		::MessageBox(NULL,error.c_str(),"错误 ",MB_OK);
+		xLogMessager::getSingleton().logMessage(error);
+		return false;
+
+	}
+
+	iport=Helper::StringToInt(DataPortNumber);
+	m_pDatabaseInstance=new DatabaseInstace();
+	if(	m_pDatabaseInstance->open(DataServer.c_str(),DataUser.c_str(),DataPassWord.c_str(),DataName.c_str(),iport)==false)
+	{
+		Application::getSingleton().addPrintMessage("打开数据库失败");
+		xLogMessager::getSingleton().logMessage("打开数据库失败...");
+        return false;
+	}else
+	{
+		Application::getSingleton().addPrintMessage("打开数据库成功");
+		xLogMessager::getSingleton().logMessage("打开数据库成功...");
+	}
+
+
+
+
+
+
+
+
 
 	return true;
 }
@@ -253,7 +281,7 @@ bool Application::initWindow(int width, int height)
 
 	RegisterClassEx(&wcex);
 
-	mHwnd = CreateWindow("mainwindow", "印魂者游戏服务器", WS_OVERLAPPEDWINDOW,
+	mHwnd = CreateWindow("mainwindow", "游戏数据库服务器", WS_OVERLAPPEDWINDOW,
 		100, 100, 1024, 768, NULL, NULL, mInstance, NULL);
 
 	if (!mHwnd)
@@ -283,7 +311,7 @@ bool Application::initWindow(int width, int height)
 
 
 /**输入信息到窗口*/
-void    Application::printMessage( )
+void    Application::printMessage()
 {
 	if(m_PrintWind==NULL)
 		return ;
@@ -303,12 +331,10 @@ void    Application::printMessage( )
 
 	SetWindowText(m_PrintWind,message.c_str());
 
-
-
 }
 
 
-void    Application::addPrintMessage(const std::string& message,bool outlog)
+void    Application::addPrintMessage(const std::string& message)
 {
 
 	m_LogMessage.push_back(message);
@@ -319,27 +345,6 @@ void    Application::addPrintMessage(const std::string& message,bool outlog)
 
 	printMessage();
 
-	if(outlog)
-	{
-		xLogMessager::getSingleton().logMessage(message);
-	}
-
-
 
 }
 
-//----------------------------------------------------------------------------
-//bool   Application::connectStateServer()
-//{
-//
-//
-//}
-//
-//
-//
-////----------------------------------------------------------------------------
-//bool   Application::disConnectStateServer()
-//{
-//
-//	return true;
-//}

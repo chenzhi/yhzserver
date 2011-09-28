@@ -205,14 +205,7 @@ void  GameServerManager::unregisterMessage()
 /**有游戏服务器进入*/
 void GameServerManager::onGameServerConnect(RakNet::Packet* p)
 {
-	//char* pServerName=(char*)p->
-	//if(addGameServer(pServerName,pPack->getAddress().ToString(false)))
-	/*addGameServer(pServerName, p->systemAddress.ToString(false));
-	{*/
-		
-	/*}*/
-
-
+	
 		GameServerCollect::iterator it=m_GameServerCollect.begin();
 		GameServerCollect::iterator itend=m_GameServerCollect.end();
        

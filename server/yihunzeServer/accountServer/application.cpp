@@ -239,8 +239,8 @@ bool	Application::init()
 	m_pDatabaseInstance=new DatabaseInstace();
 	if(	m_pDatabaseInstance->open(DataServer.c_str(),DataUser.c_str(),DataPassWord.c_str(),DataName.c_str(),iport)==false)
 	{
-		Application::getSingleton().addPrintMessage("打开数据库成功");
-		xLogMessager::getSingleton().logMessage("打开数据库成功...");
+		Application::getSingleton().addPrintMessage("打开数据库失败");
+		xLogMessager::getSingleton().logMessage("打开数据库失败...");
         return false;
 	}else
 	{

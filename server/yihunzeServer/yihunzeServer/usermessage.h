@@ -66,8 +66,6 @@ struct UserLogin
 	char  m_password[UserNameLength];
 
 };
-
-
 #pragma pack(pop)
 
 

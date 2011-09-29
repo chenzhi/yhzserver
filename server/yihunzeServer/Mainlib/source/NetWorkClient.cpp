@@ -13,10 +13,12 @@ NetWorkClient::NetWorkClient()
 	m_isServer=false;
 
 	m_pNetInterface->SetTimeoutTime(NetWorkTimeOut,RakNet::UNASSIGNED_SYSTEM_ADDRESS);
+     
+    m_pNetInterface->AllowConnectionResponseIPMigration(false);
+    RakNet::SocketDescriptor socketDescriptor(1234,0);
+	m_pNetInterface->Startup(8, &socketDescriptor, 1);
 
-	m_pNetInterface->Startup(8, &RakNet::SocketDescriptor(), 1);
-
-	m_pNetInterface->SetMaximumIncomingConnections(8);
+	//m_pNetInterface->SetMaximumIncomingConnections(8);
 
 	m_pNetInterface->SetOccasionalPing(true);
 

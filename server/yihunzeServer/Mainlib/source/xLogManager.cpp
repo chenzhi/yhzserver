@@ -10,7 +10,7 @@
 #include "xLogManager.h"
 
 
-xLogMessager* Singleton<xLogMessager>::ms_Singleton = NULL;
+template<> xLogMessager* Singleton<xLogMessager>::ms_Singleton = NULL;
 
 xLogMessager::~xLogMessager()
 {
@@ -32,6 +32,7 @@ void xLogMessager::logMessage( const std::string& message,LogLevel level )
 	if(level<m_WriteLevel)
 		return;
 
+    /*/
 	tm pTime;
 	time_t ctTime;
 
@@ -50,7 +51,20 @@ void xLogMessager::logMessage( const std::string& message,LogLevel level )
 		<< std::setw(2) << std::setfill('0') << pTime.tm_sec << ":" 
 		<< message << std::endl;
 
+    //*/
 	// Flush stcmdream to ensure it is written (incase of a crash, we need log to be up to date)
+    
+    struct tm *pTime;
+    time_t ctTime; time(&ctTime);
+    pTime = localtime( &ctTime );
+    mfpLog << std::setw(2) << std::setfill('0') << pTime->tm_hour
+    << ":" << std::setw(2) << std::setfill('0') << pTime->tm_min
+    << ":" << std::setw(2) << std::setfill('0') << pTime->tm_sec
+    << ": ";
+
+
+    mfpLog << message << std::endl;
+
 	mfpLog.flush();
 
 

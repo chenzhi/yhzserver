@@ -1,0 +1,544 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		779C3C6914340492003436D8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 779C3C6814340492003436D8 /* UIKit.framework */; };
+		779C3C6B14340492003436D8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 779C3C6A14340492003436D8 /* Foundation.framework */; };
+		779C3C6D14340492003436D8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 779C3C6C14340492003436D8 /* CoreGraphics.framework */; };
+		779C3C7314340492003436D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 779C3C7114340492003436D8 /* InfoPlist.strings */; };
+		779C3C7614340492003436D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 779C3C7514340492003436D8 /* main.m */; };
+		779C3C7914340492003436D8 /* yhzIphoneClientAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 779C3C7814340492003436D8 /* yhzIphoneClientAppDelegate.mm */; };
+		779C3C7C14340492003436D8 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779C3C7A14340492003436D8 /* MainWindow.xib */; };
+		779C3C7F14340492003436D8 /* yhzIphoneClientViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 779C3C7E14340492003436D8 /* yhzIphoneClientViewController.mm */; };
+		779C3C8214340492003436D8 /* yhzIphoneClientViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779C3C8014340492003436D8 /* yhzIphoneClientViewController.xib */; };
+		779C3C8914340492003436D8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 779C3C6814340492003436D8 /* UIKit.framework */; };
+		779C3C8A14340492003436D8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 779C3C6A14340492003436D8 /* Foundation.framework */; };
+		779C3C8B14340492003436D8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 779C3C6C14340492003436D8 /* CoreGraphics.framework */; };
+		779C3C9314340492003436D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 779C3C9114340492003436D8 /* InfoPlist.strings */; };
+		779C3C9614340492003436D8 /* yhzIphoneClientTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 779C3C9514340492003436D8 /* yhzIphoneClientTests.h */; };
+		779C3C9814340492003436D8 /* yhzIphoneClientTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 779C3C9714340492003436D8 /* yhzIphoneClientTests.mm */; };
+		779C3CC1143409D7003436D8 /* Config.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779C3CBE143409D7003436D8 /* Config.cpp */; };
+		779C3CC2143409D7003436D8 /* EventManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779C3CBF143409D7003436D8 /* EventManager.cpp */; };
+		779C3CC3143409D7003436D8 /* NetWorkClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779C3CC0143409D7003436D8 /* NetWorkClient.cpp */; };
+		779C3CC914340A48003436D8 /* helper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779C3CC714340A48003436D8 /* helper.cpp */; };
+		779C3CCA14340A48003436D8 /* xLogManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779C3CC814340A48003436D8 /* xLogManager.cpp */; };
+		779C3CE61434130B003436D8 /* netWork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779C3CE51434130B003436D8 /* netWork.cpp */; };
+		779C3CF114341FD8003436D8 /* MessageReceive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 779C3CF014341FD8003436D8 /* MessageReceive.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		779C3C8C14340492003436D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 779C3C5B14340492003436D8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 779C3C6314340492003436D8;
+			remoteInfo = yhzIphoneClient;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		779C3C6414340492003436D8 /* yhzIphoneClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yhzIphoneClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		779C3C6814340492003436D8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		779C3C6A14340492003436D8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		779C3C6C14340492003436D8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		779C3C7014340492003436D8 /* yhzIphoneClient-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "yhzIphoneClient-Info.plist"; sourceTree = "<group>"; };
+		779C3C7214340492003436D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		779C3C7414340492003436D8 /* yhzIphoneClient-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "yhzIphoneClient-Prefix.pch"; sourceTree = "<group>"; };
+		779C3C7514340492003436D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		779C3C7714340492003436D8 /* yhzIphoneClientAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yhzIphoneClientAppDelegate.h; sourceTree = "<group>"; };
+		779C3C7814340492003436D8 /* yhzIphoneClientAppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = yhzIphoneClientAppDelegate.mm; sourceTree = "<group>"; };
+		779C3C7B14340492003436D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainWindow.xib; sourceTree = "<group>"; };
+		779C3C7D14340492003436D8 /* yhzIphoneClientViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yhzIphoneClientViewController.h; sourceTree = "<group>"; };
+		779C3C7E14340492003436D8 /* yhzIphoneClientViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = yhzIphoneClientViewController.mm; sourceTree = "<group>"; };
+		779C3C8114340492003436D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/yhzIphoneClientViewController.xib; sourceTree = "<group>"; };
+		779C3C8814340492003436D8 /* yhzIphoneClientTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = yhzIphoneClientTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		779C3C9014340492003436D8 /* yhzIphoneClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "yhzIphoneClientTests-Info.plist"; sourceTree = "<group>"; };
+		779C3C9214340492003436D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		779C3C9414340492003436D8 /* yhzIphoneClientTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "yhzIphoneClientTests-Prefix.pch"; sourceTree = "<group>"; };
+		779C3C9514340492003436D8 /* yhzIphoneClientTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yhzIphoneClientTests.h; sourceTree = "<group>"; };
+		779C3C9714340492003436D8 /* yhzIphoneClientTests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = yhzIphoneClientTests.mm; sourceTree = "<group>"; };
+		779C3CBA14340964003436D8 /* NetWorkClient.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; name = NetWorkClient.h; path = ../../Mainlib/include/NetWorkClient.h; sourceTree = "<group>"; };
+		779C3CBB14340964003436D8 /* netWork.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; name = netWork.h; path = ../../Mainlib/include/netWork.h; sourceTree = "<group>"; };
+		779C3CBC14340964003436D8 /* EventManager.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; name = EventManager.h; path = ../../Mainlib/include/EventManager.h; sourceTree = "<group>"; };
+		779C3CBD14340964003436D8 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; name = Config.h; path = ../../Mainlib/include/Config.h; sourceTree = "<group>"; };
+		779C3CBE143409D7003436D8 /* Config.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Config.cpp; path = ../../Mainlib/source/Config.cpp; sourceTree = "<group>"; };
+		779C3CBF143409D7003436D8 /* EventManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = EventManager.cpp; path = ../../Mainlib/source/EventManager.cpp; sourceTree = "<group>"; };
+		779C3CC0143409D7003436D8 /* NetWorkClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = NetWorkClient.cpp; path = ../../Mainlib/source/NetWorkClient.cpp; sourceTree = "<group>"; };
+		779C3CC514340A3D003436D8 /* helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helper.h; path = ../../Mainlib/include/helper.h; sourceTree = "<group>"; };
+		779C3CC614340A3D003436D8 /* xLogManager.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; name = xLogManager.h; path = ../../Mainlib/include/xLogManager.h; sourceTree = "<group>"; };
+		779C3CC714340A48003436D8 /* helper.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = helper.cpp; path = ../../Mainlib/source/helper.cpp; sourceTree = "<group>"; };
+		779C3CC814340A48003436D8 /* xLogManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 2147484705; name = xLogManager.cpp; path = ../../Mainlib/source/xLogManager.cpp; sourceTree = "<group>"; };
+		779C3CDB14341147003436D8 /* usermessage.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; name = usermessage.h; path = ../../yihunzeServer/usermessage.h; sourceTree = "<group>"; };
+		779C3CDC14341193003436D8 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 2147486000; lastKnownFileType = sourcecode.c.h; name = Singleton.h; path = ../../Mainlib/include/Singleton.h; sourceTree = "<group>"; };
+		779C3CE51434130B003436D8 /* netWork.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 2147486000; name = netWork.cpp; path = ../../Mainlib/source/netWork.cpp; sourceTree = "<group>"; };
+		779C3CEF14341FD7003436D8 /* MessageReceive.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; name = MessageReceive.h; path = yhzIphoneClient/MessageReceive.h; sourceTree = "<group>"; };
+		779C3CF014341FD8003436D8 /* MessageReceive.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = MessageReceive.cpp; path = yhzIphoneClient/MessageReceive.cpp; sourceTree = "<group>"; };
+		779C3CFA14346189003436D8 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = yhzIphoneClient/pch.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		779C3C6114340492003436D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				779C3C6914340492003436D8 /* UIKit.framework in Frameworks */,
+				779C3C6B14340492003436D8 /* Foundation.framework in Frameworks */,
+				779C3C6D14340492003436D8 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		779C3C8414340492003436D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				779C3C8914340492003436D8 /* UIKit.framework in Frameworks */,
+				779C3C8A14340492003436D8 /* Foundation.framework in Frameworks */,
+				779C3C8B14340492003436D8 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		779C3C5914340492003436D8 = {
+			isa = PBXGroup;
+			children = (
+				779C3CB914340937003436D8 /* network */,
+				779C3C6E14340492003436D8 /* yhzIphoneClient */,
+				779C3C8E14340492003436D8 /* yhzIphoneClientTests */,
+				779C3C6714340492003436D8 /* Frameworks */,
+				779C3C6514340492003436D8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		779C3C6514340492003436D8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				779C3C6414340492003436D8 /* yhzIphoneClient.app */,
+				779C3C8814340492003436D8 /* yhzIphoneClientTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		779C3C6714340492003436D8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				779C3C6814340492003436D8 /* UIKit.framework */,
+				779C3C6A14340492003436D8 /* Foundation.framework */,
+				779C3C6C14340492003436D8 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		779C3C6E14340492003436D8 /* yhzIphoneClient */ = {
+			isa = PBXGroup;
+			children = (
+				779C3C7714340492003436D8 /* yhzIphoneClientAppDelegate.h */,
+				779C3C7814340492003436D8 /* yhzIphoneClientAppDelegate.mm */,
+				779C3C7A14340492003436D8 /* MainWindow.xib */,
+				779C3C7D14340492003436D8 /* yhzIphoneClientViewController.h */,
+				779C3C7E14340492003436D8 /* yhzIphoneClientViewController.mm */,
+				779C3C8014340492003436D8 /* yhzIphoneClientViewController.xib */,
+				779C3C6F14340492003436D8 /* Supporting Files */,
+			);
+			path = yhzIphoneClient;
+			sourceTree = "<group>";
+		};
+		779C3C6F14340492003436D8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				779C3C7014340492003436D8 /* yhzIphoneClient-Info.plist */,
+				779C3C7114340492003436D8 /* InfoPlist.strings */,
+				779C3C7414340492003436D8 /* yhzIphoneClient-Prefix.pch */,
+				779C3C7514340492003436D8 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		779C3C8E14340492003436D8 /* yhzIphoneClientTests */ = {
+			isa = PBXGroup;
+			children = (
+				779C3C9514340492003436D8 /* yhzIphoneClientTests.h */,
+				779C3C9714340492003436D8 /* yhzIphoneClientTests.mm */,
+				779C3C8F14340492003436D8 /* Supporting Files */,
+			);
+			path = yhzIphoneClientTests;
+			sourceTree = "<group>";
+		};
+		779C3C8F14340492003436D8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				779C3C9014340492003436D8 /* yhzIphoneClientTests-Info.plist */,
+				779C3C9114340492003436D8 /* InfoPlist.strings */,
+				779C3C9414340492003436D8 /* yhzIphoneClientTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		779C3CB914340937003436D8 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				779C3CFA14346189003436D8 /* pch.h */,
+				779C3CEF14341FD7003436D8 /* MessageReceive.h */,
+				779C3CF014341FD8003436D8 /* MessageReceive.cpp */,
+				779C3CE51434130B003436D8 /* netWork.cpp */,
+				779C3CDC14341193003436D8 /* Singleton.h */,
+				779C3CDB14341147003436D8 /* usermessage.h */,
+				779C3CC714340A48003436D8 /* helper.cpp */,
+				779C3CC814340A48003436D8 /* xLogManager.cpp */,
+				779C3CC514340A3D003436D8 /* helper.h */,
+				779C3CC614340A3D003436D8 /* xLogManager.h */,
+				779C3CBE143409D7003436D8 /* Config.cpp */,
+				779C3CBF143409D7003436D8 /* EventManager.cpp */,
+				779C3CC0143409D7003436D8 /* NetWorkClient.cpp */,
+				779C3CBA14340964003436D8 /* NetWorkClient.h */,
+				779C3CBB14340964003436D8 /* netWork.h */,
+				779C3CBC14340964003436D8 /* EventManager.h */,
+				779C3CBD14340964003436D8 /* Config.h */,
+			);
+			name = network;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		779C3C6314340492003436D8 /* yhzIphoneClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 779C3C9B14340492003436D8 /* Build configuration list for PBXNativeTarget "yhzIphoneClient" */;
+			buildPhases = (
+				779C3C6014340492003436D8 /* Sources */,
+				779C3C6114340492003436D8 /* Frameworks */,
+				779C3C6214340492003436D8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = yhzIphoneClient;
+			productName = yhzIphoneClient;
+			productReference = 779C3C6414340492003436D8 /* yhzIphoneClient.app */;
+			productType = "com.apple.product-type.application";
+		};
+		779C3C8714340492003436D8 /* yhzIphoneClientTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 779C3C9E14340492003436D8 /* Build configuration list for PBXNativeTarget "yhzIphoneClientTests" */;
+			buildPhases = (
+				779C3C8314340492003436D8 /* Sources */,
+				779C3C8414340492003436D8 /* Frameworks */,
+				779C3C8514340492003436D8 /* Resources */,
+				779C3C8614340492003436D8 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				779C3C8D14340492003436D8 /* PBXTargetDependency */,
+			);
+			name = yhzIphoneClientTests;
+			productName = yhzIphoneClientTests;
+			productReference = 779C3C8814340492003436D8 /* yhzIphoneClientTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		779C3C5B14340492003436D8 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 779C3C5E14340492003436D8 /* Build configuration list for PBXProject "yhzIphoneClient" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 779C3C5914340492003436D8;
+			productRefGroup = 779C3C6514340492003436D8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				779C3C6314340492003436D8 /* yhzIphoneClient */,
+				779C3C8714340492003436D8 /* yhzIphoneClientTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		779C3C6214340492003436D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				779C3C7314340492003436D8 /* InfoPlist.strings in Resources */,
+				779C3C7C14340492003436D8 /* MainWindow.xib in Resources */,
+				779C3C8214340492003436D8 /* yhzIphoneClientViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		779C3C8514340492003436D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				779C3C9314340492003436D8 /* InfoPlist.strings in Resources */,
+				779C3C9614340492003436D8 /* yhzIphoneClientTests.h in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		779C3C8614340492003436D8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		779C3C6014340492003436D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				779C3C7614340492003436D8 /* main.m in Sources */,
+				779C3C7914340492003436D8 /* yhzIphoneClientAppDelegate.mm in Sources */,
+				779C3C7F14340492003436D8 /* yhzIphoneClientViewController.mm in Sources */,
+				779C3CC1143409D7003436D8 /* Config.cpp in Sources */,
+				779C3CC2143409D7003436D8 /* EventManager.cpp in Sources */,
+				779C3CC3143409D7003436D8 /* NetWorkClient.cpp in Sources */,
+				779C3CC914340A48003436D8 /* helper.cpp in Sources */,
+				779C3CCA14340A48003436D8 /* xLogManager.cpp in Sources */,
+				779C3CE61434130B003436D8 /* netWork.cpp in Sources */,
+				779C3CF114341FD8003436D8 /* MessageReceive.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		779C3C8314340492003436D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				779C3C9814340492003436D8 /* yhzIphoneClientTests.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		779C3C8D14340492003436D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 779C3C6314340492003436D8 /* yhzIphoneClient */;
+			targetProxy = 779C3C8C14340492003436D8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		779C3C7114340492003436D8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				779C3C7214340492003436D8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		779C3C7A14340492003436D8 /* MainWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				779C3C7B14340492003436D8 /* en */,
+			);
+			name = MainWindow.xib;
+			sourceTree = "<group>";
+		};
+		779C3C8014340492003436D8 /* yhzIphoneClientViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				779C3C8114340492003436D8 /* en */,
+			);
+			name = yhzIphoneClientViewController.xib;
+			sourceTree = "<group>";
+		};
+		779C3C9114340492003436D8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				779C3C9214340492003436D8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		779C3C9914340492003436D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: workroom zero (9N3UP734RR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: workroom zero (9N3UP734RR)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/cz/sdk/RakNet-4.0.Beta1/Source";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_LDFLAGS = "/cz/sdk/RakNet-4.0.Beta1/build/Lib/LibStatic/Debug/Simulator/libRakNetStatic.a";
+				PROVISIONING_PROFILE = "E85A855E-3CE6-4BF3-9EAE-378857D27D43";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E85A855E-3CE6-4BF3-9EAE-378857D27D43";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		779C3C9A14340492003436D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: workroom zero (9N3UP734RR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: workroom zero (9N3UP734RR)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/cz/sdk/RakNet-4.0.Beta1/Source";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
+					"/cz/sdk/RakNet-4.0.Beta1/build/Lib/LibStatic/Debug/Device/libRakNetStatic.a",
+					"-lpthread",
+				);
+				PROVISIONING_PROFILE = "E85A855E-3CE6-4BF3-9EAE-378857D27D43";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E85A855E-3CE6-4BF3-9EAE-378857D27D43";
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		779C3C9C14340492003436D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "yhzIphoneClient/yhzIphoneClient-Prefix.pch";
+				INFOPLIST_FILE = "yhzIphoneClient/yhzIphoneClient-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0.2;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		779C3C9D14340492003436D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "yhzIphoneClient/yhzIphoneClient-Prefix.pch";
+				INFOPLIST_FILE = "yhzIphoneClient/yhzIphoneClient-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0.2;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-Wl,-search_paths_first",
+					"-Wl,-headerpad_max_install_names",
+					"/cz/sdk/RakNet-4.0.Beta1/build/Lib/LibStatic/Debug/Device/libRakNetStatic.a",
+					"-lpthread",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = NO;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		779C3C9F14340492003436D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/yhzIphoneClient.app/yhzIphoneClient";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "yhzIphoneClientTests/yhzIphoneClientTests-Prefix.pch";
+				INFOPLIST_FILE = "yhzIphoneClientTests/yhzIphoneClientTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		779C3CA014340492003436D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/yhzIphoneClient.app/yhzIphoneClient";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "yhzIphoneClientTests/yhzIphoneClientTests-Prefix.pch";
+				INFOPLIST_FILE = "yhzIphoneClientTests/yhzIphoneClientTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-framework",
+					SenTestingKit,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		779C3C5E14340492003436D8 /* Build configuration list for PBXProject "yhzIphoneClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				779C3C9914340492003436D8 /* Debug */,
+				779C3C9A14340492003436D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		779C3C9B14340492003436D8 /* Build configuration list for PBXNativeTarget "yhzIphoneClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				779C3C9C14340492003436D8 /* Debug */,
+				779C3C9D14340492003436D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		779C3C9E14340492003436D8 /* Build configuration list for PBXNativeTarget "yhzIphoneClientTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				779C3C9F14340492003436D8 /* Debug */,
+				779C3CA014340492003436D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 779C3C5B14340492003436D8 /* Project object */;
+}

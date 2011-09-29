@@ -2,7 +2,7 @@
 
 #include "Singleton.h"
 #include "EventManager.h"
-//#include "usermessage.h"
+#include "usermessage.h"
 //#include "userstruct.h"
 
 

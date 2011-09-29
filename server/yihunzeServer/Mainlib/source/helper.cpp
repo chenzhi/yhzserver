@@ -9,7 +9,9 @@
 void Helper::setCurrentWorkPath()
 {
 
-	char pBuffer[1024];
+#ifndef Platform
+    
+    char pBuffer[1024];
 	ZeroMemory(pBuffer, 1024);
 	GetModuleFileName(NULL, pBuffer, 1024);
 
@@ -18,6 +20,9 @@ void Helper::setCurrentWorkPath()
 	std::string::size_type pos =cc.find_last_of("\\");
 	dirname = cc.substr(0,pos);
 	SetCurrentDirectory(dirname.c_str());
+    
+#endif
+    
 
 }
 
@@ -35,7 +40,7 @@ int Helper::StringToInt(const std::string& str)
 std::string Helper::IntToString(int i)
 {
 	char buff[64];
-	_snprintf(buff,sizeof(buff),"%d",i);
+	sprintf(buff,"%d",i);
 	return std::string(buff);
 
 }
@@ -54,6 +59,6 @@ float Helper::StringTofloat(const std::string& str)
 std::string Helper::floatToString(float f)
 {
 	char buff[128];
-	_snprintf(buff,sizeof(buff),"%f",f);
+	sprintf(buff,"%f",f);
 	return std::string(buff);
 }

@@ -192,6 +192,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\playermanager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stateServer.cpp"
 				>
 			</File>
@@ -215,6 +219,10 @@
 			</File>
 			<File
 				RelativePath=".\pch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\playerManager.h"
 				>
 			</File>
 			<File

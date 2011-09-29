@@ -3,7 +3,7 @@
 #include "Singleton.h"
 
 class NetWorkServer;
-class PlayerManager;
+class LoginManager;
 class DatabaseInstace;
 class GameServerManager;
 
@@ -66,13 +66,12 @@ private:
 
 	NetWorkServer*                m_pNetWork;///网络实例 
 	
-	PlayerManager*          m_pPlayerManager; ////用户管理器
+	LoginManager*          m_pLoginManager; ////登入管理器
 
 	HWND                    m_PrintWind;           ///打印的多行文件框 
 
 	std::list<std::string>  m_LogMessage;
 
-	//DatabaseInstace*        m_pDatabaseInstance; ///数据实例 
 
 	netWorkListener*        m_pNetlistener;    ///网络事件监听
 

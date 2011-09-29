@@ -201,15 +201,11 @@
 				>
 			</File>
 			<File
+				RelativePath=".\LoginManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\player.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\playermanager.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\playerManager.h"
 				>
 			</File>
 		</Filter>
@@ -224,6 +220,10 @@
 			</File>
 			<File
 				RelativePath=".\GameServerManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LoginManager.h"
 				>
 			</File>
 			<File

@@ -293,4 +293,7 @@ protected:
 
 	netWorkListener*          m_pLinstener;   ///监听者
 
+
+	NetPack*                  m_pNetPack;///消息包
+
 };

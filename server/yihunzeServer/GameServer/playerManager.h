@@ -61,14 +61,6 @@ public:
 protected:
 	/**@{消息处理函数
 	*/
- 
-	void processTestMessage(NetPack* pdata);
-
-
-
-	/**处理帐号服务器消息验证*/
-	void processAccountTest(NetPack* pdata);
-
 
 
 	/**@}*/

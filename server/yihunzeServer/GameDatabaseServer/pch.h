@@ -22,7 +22,6 @@
 #include <vector>
 #include <map>
 #include <list>
-#include <hash_map>
 #include <algorithm>
 #include "mysql.h"
 

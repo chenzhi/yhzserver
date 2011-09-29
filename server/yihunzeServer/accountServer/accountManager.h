@@ -28,9 +28,10 @@ public:
 
 
 	/**判断帐号密码是否正确
+	*@param accountid 如果验证通过，返回帐号id,
 	*@return 如果有些帐号密码返回真，无返回false
 	*/
-	bool checkAccount(const std::string& accountName,const std::string& password);
+	bool checkAccount(const std::string& accountName,const std::string& password, int&accountid);
 
 
 

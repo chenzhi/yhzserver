@@ -2,7 +2,7 @@
 #include "vld.h"
 #include "application.h"
 #include "netWork.h"
-#include "playerManager.h"
+#include "LoginManager.h"
 #include "NetWorkListener.h"
 #include "xLogManager.h"
 #include "databaseInstance.h"
@@ -77,7 +77,7 @@ template<> Application* Singleton<Application>::ms_Singleton=NULL;
 
 //-----------------------------------------------------------------
 Application::Application(HINSTANCE  Instance)
-:mInstance(Instance),mHwnd(NULL),m_pNetWork(NULL),m_pPlayerManager(NULL),m_PrintWind(NULL),
+:mInstance(Instance),mHwnd(NULL),m_pNetWork(NULL),m_pLoginManager(NULL),m_PrintWind(NULL),
 /*m_pDatabaseInstance(NULL),*/m_pNetlistener(NULL),m_GameSreverManager(NULL)
 {
 
@@ -96,7 +96,7 @@ Application:: ~Application()
 
 
 	SafeDelete(m_GameSreverManager);
-	SafeDelete(m_pPlayerManager);
+	SafeDelete(m_pLoginManager);
 	SafeDelete(m_pNetWork);
 
 	SafeDelete(m_pNetlistener);
@@ -281,7 +281,7 @@ bool	Application::init()
 	m_pNetlistener=new ServerListener();
 	m_pNetWork->setListener(m_pNetlistener);
 
-	m_pPlayerManager=new PlayerManager();
+	m_pLoginManager=new LoginManager();
 
 	m_GameSreverManager=new GameServerManager("gameserver.cfg");
 
@@ -312,7 +312,7 @@ bool Application::initWindow(int width, int height)
 	RegisterClassEx(&wcex);
 
 	mHwnd = CreateWindow(wcex.lpszClassName, "印魂者全局服务器", WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,/*100, 100, 1024, 768,*/ NULL, NULL, mInstance, NULL);
+		100, 100, 1024, 768,/*100, 100, 1024, 768,*/ NULL, NULL, mInstance, NULL);
 
 	if (!mHwnd)
 	{
@@ -324,7 +324,7 @@ bool Application::initWindow(int width, int height)
 	m_PrintWind=CreateWindow( "edit", "",
 		WS_VISIBLE|WS_CHILD|WS_BORDER|WS_VSCROLL|WS_HSCROLL|
 		ES_MULTILINE/*|ES_WANTRETURN*/|ES_AUTOHSCROLL|ES_AUTOVSCROLL|ES_READONLY,
-		0, 0, 1000, 700, mHwnd, (HMENU)PrintWindID, mInstance, NULL);
+			0, 0, 1000, 700, mHwnd, (HMENU)PrintWindID, mInstance, NULL);
 
 
 

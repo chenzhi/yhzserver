@@ -24,7 +24,7 @@
 
 //--------------------------------------------------------------------------------------------
 NetWork::NetWork()
-:m_pNetInterface(NULL),m_isServer(false),m_pLinstener(NULL)
+:m_pNetInterface(NULL),m_isServer(false),m_pLinstener(NULL),m_pNetPack(NULL)
 {
 
 	m_pNetInterface=RakNet::RakPeerInterface::GetInstance();
@@ -196,6 +196,8 @@ bool NetWork::startServer(unsigned int portNumber,const std::string& password)
 NetWork::~NetWork()
 {
 
+
+	SafeDelete(m_pNetPack);
 	if(m_pNetInterface!=NULL)
 	{
 		m_pNetInterface->Shutdown(300);
@@ -426,11 +428,15 @@ void NetWork::setListener(netWorkListener* pListener)
 void NetWork::processGameMessage(RakNet::Packet* p)
 {
 
-	static NetPack pPack(p);
+	
+	if(m_pNetPack==NULL)
+	{
+		m_pNetPack=new NetPack(p);
+	}
 
 
-	pPack.setRaknetPack(p);
-	fireMessage( pPack.getGameMessageID() ,&pPack );
+	m_pNetPack->setRaknetPack(p);
+	fireMessage( m_pNetPack->getGameMessageID() ,m_pNetPack );
 
 	return ;
 

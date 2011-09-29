@@ -14,6 +14,7 @@ enum GameMessage
 
 	GM_TEXT_MESSAGE,   ///文字消息
 
+   ///帐号服务器消息定义
 	GM_ACCOUNT_REQUEST,   ///验证是否有这个帐号
 	GM_ACCOUNT_RESPOND,   ///帐号服务发给全局服务器的帐号验证消息
 	GM_ACCOUNT_RESPOND_FAILED,   //回应验证消息,未能验证的用户名和密码
@@ -27,6 +28,15 @@ enum GameMessage
 	GM_GAMESERVER_CONNECT,   ///游戏服务器连接
 	GM_GAMESERVER_DISCONNECT, ///游戏服务器断开
     GM_STATESERVER_CLIENT_CONNECT,///状态服务器通知游戏服务器有客户端需要连接,必须在一分钟内联接
+
+
+
+	///游戏逻辑服务器消息定义
+	
+
+
+
+	///游戏数据库服务器消息定义
 
 
 
@@ -78,6 +88,7 @@ struct RespondAccount
 {
 	char   m_userip[IPaddressLength];  //用户ip
 	char   m_login;       //是否登入,0表示帐号用户名不对，1表示同意登入
+	int m_accountID;///帐号id
 };
 #pragma pack(pop)
 
@@ -87,6 +98,16 @@ struct RespondAccount
 struct NetByte
 {
 	char  m_byte;
+};
+#pragma pack(pop)
+
+
+
+///返回一个整型
+#pragma pack(push, 1)
+struct NetInt
+{
+	int   m_int;
 };
 #pragma pack(pop)
 
@@ -109,6 +130,7 @@ struct GameServerInfor
 	char  m_GameServerIP[IPaddressLength];          ///游戏服务器地址和端口号
 	char  m_GameServerPassWord[UserNameLength];     ///游戏服务器密码
 	unsigned int m_PortNumber;                      ///端品号
+	int m_accountid;                        ///玩家帐号id
 };
 #pragma pack(pop)
 

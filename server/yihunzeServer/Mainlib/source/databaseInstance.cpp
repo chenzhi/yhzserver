@@ -99,7 +99,7 @@ u_long CppMySQLQuery::numRow()
 {
 	if(_mysql_res==NULL)
 		return 0;
-	return _mysql_res->row_count;
+	return (u_long)_mysql_res->row_count;
 }
 
 //--------------------------------------------------------------------------------

@@ -11,9 +11,6 @@ AccountManager::AccountManager()
 	init();
 
 
-	//createAccount("插入中文试一下看能插几个","111");
-
-	checkAccount("testplayer","11111");
 
 
 }
@@ -64,7 +61,7 @@ void AccountManager::processAccountTest(NetPack* pPack)
 	memset(&respond,0,sizeof(RespondAccount));
 	strcpy(respond.m_userip,puser->m_ip);
 
-	if(checkAccount(puser->m_account,puser->m_password))
+	if(checkAccount(puser->m_account,puser->m_password,respond.m_accountID))
 	{
      	respond.m_login=1;
 	}else
@@ -95,7 +92,7 @@ bool AccountManager:: createAccount(const std::string& accountName,const std::st
 	if(DatabaseInstace::getSingleton().querySQL("SELECT @ret",&pQuery)==false)
 		return false;
 
-	unsigned int result=pQuery->getIntField("@ret",0);
+	unsigned int result=pQuery->getIntField("@ret",-1);
 	if(result==0)
 		return false;
 
@@ -106,7 +103,7 @@ bool AccountManager:: createAccount(const std::string& accountName,const std::st
 
 
 //---------------------------------------------------------------------
-bool AccountManager::checkAccount(const std::string& accountName,const std::string& password)
+bool AccountManager::checkAccount(const std::string& accountName,const std::string& password,int&accountid)
 {
 
 	char Procedurce[512];
@@ -122,8 +119,8 @@ bool AccountManager::checkAccount(const std::string& accountName,const std::stri
 	if(DatabaseInstace::getSingleton().querySQL("SELECT @ret",&pQuery)==false)
 		return false;
 
-	unsigned int result=pQuery->getIntField("@ret",0);
-	if(result==0)
+	accountid =pQuery->getIntField("@ret",-1);
+	if(accountid<0)
 		return false;
 
 	return true;

@@ -1,63 +1,57 @@
 #include "pch.h"
-#include "playerManager.h"
-#include "netWork.h"
-#include "application.h"
+#include "LoginManager.h"
 #include "usermessage.h"
+#include "application.h"
 #include "GameServerManager.h"
 
 
-template<> PlayerManager* Singleton<PlayerManager>::ms_Singleton=NULL;
+template<> LoginManager* Singleton<LoginManager>::ms_Singleton=NULL;
 
-//--------------------------------------------------------
-PlayerManager::PlayerManager()
+//------------------------------------------------------------
+LoginManager::LoginManager()
 {
-
-	registerNetWorkMessage();
-
+	///注册网络消息
+	registerMessage();
 
 }
 
 
-
-//--------------------------------------------------------
-PlayerManager::~PlayerManager()
+//------------------------------------------------------------
+LoginManager::~LoginManager()
 {
 
-	unregisterNetWorkMessage();
+	
+	unregisterMessage();
+
 }
 
 
-//--------------------------------------------------------
-bool PlayerManager::registerNetWorkMessage()
+//------------------------------------------------------------
+void LoginManager::registerMessage()
 {
-
 
 	NetWorkServer* pNetWork=NetWorkServer::getSingletonPtr();
 
-	pNetWork->registerMessageHandle(GM_ACCOUNT_REQUEST,&PlayerManager::processTestMessage,this);
-	pNetWork->registerMessageHandle(GM_ACCOUNT_RESPOND,&PlayerManager::processAccountTest,this);
-
-	return true;
+	pNetWork->registerMessageHandle(GM_ACCOUNT_REQUEST,&LoginManager::processAccountRequest,this);
+	pNetWork->registerMessageHandle(GM_ACCOUNT_RESPOND,&LoginManager::processAccountRespond,this);
 
 }
 
 
-//--------------------------------------------------------
-bool PlayerManager::unregisterNetWorkMessage()
+//------------------------------------------------------------
+void LoginManager::unregisterMessage()
 {
+
 	NetWorkServer* pNetWork=NetWorkServer::getSingletonPtr();
 
+	pNetWork->unregisterMessageHandle(GM_ACCOUNT_REQUEST,this);
+	pNetWork->unregisterMessageHandle(GM_ACCOUNT_RESPOND,this);
 
-
-	pNetWork->unregisterMessageHandle(GM_TEXT_MESSAGE,this);
-
-	return true;
 }
 
 
-
-//--------------------------------------------------------
-void PlayerManager::processTestMessage(NetPack* pPack)
+//------------------------------------------------------------
+void LoginManager::processAccountRequest(NetPack* pPack)
 {
 
 	UserLogin* pmessage=(UserLogin*)pPack->getData();
@@ -67,7 +61,7 @@ void PlayerManager::processTestMessage(NetPack* pPack)
 	const std::string& serverip=Application::getSingleton().getAccountServer();
 	unsigned int port=Application::getSingleton().getAccountServerPort();
 	RakNet::SystemAddress address(serverip.c_str(),port);
-     
+
 	const char* sendip=pPack->getSendGUID().ToString();
 	unsigned len=strlen(sendip);
 	UserAccount account;
@@ -83,25 +77,14 @@ void PlayerManager::processTestMessage(NetPack* pPack)
 
 	return ;
 
- //   NetByte netbyte;
-	//netbyte.m_byte = 0;
-
-	//RakNet::RakNetGUID netguid;
-	//netguid.FromString(sendip);
-	//NetWork::getSingleton().send(GM_ACCOUNT_RESPOND,netbyte,netguid);
-
-
-
-	//return ;
-
 }
 
 
-//---------------------------------------------------------------------
-void  PlayerManager::processAccountTest(NetPack* pdata)
-{
 
-	RespondAccount* prespond=reinterpret_cast<RespondAccount*>(pdata->getData());
+//------------------------------------------------------------
+void LoginManager::processAccountRespond(NetPack* pPack)
+{
+	RespondAccount* prespond=reinterpret_cast<RespondAccount*>(pPack->getData());
 
 	RakNet::RakNetGUID  address;
 	address.FromString(prespond->m_userip);
@@ -112,7 +95,7 @@ void  PlayerManager::processAccountTest(NetPack* pdata)
 		netbyte.m_byte=prespond->m_login;
 		NetWorkServer::getSingleton().send(GM_ACCOUNT_RESPOND_FAILED,netbyte,address);
 
-	
+
 	}else
 	{
 		///发送消息给游戏逻辑服务器，通知有客户端需要联接
@@ -126,6 +109,7 @@ void  PlayerManager::processAccountTest(NetPack* pdata)
 			strcpy(gameserver.m_GameServerIP,pGameserver->getIP().c_str());
 			strcpy(gameserver.m_GameServerPassWord,pGameserver->getPassWord().c_str());
 			gameserver.m_PortNumber=pGameserver->getPortNumber();
+			gameserver.m_accountid=prespond->m_accountID;
 			NetWorkServer::getSingleton().send(GM_ACCOUNT_RESPOND_SUCCEED,gameserver,address);
 		}
 
@@ -136,4 +120,5 @@ void  PlayerManager::processAccountTest(NetPack* pdata)
 
 
 	return ;
+
 }

@@ -3,6 +3,8 @@
 #include "MessageReceive.h"
 #include "usermessage.h"
 #include "NetWorkListener.h"
+#include "App.h"
+#include "SimulateClientMainFrame.h"
 
 template<>
 MessageReceive* Singleton<MessageReceive>::ms_Singleton=NULL;
@@ -50,16 +52,22 @@ void MessageReceive::processAccountSucceed(NetPack* pPack)
 
 	GameServerInfor* pGameserver=(GameServerInfor*) pPack->getData();
 
+
 	NetWorkClient::getSingleton().close(pPack->getAddress());
-
 	NetWorkClient::getSingleton(). connect(pGameserver->m_GameServerIP,pGameserver->m_PortNumber,pGameserver->m_GameServerPassWord); 
-
-	
 
 	///记录游戏服务器地址
 	RakNet::SystemAddress  tem(pGameserver->m_GameServerIP,pGameserver->m_PortNumber);
 	m_GameServerAdderss=tem;
     m_GameServerPassWord=pGameserver->m_GameServerPassWord;
+
+
+	MyApp* pApp=static_cast<MyApp*>(&wxGetApp());
+	wxString receiveMessage;
+	receiveMessage=receiveMessage.Format("帐号服务器验证成功，返回帐号id: %d ", (pGameserver->m_accountid));
+	pApp->m_pframe->addSendMessage(receiveMessage);
+
+
 
 
 }
@@ -69,7 +77,11 @@ void MessageReceive::processConnectRemoteServer(NetPack* pPack)
 {
 	if(pPack->getAddress()==m_GameServerAdderss)
 	{
-		::MessageBox(NULL,"登入游戏服务器成功","",MB_OK);
+		MyApp* pApp=static_cast<MyApp*>(&wxGetApp());
+		wxString receiveMessage;
+		receiveMessage=receiveMessage.Format("登入远程游戏服务器成功:%s",pPack->getAddress().ToString());
+		pApp->m_pframe->addSendMessage(receiveMessage);
+
 	}
 
 	ServerListener::getSingleton().onConnect(pPack->getRakNetPack());

@@ -119,7 +119,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;$(MYSQL)/include&quot;;./include;&quot;$(RakNet4.0)/Source&quot;"
+				AdditionalIncludeDirectories="&quot;$(MYSQL)/include&quot;;./include;&quot;$(RakNet4.0)/Source&quot;;../yihunzeServer"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;XMAIN_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"

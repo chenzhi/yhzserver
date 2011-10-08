@@ -90,7 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;"
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -120,6 +120,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="../Mainlib/include;&quot;$(MYSQL)/include&quot;;&quot;$(RakNet4.0)/Source&quot;;../yihunzeserver"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -168,7 +169,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain.dll&quot;  &quot;..\bin\GameDatabaseServer\release&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNet.dll&quot;   &quot;..\bin\GameDatabaseServer\release&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;   &quot;..\bin\GameDatabaseServer\release&quot;"
+				CommandLine="copy &quot;..\mainlib\lib\xmain.dll&quot;  &quot;..\bin\GameDatabaseServer\release&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNet.dll&quot;   &quot;..\bin\GameDatabaseServer\release&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;   &quot;..\bin\GameDatabaseServer\release&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

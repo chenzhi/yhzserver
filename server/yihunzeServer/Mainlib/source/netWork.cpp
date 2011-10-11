@@ -214,6 +214,8 @@ NetWork::~NetWork()
 void NetWork::receive()
 {
 
+	if(m_pNetInterface==NULL)
+		return ;
 	
 	RakNet::Packet* p=NULL;
 	// GetPacketIdentifier returns this
@@ -244,7 +246,7 @@ void NetWork::receive()
               m_pLinstener->onDisconnect(p);
 			}
 			break;
-
+             
 		case ID_NEW_INCOMING_CONNECTION:  ///新玩家进入
 			// Somebody connected.  We have their IP now
 			printf("ID_NEW_INCOMING_CONNECTION from %s with GUID %s\n", p->systemAddress.ToString(true), p->guid.ToString());
@@ -267,12 +269,14 @@ void NetWork::receive()
 
 			break;
 
-	/*	case   GM_ACCEPTCOME :
+	/*	
+	    case   GM_ACCEPTCOME :
 			if(m_pLinstener!=NULL)
 			{
 				m_pLinstener->onConnect(p);
 			}
-			break;*/
+			break;
+			//*/
 
 		case ID_INCOMPATIBLE_PROTOCOL_VERSION:
 			printf("ID_INCOMPATIBLE_PROTOCOL_VERSION\n");
@@ -293,6 +297,13 @@ void NetWork::receive()
 
 			printf("ID_CONNECTION_LOST from %s\n", p->systemAddress.ToString(true));;
 			break;
+		case ID_CONNECTION_ATTEMPT_FAILED:
+			if(m_pLinstener!=NULL)
+			{
+				m_pLinstener->onConnectFailed(p);
+			}
+
+			break;;
 
 	
 
@@ -336,7 +347,7 @@ void NetWork::close(const char* pAddress,short unsigned int portnumber)
 
 	if(m_pNetInterface!=NULL)
 	{
-		m_pNetInterface->CloseConnection(RakNet::SystemAddress(pAddress,portnumber),true);
+		m_pNetInterface->CloseConnection(RakNet::SystemAddress(pAddress,portnumber),true,0,IMMEDIATE_PRIORITY);
 	}
 
 }
@@ -355,7 +366,7 @@ void NetWork::close(const  RakNet::SystemAddress& address)
 //--------------------------------------------------------------------------------------------
 void NetWork::update()
 {
-
+	
 	receive();
 
 }
@@ -432,6 +443,12 @@ void NetWork::processGameMessage(RakNet::Packet* p)
 	if(m_pNetPack==NULL)
 	{
 		m_pNetPack=new NetPack(p);
+	}
+
+	unsigned int messageid=m_pNetPack->getGameMessageID();
+	if(messageid==GM_ACCEPTCOME&&m_pLinstener!=NULL)
+	{
+		m_pLinstener->onConnect(p);
 	}
 
 

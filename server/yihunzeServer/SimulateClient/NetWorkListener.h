@@ -36,6 +36,9 @@ public:
 	void           updateServerList();
 
 
+	/**¡¨Ω” ß∞‹*/
+	virtual void  onConnectFailed(RakNet::Packet* p);
+
 protected:
 
 	AddressVector m_AddressVector;

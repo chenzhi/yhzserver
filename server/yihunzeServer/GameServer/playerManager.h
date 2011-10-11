@@ -62,6 +62,8 @@ protected:
 	/**@{消息处理函数
 	*/
 
+	///处理聊天包
+	void processChatMessage(NetPack* pPack);
 
 	/**@}*/
 

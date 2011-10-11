@@ -2,7 +2,7 @@
 #include "NetWorkListener.h"
 #include "SimulateClientMainFrame.h"
 #include "App.h"
-
+#include "MessageReceive.h"
 
 template<> ServerListener* Singleton<ServerListener>::ms_Singleton=NULL;
 
@@ -32,6 +32,7 @@ void ServerListener::onDisconnect(RakNet::Packet* p)
 		m_AddressVector.erase(it);
 	}
 	
+//	MessageReceive::getSingletonPtr()->connectGameServer();
 
 	updateServerList();
 	return ;
@@ -70,5 +71,14 @@ void  ServerListener::updateServerList()
 	MyApp* pApp=static_cast<MyApp*>(&wxGetApp());
 	pApp->m_pframe->updateServerList(m_AddressVector);
 
+
+}
+
+
+void  ServerListener::onConnectFailed(RakNet::Packet* p)
+{
+	MyApp* pApp=static_cast<MyApp*>(&wxGetApp());
+	pApp->m_pframe->updateServerList(m_AddressVector);
+	pApp->m_pframe->addReceiveMessage( "连接服务器失败：",p->systemAddress);
 
 }

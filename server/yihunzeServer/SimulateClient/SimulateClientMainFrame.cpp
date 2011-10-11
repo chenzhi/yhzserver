@@ -46,9 +46,10 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 
 	if(id==GM_TEXT_MESSAGE)
 	{
-		NetWorkClient::getSingletonPtr()->send(id,message.c_str(),message.Length());
+		NetWorkClient::getSingletonPtr()->getConnectInstance("statserver")->send(id,message.c_str(),message.Length()+1);
 		m_MessageText->Clear();
 		addSendMessage(message);
+
 	}else if(GM_ACCOUNT_REQUEST==id)
 	{
 
@@ -56,7 +57,7 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 		::ZeroMemory(&userlogin,sizeof(userlogin));
 	    if(sscanf(message.c_str(),"%s = %s",userlogin.m_account,userlogin.m_password)>0)
 		{
-           NetWorkClient::getSingleton().send(id,userlogin);
+           NetWorkClient::getSingleton().getConnectInstance("statserver")->send(id,userlogin);
 		}else
 		{
             wxMessageBox("格式不正确请用;分格开用户名和密码");
@@ -67,7 +68,13 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 		// memcpy(userlogin.m_account,"palyer1",strlen("player1"));
 		// memcpy(userlogin.m_password,"palyer1",strlen("player1"));
 		
+	}else if(id==GM_CHATMESSAGE)
+	{
+		NetWorkClient::getSingletonPtr()->getConnectInstance("gameserver")->send(id,message.c_str(),message.Length()+1);
+		m_MessageText->Clear();
+		addSendMessage(message);
 	}
+
 
 
 
@@ -113,6 +120,7 @@ void SimulateClientMainFrame::initMessageID()
 
 	m_MessageMap["GM_TEXT_MESSAGE"]=GM_TEXT_MESSAGE;
 	m_MessageMap["GM_ACCOUNT_REQUEST"]=GM_ACCOUNT_REQUEST;
+	m_MessageMap["GM_CHATMESSAGE"]=GM_CHATMESSAGE;
 
 
 
@@ -143,15 +151,14 @@ unsigned int SimulateClientMainFrame::stringToMessageID(const std::string& messa
 
 
 ///加条发送的消息
-void  SimulateClientMainFrame::addReceiveMessage(const std::string& message,RakNet::SystemAddress& Address)
+void  SimulateClientMainFrame::addReceiveMessage(const std::string& message,const RakNet::SystemAddress& Address)
 {
 	wxString tem;
 	tem+=Address.ToString();
 	tem+=": ";
 	tem+=message;
 	tem+="\n";
-
-	m_receiveText->AppendText(message);
+	m_receiveText->AppendText(tem);
 
 }
 
@@ -163,6 +170,6 @@ void  SimulateClientMainFrame::addSendMessage(const wxString& message)
 	wxString tem;
 	tem+=message;
 	tem+="\n";
-	m_receiveText->AppendText(tem);
+	m_sendText->AppendText(tem);
 
 }

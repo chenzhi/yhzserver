@@ -55,6 +55,10 @@ public:
 
 	    /**当一个玩家进入*/
 
+	/**连接失败*/
+	virtual void  onConnectFailed(RakNet::Packet* p){};
+
+
 
 };
 
@@ -210,7 +214,6 @@ public:
 
 
 	/**开始一个客户端*/
-
 
 
 

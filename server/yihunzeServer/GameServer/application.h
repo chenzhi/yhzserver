@@ -7,6 +7,7 @@ class DatabaseInstace;
 class AccountManager;
 class StateServer;
 class DatabaserServer;
+class PlayerManager;
 
 
 class Application  :public Singleton<Application>
@@ -79,6 +80,8 @@ private:
 	StateServer*            m_pStateServer;   ///状态服务器
 
 	DatabaserServer*        m_pDatabaseServer; ///数据库服务器
+
+	PlayerManager*          m_pPlayerManger;
 
 };
 

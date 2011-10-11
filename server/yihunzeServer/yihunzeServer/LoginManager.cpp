@@ -111,7 +111,16 @@ void LoginManager::processAccountRespond(NetPack* pPack)
 			gameserver.m_PortNumber=pGameserver->getPortNumber();
 			gameserver.m_accountid=prespond->m_accountID;
 			NetWorkServer::getSingleton().send(GM_ACCOUNT_RESPOND_SUCCEED,gameserver,address);
+
+
+			///°Ñ¿Í»§
+
+
+
+
 		}
+
+
 
 
 

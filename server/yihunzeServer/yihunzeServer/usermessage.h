@@ -32,6 +32,7 @@ enum GameMessage
 
 
 	///游戏逻辑服务器消息定义
+	GM_CHATMESSAGE,                ///逻辑服服报器测试代码
 	
 
 

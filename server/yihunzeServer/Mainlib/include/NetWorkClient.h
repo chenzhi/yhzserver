@@ -7,19 +7,32 @@
 #include "network.h"
 
 
-class XClass NetWorkClient : public Singleton<NetWorkClient>, public NetWork
+
+
+
+
+
+
+
+
+
+
+
+class XClass NetWorkClientInstance :public NetWork
 {
 
 public:
 
 
 	/**构造*/
-	NetWorkClient();
+	NetWorkClientInstance(const std::string& name);
 
 
     /**析构*/
-	~NetWorkClient();
+	~NetWorkClientInstance();
 
+
+	const std::string& getName()const{return m_Name;}
 
 	/**连接到指定的服务器，无论是服务器或客户端都可以调用接口连接远程计算机
 	*@param  ip 连接对方的ip地址
@@ -76,6 +89,8 @@ public:
 
 protected:
 
+	std::string         m_Name;
+
 	std::string         m_ServerIP ;         //远程服务器ip
 
 	unsigned int        m_PortNumber;        ///远程端口号
@@ -84,7 +99,70 @@ protected:
 
 	RakNet::SystemAddress m_ServerAddress;   ///远程地址
 
+	bool                m_needShoudown;//
 
+
+
+
+
+};
+
+
+
+typedef std::vector<NetWorkClientInstance*>ClientInstanceCollect;
+
+
+class XClass  NetWorkClient :public Singleton<NetWorkClient>
+{
+
+public:
+
+	NetWorkClient()
+		:m_pListener(NULL)
+	{}
+
+
+	~NetWorkClient(){	destroyAllInstance();}
+
+
+	/**更新函数*/
+    void update();
+
+	void setNetworkListener(netWorkListener* pListener);
+
+
+	/**创建一个新的连接实例
+	*如果创建相同名的实例，抛出异常
+	*/
+	bool createConnect(const std::string& name,const std::string& serverip,unsigned int portnumber,const std::string& passWord);
+
+
+	/**获取指定名字的连接实例，如果没有找到返回空*/
+	NetWorkClientInstance* getConnectInstance(const std::string& name) const ;
+
+
+	/**销毁一个连接实例 */
+	void destroyInstance(const std::string& name);
+
+
+
+protected:
+
+	/**销毁所有连接实例*/
+	void destroyAllInstance();
+
+	///真实的销毁动作
+	void _destroyAllInstance(const std::string& name);
+
+
+
+protected:
+
+	netWorkListener*      m_pListener;
+
+	ClientInstanceCollect m_InstanceCollect;
+
+	std::vector<std::string> DestroyInstanceCollect;
 
 
 

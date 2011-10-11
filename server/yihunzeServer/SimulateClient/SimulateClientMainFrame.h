@@ -38,7 +38,7 @@ public:
 
 
 		///加条发送的消息
-		void addReceiveMessage(const std::string& message,RakNet::SystemAddress& Address);
+		void addReceiveMessage(const std::string& message,const RakNet::SystemAddress& Address);
 		
 
 		///加入一条接收的消息

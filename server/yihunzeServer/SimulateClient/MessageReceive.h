@@ -14,6 +14,12 @@ public:
 
 	~MessageReceive();
 
+	///更新函数
+	void update();
+
+
+	bool connectGameServer();
+
 
 protected:
 
@@ -28,12 +34,22 @@ protected:
 	void processConnectRemoteServer(NetPack* pPack);
 
 
+	///处理游戏逻辑服务器聊天消息
+	void processChatMessage(NetPack* pPack);
+
+
 
 
 protected:
 
-	RakNet::SystemAddress m_GameServerAdderss;
+	//RakNet::SystemAddress m_GameServerAdderss;
+	std::string           m_GameServerIp;
+	unsigned int          m_GameServerPortNumber;
 	std::string           m_GameServerPassWord;
+
+
+	bool                  m_NeedConectGameServer;///是否需要连接到gameserver
+
 
 
 };

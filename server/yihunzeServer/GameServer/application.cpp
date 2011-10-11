@@ -8,7 +8,7 @@
 #include  "helper.h"
 #include "Stateserver.h"
 #include "DatabaseServer.h"
-
+#include "playerManager.h"
 
 #define PrintWindID   99999
 
@@ -97,6 +97,7 @@ Application:: ~Application()
 	}
 	SafeDelete(m_pDatabaseServer);
 	SafeDelete(m_pStateServer);
+	SafeDelete(m_pPlayerManger);
 	SafeDelete(m_pNetWork);
 	SafeDelete(m_pNetlistener);
   //  SafeDelete(m_pDatabaseInstance);
@@ -224,6 +225,7 @@ bool	Application::init()
 
 	m_pStateServer = new    StateServer(m_Config);///创建状态服务器
 	m_pDatabaseServer = new DatabaserServer(m_Config);
+	m_pPlayerManger = new PlayerManager();
 
 	return true;
 }

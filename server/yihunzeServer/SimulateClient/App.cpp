@@ -46,11 +46,14 @@ bool:: MyApp::OnInit()
 
 	m_pNetWorker=new NetWorkClient();
 
-   if(m_pNetWorker-> connect(serverip,portnubmer,password)==false)
-	   return false;
+	if(m_pNetWorker->createConnect("statserver",serverip,portnubmer,password)==false)
+		return false;
+
+  // if(m_pNetWorker-> connect(serverip,portnubmer,password)==false)
+	 //  return false;
 
 	m_pNetWorkListener=new ServerListener();
-	m_pNetWorker->setListener(m_pNetWorkListener);
+	m_pNetWorker->setNetworkListener(m_pNetWorkListener);
 
 	m_pframe = new SimulateClientMainFrame(NULL);
 	m_pframe->Show(true);
@@ -65,10 +68,14 @@ bool:: MyApp::OnInit()
 bool   MyApp::ProcessIdle()
 {
 
+
+	MessageReceive::getSingletonPtr()->update();
+
 	if(m_pNetWorker!=NULL)
 	{
 		m_pNetWorker->update();
 	}
+
 
 	wxApp::ProcessIdle();
 	return 	true;

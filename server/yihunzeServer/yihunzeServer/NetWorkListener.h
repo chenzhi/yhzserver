@@ -24,6 +24,7 @@ public:
 	/**玩家掉线*/
 	virtual void  onConnectlost(RakNet::Packet* p);
 
+	
     /**获取连接机器的数量*/
 	size_t        getServerCount()const {return m_AddressVector.size();}
 

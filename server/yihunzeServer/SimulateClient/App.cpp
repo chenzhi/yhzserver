@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "vld.h"
+//#include "vld.h"
 #include "App.h"
 #include "SimulateClientMainFrame.h"
 #include "netWork.h"

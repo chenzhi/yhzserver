@@ -10,7 +10,7 @@
 
 #ifdef _DEBUG
 #define  NetWorkTimeOut         30000
-#define  NetWorkMaxClientNumber 1000
+#define  NetWorkMaxClientNumber 100
 
 #else
 

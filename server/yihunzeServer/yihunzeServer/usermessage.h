@@ -52,7 +52,7 @@ enum GameMessage
 
 
 
-#define IPaddressLength  30///定义ip地址需要少空间
+#define IPaddressLength  50///定义ip地址需要少空间
 #define UserNameLength   20//用户名长度
 
 
@@ -77,6 +77,7 @@ struct UserAccount
 	char  m_account [UserNameLength];  //用户名
 	char  m_password[UserNameLength]; //密码
 	char  m_ip      [IPaddressLength];  //ip地址
+	//short unsigned int  m_portnumber;
 };
 #pragma pack(pop)
 
@@ -87,7 +88,7 @@ struct RespondAccount
 {
 	char   m_userip[IPaddressLength];  //用户ip
 	char   m_login;       //是否登入,0表示帐号用户名不对，1表示同意登入
-	int m_accountID;///帐号id
+	int    m_accountID;///帐号id
 };
 #pragma pack(pop)
 

@@ -31,8 +31,8 @@ bool NetWorkServer::startServer(unsigned int portNumber,const std::string& passw
 	}
 
 	m_pNetInterface->SetTimeoutTime(NetWorkTimeOut,RakNet::UNASSIGNED_SYSTEM_ADDRESS);
-	m_pNetInterface->Startup(NetWorkMaxClientNumber ,&RakNet::SocketDescriptor(portNumber,0), 1);
-
+    RakNet::SocketDescriptor  sopcket(portNumber,0);
+	m_pNetInterface->Startup(NetWorkMaxClientNumber ,&sopcket, 1);
 	m_pNetInterface->SetMaximumIncomingConnections(NetWorkMaxClientNumber);
 	m_pNetInterface->SetOccasionalPing(true);
 	m_pNetInterface->SetUnreliableTimeout(1000);

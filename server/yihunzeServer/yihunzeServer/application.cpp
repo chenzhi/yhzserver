@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "vld.h"
+//#include "vld.h"
 #include "application.h"
 #include "netWork.h"
 #include "LoginManager.h"

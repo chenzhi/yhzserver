@@ -62,7 +62,8 @@ void LoginManager::processAccountRequest(NetPack* pPack)
 	unsigned int port=Application::getSingleton().getAccountServerPort();
 	RakNet::SystemAddress address(serverip.c_str(),port);
 
-	const char* sendip=pPack->getSendGUID().ToString();
+	const char* sendip=pPack->getAddress().ToString(true);
+
 	unsigned len=strlen(sendip);
 	UserAccount account;
 	unsigned size=sizeof(UserAccount);
@@ -86,8 +87,8 @@ void LoginManager::processAccountRespond(NetPack* pPack)
 {
 	RespondAccount* prespond=reinterpret_cast<RespondAccount*>(pPack->getData());
 
-	RakNet::RakNetGUID  address;
-	address.FromString(prespond->m_userip);
+	RakNet::SystemAddress  address;
+	address.SetBinaryAddress(prespond->m_userip);
 
 	if(prespond->m_login==0)
 	{
@@ -110,6 +111,7 @@ void LoginManager::processAccountRespond(NetPack* pPack)
 			strcpy(gameserver.m_GameServerPassWord,pGameserver->getPassWord().c_str());
 			gameserver.m_PortNumber=pGameserver->getPortNumber();
 			gameserver.m_accountid=prespond->m_accountID;
+
 			NetWorkServer::getSingleton().send(GM_ACCOUNT_RESPOND_SUCCEED,gameserver,address);
 
 

@@ -65,6 +65,10 @@ protected:
 	///处理聊天包
 	void processChatMessage(NetPack* pPack);
 
+
+	///处理将会有客户端联接通知
+	void processWillClientConnect(NetPack* pPack);
+
 	/**@}*/
 
 

@@ -37,6 +37,10 @@ bool PlayerManager::registerNetWorkMessage()
 
 
 
+	pNetWork->registerMessageHandle(GM_STATESERVER_CLIENT_CONNECT,&PlayerManager::processWillClientConnect,this);
+
+
+
 	return true;
 
 }
@@ -62,5 +66,19 @@ void  PlayerManager::processChatMessage(NetPack* pPack)
 
 	NetWorkServer::getSingletonPtr()->send(GM_CHATMESSAGE,reMessage.c_str(),reMessage.length(),pPack->getSendGUID());
 	return ;
+
+}
+
+
+//-------------------------------------------------------------------------------
+///处理将会有客户端联接通知
+void  PlayerManager::processWillClientConnect(NetPack* pPack)
+{
+	NetIPAddress* paddress=static_cast<NetIPAddress*>( pPack->getData());
+
+	MessageBox(NULL,"客户端将要联接通知",NULL,MB_OK);
+
+	return ;
+
 
 }

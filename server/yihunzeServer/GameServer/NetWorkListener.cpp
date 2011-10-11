@@ -51,3 +51,11 @@ void  ServerListener::updateServerList()
 
 
 }
+
+
+void  ServerListener::onConnectFailed(RakNet::Packet* p)
+{
+	std::string tem=p->systemAddress.ToString(false);
+	tem+=": 连接失败,远程无响应";
+	Application::getSingleton().addPrintMessage(tem);
+}

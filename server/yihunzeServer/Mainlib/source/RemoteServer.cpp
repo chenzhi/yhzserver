@@ -29,6 +29,10 @@ bool RemoteServer::connect()
 		closeConnect();
 	}
 
+
+	NetWorkServer::getSingletonPtr()->connect(m_RemoteIP,m_PortNumber,m_PassWord);
+
+
 	return true;
 
 

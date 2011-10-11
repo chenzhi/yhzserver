@@ -86,9 +86,11 @@ struct UserAccount
 #pragma pack(push, 1)
 struct RespondAccount
 {
-	char   m_userip[IPaddressLength];  //用户ip
+	
 	char   m_login;       //是否登入,0表示帐号用户名不对，1表示同意登入
 	int    m_accountID;///帐号id
+	char   m_userip[IPaddressLength];  //用户ip
+
 };
 #pragma pack(pop)
 
@@ -120,6 +122,16 @@ struct NetString
 	char  m_char[UserNameLength];
 };
 #pragma pack(pop)
+
+
+
+#pragma pack(push, 1)
+struct NetIPAddress
+{
+	char  m_char[IPaddressLength];
+};
+#pragma pack(pop)
+
 
 
 

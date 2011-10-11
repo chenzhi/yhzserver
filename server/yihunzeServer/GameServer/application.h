@@ -34,6 +34,12 @@ public:
 	void    addPrintMessage(const std::string& message,bool outlog = false);
 
 
+	///
+	void    initStatServer(const Config& config);
+
+  
+	void    initGameDataServer(const Config& config);
+
 
 protected:
 
@@ -77,9 +83,9 @@ private:
 
 	Config                  m_Config;
 
-	StateServer*            m_pStateServer;   ///状态服务器
+//	StateServer*            m_pStateServer;   ///状态服务器
 
-	DatabaserServer*        m_pDatabaseServer; ///数据库服务器
+//	DatabaserServer*        m_pDatabaseServer; ///数据库服务器
 
 	PlayerManager*          m_pPlayerManger;
 

@@ -35,6 +35,8 @@ public:
 	/**更新服务器列表*/
 	void           updateServerList();
 
+	void   onConnectFailed(RakNet::Packet* p);
+
 
 protected:
 

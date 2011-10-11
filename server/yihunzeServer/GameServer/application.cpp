@@ -78,7 +78,7 @@ template<> Application* Singleton<Application>::ms_Singleton=NULL;
 //-----------------------------------------------------------------
 Application::Application()
 :mInstance(NULL),mHwnd(NULL),m_pNetWork(NULL),m_PrintWind(NULL),
-m_pNetlistener(NULL),m_pStateServer(NULL),m_pDatabaseServer(NULL)
+m_pNetlistener(NULL)/*,m_pStateServer(NULL),m_pDatabaseServer(NULL)*/
 {
 
   Helper::setCurrentWorkPath();
@@ -95,8 +95,8 @@ Application:: ~Application()
 		DestroyWindow(mHwnd);
 		mHwnd=NULL;
 	}
-	SafeDelete(m_pDatabaseServer);
-	SafeDelete(m_pStateServer);
+	//SafeDelete(m_pDatabaseServer);
+	//SafeDelete(m_pStateServer);
 	SafeDelete(m_pPlayerManger);
 	SafeDelete(m_pNetWork);
 	SafeDelete(m_pNetlistener);
@@ -117,15 +117,15 @@ void    Application::update(float time)
 	}
 
 	
-	if(	m_pStateServer!=NULL)
-	{
-		m_pStateServer->update(time);
-	}
+	//if(	m_pStateServer!=NULL)
+	//{
+	//	m_pStateServer->update(time);
+	//}
 
-	if(m_pDatabaseServer!=NULL)
-	{
-		m_pDatabaseServer->update(time);
-	}
+	//if(m_pDatabaseServer!=NULL)
+	//{
+	//	m_pDatabaseServer->update(time);
+	//}
 
 	return ;
 
@@ -221,14 +221,70 @@ bool	Application::init()
 	m_pNetWork->setListener(m_pNetlistener);
 
 
+	initStatServer(m_Config);
 
 
-	m_pStateServer = new    StateServer(m_Config);///创建状态服务器
-	m_pDatabaseServer = new DatabaserServer(m_Config);
+	//m_pStateServer = new    StateServer(m_Config);///创建状态服务器
+	//m_pDatabaseServer = new DatabaserServer(m_Config);
 	m_pPlayerManger = new PlayerManager();
 
 	return true;
 }
+
+
+
+void    Application::initStatServer(const Config& config)
+{
+
+	std::string Value;
+	std::string remoteIP;
+	unsigned int portNumber;
+	std::string password;
+	if(config.getValue("stateserverip",remoteIP)==false)
+	{
+		Application::getSingleton().addPrintMessage("未找到状态服务器ip设置",true);
+	}
+
+	std::string temValue;
+	if(config.getValue("stattserverportnumber",temValue)==false)
+	{
+		Application::getSingleton().addPrintMessage("未找到状态服务器端口号设置",true);
+	}
+	portNumber=Helper::StringToInt(temValue);
+
+	
+
+	if(config.getValue("statserverpassword",password)==false)
+	{
+		Application::getSingleton().addPrintMessage("未找到状态服务器 游戏服务器线路名设置",true);
+
+	}
+
+
+	m_pNetWork->connect(remoteIP,portNumber,password);
+
+
+
+	//m_Address=RakNet::SystemAddress(m_RemoteIP.c_str(),m_PortNumber);
+
+}
+
+
+void    Application::initGameDataServer(const Config& config)
+{ 
+	std::string Value;
+	std::string remoteIP;
+	unsigned int portNumber;
+	std::string password;
+	assert(config.getValue("gamedatabaseserver",remoteIP));
+	assert(config.getValue("gamedatabaseserverpassword",password));
+	assert(config.getValue("gamedatabaseserverportnumber",Value));
+	portNumber=Helper::StringToInt(Value);
+	m_pNetWork->connect(remoteIP,portNumber,password);
+	return ;
+
+}
+
 
 //-----------------------------------------------------------------
 bool Application::initWindow(int width, int height)

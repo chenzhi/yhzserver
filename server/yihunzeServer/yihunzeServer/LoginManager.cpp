@@ -115,7 +115,14 @@ void LoginManager::processAccountRespond(NetPack* pPack)
 			NetWorkServer::getSingleton().send(GM_ACCOUNT_RESPOND_SUCCEED,gameserver,address);
 
 
-			///把客户
+			///把客户端消息发给游戏逻辑服务器
+			NetIPAddress clientaddress;
+			memset(&clientaddress,0,sizeof(NetIPAddress));
+			strcpy(clientaddress.m_char,prespond->m_userip);
+			address=RakNet::SystemAddress(gameserver.m_GameServerIP,gameserver.m_PortNumber);
+			NetWorkServer::getSingleton().send(GM_STATESERVER_CLIENT_CONNECT,clientaddress,address);
+
+
 
 
 

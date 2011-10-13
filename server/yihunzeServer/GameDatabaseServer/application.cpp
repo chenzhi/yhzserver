@@ -6,6 +6,8 @@
 #include "xLogManager.h"
 #include "databaseInstance.h"
 #include  "helper.h"
+#include "playerManager.h"
+
 
 
 #define PrintWindID   99999
@@ -93,6 +95,7 @@ Application:: ~Application()
 		mHwnd=NULL;
 	}
 	
+	delete PlayerManager::getSingletonPtr();
   
 	SafeDelete(m_pNetWork);
 	SafeDelete(m_pNetlistener);
@@ -252,6 +255,7 @@ bool	Application::init()
 
 
 
+	new PlayerManager();
 
 
 

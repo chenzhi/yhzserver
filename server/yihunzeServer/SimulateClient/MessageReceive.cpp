@@ -40,13 +40,16 @@ MessageReceive::~MessageReceive()
 }
 
 
-bool MessageReceive::connectGameServer()
+void  MessageReceive::initGameserverMessage()
 {
-	//return NetWorkClient::getSingletonPtr()->createConnect("Gameserver",m_GameServerIp,m_GameServerPortNumber,m_GameServerPassWord);
+	NetWorkClientInstance*pInstance=NetWorkClient::getSingleton().getConnectInstance(GAMESERVER);
+	assert(pInstance);
+	pInstance->registerMessageHandle(GM_CHATMESSAGE,&MessageReceive::processChatMessage,this);
+	pInstance->registerMessageHandle(GM_REQUEST_PLAYERS,&MessageReceive::processAccountPlayers,this);
 
-	return true;
 
 }
+
 
 void MessageReceive::update()
 {
@@ -92,11 +95,10 @@ void MessageReceive::processAccountSucceed(NetPack* pPack)
 
 
 	//NetWorkClient::getSingleton().closeConnect();
-	NetWorkClient::getSingletonPtr()->createConnect("gameserver",pGameserver->m_GameServerIP,pGameserver->m_PortNumber,pGameserver->m_GameServerPassWord);
+	NetWorkClient::getSingletonPtr()->createConnect(GAMESERVER,pGameserver->m_GameServerIP,pGameserver->m_PortNumber,pGameserver->m_GameServerPassWord);
 
-	NetWorkClientInstance*pInstance=NetWorkClient::getSingleton().getConnectInstance("gameserver");
-
-	pInstance->registerMessageHandle(GM_CHATMESSAGE,&MessageReceive::processChatMessage,this);
+	///注册游戏逻辑服务器消息
+	initGameserverMessage();
 
     NetWorkClient::getSingletonPtr()->getConnectInstance("statserver")->closeConnect();
 	NetWorkClient::getSingletonPtr()->destroyInstance("statserver");
@@ -147,5 +149,29 @@ void MessageReceive::processChatMessage(NetPack* pPack)
 	receiveMessage=receiveMessage.Format("%s",pMessage);
 	pApp->m_pframe->addReceiveMessage(receiveMessage.c_str(),pPack->getAddress());
 
+
+}
+
+///处理帐号有多少个玩家
+void  MessageReceive::processAccountPlayers(NetPack* pPack)
+{
+	Tag_PlayerCollect* players=static_cast<Tag_PlayerCollect*>(pPack->getData());
+
+	char message[256];
+	memset(message,0,256);
+
+	sprintf(message,"帐号：%d 共有%d个角色",players->m_Account,players->m_Count);
+	MyApp* pApp=static_cast<MyApp*>(&wxGetApp());
+	pApp->m_pframe->addReceiveMessage(message,pPack->getAddress());
+
+	for(UINT i=0;i<players->m_Count;++i)
+	{
+		Tag_Player* player = (&(players->m_pPlayer))+i;
+
+		sprintf(message,"角色信息：%s, hp：%d,mp:%d",player->m_Name,player->m_hp,player->m_mp);
+		pApp->m_pframe->addReceiveMessage(message,pPack->getAddress());
+	}
+	
+	return ;
 
 }

@@ -70,9 +70,25 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 		
 	}else if(id==GM_CHATMESSAGE)
 	{
-		NetWorkClient::getSingletonPtr()->getConnectInstance("gameserver")->send(id,message.c_str(),message.Length()+1);
+		NetWorkClient::getSingletonPtr()->getConnectInstance(GAMESERVER)->send(id,message.c_str(),message.Length()+1);
 		m_MessageText->Clear();
 		addSendMessage(message);
+
+
+	}else if(id==GM_CONNECT_GAMESERVER)
+	{
+		///发送帐号id组游戏逻辑服务器
+		long accountid=0;
+		if(message.ToLong(&accountid))
+		{
+			NetWorkClient::getSingletonPtr()->getConnectInstance(GAMESERVER)->send(id,accountid);
+			m_MessageText->Clear();
+		}
+	
+
+
+
+
 	}
 
 
@@ -121,6 +137,9 @@ void SimulateClientMainFrame::initMessageID()
 	m_MessageMap["GM_TEXT_MESSAGE"]=GM_TEXT_MESSAGE;
 	m_MessageMap["GM_ACCOUNT_REQUEST"]=GM_ACCOUNT_REQUEST;
 	m_MessageMap["GM_CHATMESSAGE"]=GM_CHATMESSAGE;
+	m_MessageMap["GM_CONNECT_GAMESERVER"]=GM_CONNECT_GAMESERVER;
+
+
 
 
 

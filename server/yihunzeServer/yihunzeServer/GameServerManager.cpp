@@ -17,7 +17,7 @@ GameServerManager::GameServerManager(const std::string& configFile)
 
 
     CategoryCofig categoryConfig;
-	categoryConfig.loadfile("gameserver.cfg");
+	categoryConfig.loadfile(configFile);
 
 	CategoryCofig::SectionIterator it=categoryConfig.getSectionIterator();
 

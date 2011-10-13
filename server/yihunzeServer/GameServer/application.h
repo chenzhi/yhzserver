@@ -41,6 +41,13 @@ public:
 	void    initGameDataServer(const Config& config);
 
 
+	/**获取状态服务器地址*/
+	const RakNet::SystemAddress& getStatServerAddress()const {return m_StatServerAddress;}
+
+	/**获取数据库服务器地址*/
+	const RakNet::SystemAddress& getDatabaseServerAddress()const {return m_DatabaserAdderss;}
+
+
 protected:
 
 
@@ -83,9 +90,9 @@ private:
 
 	Config                  m_Config;
 
-//	StateServer*            m_pStateServer;   ///状态服务器
+	RakNet::SystemAddress   m_StatServerAddress;   //状态服务器ip
 
-//	DatabaserServer*        m_pDatabaseServer; ///数据库服务器
+	RakNet::SystemAddress   m_DatabaserAdderss;  ///数据库服务器
 
 	PlayerManager*          m_pPlayerManger;
 

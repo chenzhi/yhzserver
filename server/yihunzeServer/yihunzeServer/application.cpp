@@ -283,7 +283,7 @@ bool	Application::init()
 
 	m_pLoginManager=new LoginManager();
 
-	m_GameSreverManager=new GameServerManager("gameserver.cfg");
+	m_GameSreverManager=new GameServerManager("gameserverlist.cfg");
 
 	return true;
 }

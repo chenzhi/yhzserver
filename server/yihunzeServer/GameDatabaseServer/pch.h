@@ -22,12 +22,17 @@
 #include <vector>
 #include <map>
 #include <list>
+#include <hash_map>
 #include <algorithm>
 #include "mysql.h"
 
 
 
 #include "xmain.h"
+
+
+typedef std::vector<std::string> StringVector;
+
 
 
 #define  SafeDelete(a) if(a!=NULL){delete a; a=NULL;}

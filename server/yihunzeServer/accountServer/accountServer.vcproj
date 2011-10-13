@@ -63,7 +63,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="RakNetDLLDebug.lib ws2_32.lib libmysql.lib xMain_d.lib"
-				OutputFile="../bin/AccountServer/debug/accountServer_d.exe"
+				OutputFile="../bin/debug/accountServer_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
 				GenerateDebugInformation="true"
@@ -90,7 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\AccountServer\debug&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\AccountServer\debug\&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\AccountServer\debug\&quot;&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -141,7 +141,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="RakNetDLL.lib ws2_32.lib libmysql.lib xMain.lib"
-				OutputFile="../bin/AccountServer/release/accountServer_d.exe"
+				OutputFile="../bin/release/accountServer.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
 				GenerateDebugInformation="true"
@@ -197,6 +197,14 @@
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"

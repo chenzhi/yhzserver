@@ -66,7 +66,7 @@ public:
 	template<typename T>
 	bool send( unsigned long msgType , const T & pdata )
 	{ 
-		if(m_pNetInterface==NULL)
+  		if(m_pNetInterface==NULL)
 			return false;
 
 		static RakNet::BitStream streem;

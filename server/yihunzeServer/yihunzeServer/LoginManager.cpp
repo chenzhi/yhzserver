@@ -103,6 +103,19 @@ void LoginManager::processAccountRespond(NetPack* pPack)
 		const GameServer* pGameserver=GameServerManager::getSingleton().getBestGameServer();
 		if(pGameserver!=NULL)
 		{
+
+
+			///把客户端消息发给游戏逻辑服务器
+			NetIPAddress clientaddress;
+			memset(&clientaddress,0,sizeof(NetIPAddress));
+			strcpy(clientaddress.m_char,prespond->m_userip);
+			//address=RakNet::SystemAddress(pGameserver->getIP().c_str(),pGameserver->getPortNumber());
+			NetWorkServer::getSingleton().send(GM_STATESERVER_CLIENT_CONNECT,clientaddress,RakNet::SystemAddress(pGameserver->getIP().c_str(),pGameserver->getPortNumber()));
+
+
+
+
+
 			///把游戏服务器的地址发给客户端，让客户端连接游戏服务器
 
 			GameServerInfor gameserver;
@@ -115,14 +128,7 @@ void LoginManager::processAccountRespond(NetPack* pPack)
 			NetWorkServer::getSingleton().send(GM_ACCOUNT_RESPOND_SUCCEED,gameserver,address);
 
 
-			///把客户端消息发给游戏逻辑服务器
-			NetIPAddress clientaddress;
-			memset(&clientaddress,0,sizeof(NetIPAddress));
-			strcpy(clientaddress.m_char,prespond->m_userip);
-			address=RakNet::SystemAddress(gameserver.m_GameServerIP,gameserver.m_PortNumber);
-			NetWorkServer::getSingleton().send(GM_STATESERVER_CLIENT_CONNECT,clientaddress,address);
-
-
+		
 
 
 

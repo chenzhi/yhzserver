@@ -18,7 +18,10 @@ public:
 	void update();
 
 
-	bool connectGameServer();
+
+
+
+	void initGameserverMessage();
 
 
 protected:
@@ -36,6 +39,10 @@ protected:
 
 	///处理游戏逻辑服务器聊天消息
 	void processChatMessage(NetPack* pPack);
+
+
+	///处理帐号有多少个玩家
+	void processAccountPlayers(NetPack* pPack);
 
 
 

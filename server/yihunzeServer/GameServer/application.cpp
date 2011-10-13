@@ -116,6 +116,8 @@ void    Application::update(float time)
 		m_pNetWork->update();
 	}
 
+	 m_pPlayerManger->update(time);
+
 	
 	//if(	m_pStateServer!=NULL)
 	//{
@@ -205,7 +207,7 @@ bool	Application::init()
 	}else
 	{
 		::MessageBox(NULL,"读取 accountserver.cfg 文件错误,未找到端口号设置","错误 ",MB_OK);
-		xLogMessager::getSingleton().logMessage("读取 accountserver.cfg 文件错误,未找到端口号设置");
+		xLogMessager::getSingleton().logMessage("读取 gameserver.cfg 文件错误,未找到端口号设置");
 		return false;
 	}
 
@@ -222,6 +224,8 @@ bool	Application::init()
 
 
 	initStatServer(m_Config);
+
+	initGameDataServer(m_Config);
 
 
 	//m_pStateServer = new    StateServer(m_Config);///创建状态服务器
@@ -261,6 +265,7 @@ void    Application::initStatServer(const Config& config)
 	}
 
 
+	m_StatServerAddress=RakNet::SystemAddress(remoteIP.c_str(),portNumber);
 	m_pNetWork->connect(remoteIP,portNumber,password);
 
 
@@ -276,11 +281,18 @@ void    Application::initGameDataServer(const Config& config)
 	std::string remoteIP;
 	unsigned int portNumber;
 	std::string password;
-	assert(config.getValue("gamedatabaseserver",remoteIP));
-	assert(config.getValue("gamedatabaseserverpassword",password));
-	assert(config.getValue("gamedatabaseserverportnumber",Value));
+	bool b=config.getValue("gamedatabaseserver",remoteIP);
+	assert(b);
+	b=config.getValue("gamedatabaseserverpassword",password);
+	assert(b);
+	b=config.getValue("gamedatabaseserverportnumber",Value);
+	assert(b);
+
 	portNumber=Helper::StringToInt(Value);
 	m_pNetWork->connect(remoteIP,portNumber,password);
+
+	m_DatabaserAdderss=RakNet::SystemAddress(remoteIP.c_str(),portNumber);
+
 	return ;
 
 }

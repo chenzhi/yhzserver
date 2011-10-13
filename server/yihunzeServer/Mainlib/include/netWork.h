@@ -9,13 +9,13 @@
 
 
 #ifdef _DEBUG
-#define  NetWorkTimeOut         30000
-#define  NetWorkMaxClientNumber 100
+#define  NetWorkTimeOut         9000
+#define  NetWorkMaxClientNumber 32
 
 #else
 
-#define  NetWorkMaxClientNumber 65535
-#define  NetWorkTimeOut         3000
+#define  NetWorkMaxClientNumber 5000
+#define  NetWorkTimeOut         9000
 
 #endif
 
@@ -110,6 +110,14 @@ public:
 
 		return m_pData+sizeof(DWORD) + sizeof(byte);
 
+	}
+
+
+	/**获取数据块的长茺*/
+	UINT getDataLength()const
+	{
+		assert(m_pData);
+		return m_pPack->length-(sizeof(DWORD) + sizeof(byte));
 	}
 
 

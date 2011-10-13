@@ -90,6 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\debug\&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\debug\&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\debug\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 		<Configuration
@@ -169,6 +170,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="copy &quot;..\mainlib\lib\xmain.dll&quot;  &quot;..\bin\release\&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNet.dll&quot;  &quot;..\bin\release\&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\release\&quot;&#x0D;&#x0A;"
 			/>
 		</Configuration>
 	</Configurations>

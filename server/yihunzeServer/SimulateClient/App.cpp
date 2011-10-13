@@ -30,17 +30,21 @@ bool:: MyApp::OnInit()
 
 
 	Config config;
-	assert(config.loadfile("networker.cfg"));
+	bool b=config.loadfile("networker.cfg");
+	assert(b);
 
 	std::string serverip;
 	std::string password;
 	unsigned int portnubmer;
 
-	assert(config.getValue("serverip",serverip));
-	assert(config.getValue("portnumber",password));
+	b=config.getValue("serverip",serverip);
+	assert(b);
+	b=config.getValue("portnumber",password);
+	assert(b);
 	portnubmer=Helper::StringToInt(password);
-	assert(config.getValue("password",password));
-
+	assert(b);
+	b=config.getValue("password",password);
+    assert(b);
 
 
 

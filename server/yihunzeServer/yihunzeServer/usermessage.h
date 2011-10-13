@@ -33,17 +33,19 @@ enum GameMessage
 
 	///游戏逻辑服务器消息定义
 	GM_CHATMESSAGE,                ///逻辑服服报器测试代码
+	GM_CONNECT_GAMESERVER,         ///客户端请求连接逻辑服务器
 	
 
 
 
 	///游戏数据库服务器消息定义
+	GM_REQUEST_PLAYERS,              ///向游戏数据库请求玩家信息
 
 
 
 
 	///客户端消息
-	GM_CLIENT_CONNECT_GAMESERVER,///客户端请求连接游戏服务器
+	//GM_CLIENT_CONNECT_GAMESERVER,///客户端请求连接游戏服务器
 
 
 };
@@ -93,6 +95,21 @@ struct RespondAccount
 
 };
 #pragma pack(pop)
+
+
+
+///客户端帐号信息
+#pragma pack(push, 1)
+struct ClientAccount
+{
+
+	int    m_accountID;///帐号id
+	char   m_userip[IPaddressLength];  //用户ip
+
+};
+#pragma pack(pop)
+
+
 
 
 ///返回一个字节一般用来表是否成功
@@ -146,3 +163,37 @@ struct GameServerInfor
 };
 #pragma pack(pop)
 
+
+///玩家信息
+#pragma pack(push, 1)
+struct Tag_Player
+{
+	unsigned int        m_ID;
+	char                m_Name[UserNameLength];
+	unsigned int        m_AccountID;
+	short unsigned int  m_profession;//职业0为战士1为法师
+	UINT                m_hp;
+	UINT                m_mp;
+	UINT                m_atk;
+	UINT                m_def;
+	UINT                m_power;
+	UINT                m_endurance;
+	UINT                m_intelligence;
+	UINT                m_maxdam;
+	UINT                m_dam;
+	UINT                m_mindam;
+
+};
+#pragma pack(pop)
+
+
+#pragma pack(push, 1)
+struct Tag_PlayerCollect
+{
+	UINT          m_Account;
+	UINT          m_Count;  ///多少个玩家
+	char          m_ip[IPaddressLength];
+	Tag_Player   m_pPlayer;///玩家数据
+
+};
+#pragma pack(pop)

@@ -18,7 +18,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="../bin/SimulateClient/debug"
+			OutputDirectory="../bin/debug"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
@@ -90,12 +90,12 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\SimulateClient\debug\&quot;&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="../bin/SimulateClient/release"
+			OutputDirectory="../bin/release"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"

@@ -48,13 +48,13 @@ public:
 	*@param length 消息内容的长度
 	*@param receiver接收者的id，
 	*/
-	void send(unsigned int message,const  char* pData,unsigned int length,RakNet::RakNetGUID receiver);
+	void send(unsigned int message,const  char* pData,unsigned int length, const  RakNet::RakNetGUID receiver);
 
 
 	/**
 	*@see send;
 	*/
-	void send(unsigned int message,const  char* pData,unsigned int length,RakNet::SystemAddress& receiver);
+	void send(unsigned int message,const  char* pData,unsigned int length,const  RakNet::SystemAddress& receiver);
 
 
 	/**

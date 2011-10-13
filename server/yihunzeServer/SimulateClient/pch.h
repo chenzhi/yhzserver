@@ -34,3 +34,6 @@
 
 
 #define  SafeDelete(a) if(a!=NULL){delete a; a=NULL;}
+
+
+#define  GAMESERVER   "gameserver"

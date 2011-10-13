@@ -63,7 +63,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="RakNetDLLDebug.lib ws2_32.lib libmysql.lib xMain_d.lib"
-				OutputFile="../bin/GameDatabaseServer/debug/GameDataServer_d.exe"
+				OutputFile="../bin/debug/GameDataServer_d.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
 				GenerateDebugInformation="true"
@@ -90,7 +90,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy &quot;..\mainlib\lib\xmain_d.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;&#x0D;&#x0A;copy  &quot;$(RakNet4.0)\lib\RakNetDebug.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;&#x0D;&#x0A;copy  &quot;$(MYSQL)\lib\libmysql.dll&quot;  &quot;..\bin\GameDatabaseServer\debug&quot;&#x0D;&#x0A;"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
@@ -140,7 +140,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="RakNetDLL.lib ws2_32.lib libmysql.lib xMain.lib"
-				OutputFile="../bin/GameDatabaseServer/release/GameDataServer.exe"
+				OutputFile="../bin/release/GameDataServer.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="&quot;$(RakNet4.0)/lib&quot;;&quot;$(MYSQL)/lib&quot;;../Mainlib/lib"
 				GenerateDebugInformation="true"
@@ -201,6 +201,14 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\player.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\playermanager.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -217,6 +225,14 @@
 			</File>
 			<File
 				RelativePath=".\pch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\player.h"
+				>
+			</File>
+			<File
+				RelativePath=".\playerManager.h"
 				>
 			</File>
 		</Filter>

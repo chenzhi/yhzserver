@@ -90,7 +90,7 @@ void NetWorkServer::update()
 
 
 //--------------------------------------------------------------------------------------------
-void NetWorkServer::send(unsigned int message,const  char* pData,unsigned int length,RakNet::RakNetGUID receiver)
+void NetWorkServer::send(unsigned int message,const  char* pData,unsigned int length,const RakNet::RakNetGUID receiver)
 {
 
 	unsigned int bitdatalenght=length<<3;
@@ -106,7 +106,7 @@ void NetWorkServer::send(unsigned int message,const  char* pData,unsigned int le
 
 
 //--------------------------------------------------------------------------------------------
-void NetWorkServer::send(unsigned int message,const  char* pData,unsigned int length,RakNet::SystemAddress& receiver)
+void NetWorkServer::send(unsigned int message,const  char* pData,unsigned int length,const RakNet::SystemAddress& receiver)
 {
 	if(m_pNetInterface==NULL)
 		return ;

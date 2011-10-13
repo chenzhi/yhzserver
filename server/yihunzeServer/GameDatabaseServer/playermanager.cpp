@@ -165,7 +165,7 @@ void  PlayerManager::processRequestPlayer(NetPack* pPack)
 	senddata->m_Count=playerCollect.size();
 	senddata->m_Account=accountid->m_accountID;
 	strcpy(senddata->m_ip,accountid->m_userip);
-	if(b)
+	if(b&&senddata->m_Count>0)
 	{
 		memcpy(&(senddata->m_pPlayer),&(playerCollect[0]),sizeof(Tag_Player)*senddata->m_Count);
 	}

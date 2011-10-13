@@ -81,7 +81,8 @@ void SimulateClientMainFrame::OnSend( wxCommandEvent& event )
 		long accountid=0;
 		if(message.ToLong(&accountid))
 		{
-			NetWorkClient::getSingletonPtr()->getConnectInstance(GAMESERVER)->send(id,accountid);
+			UINT temid=accountid;
+			NetWorkClient::getSingletonPtr()->getConnectInstance(GAMESERVER)->send(id,temid);
 			m_MessageText->Clear();
 		}
 	

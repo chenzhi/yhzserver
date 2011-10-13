@@ -204,7 +204,7 @@ bool  PlayerManager::AllowLogin(std::string& ip)
 //-------------------------------------------------------------------------------
 void  PlayerManager::processClientConnect(NetPack* pPack)
 {
-	NetInt* accountid=static_cast<NetInt*>(pPack->getData());
+	UINT* accountid=static_cast<UINT*>(pPack->getData());
 
 	////如果允许登入就把帐号发到数据库数据器，不允许登入断开客户端连接
 	std::string clientip=pPack->getAddress().ToString(true);
@@ -216,7 +216,7 @@ void  PlayerManager::processClientConnect(NetPack* pPack)
 
         ClientAccount clientAccount;
 		ZeroMemory(&clientAccount,sizeof(ClientAccount));
-		clientAccount.m_accountID=accountid->m_int;
+		clientAccount.m_accountID=*accountid;
 		strcpy(clientAccount.m_userip,pPack->getAddress().ToString());
 		NetWorkServer::getSingleton().send(GM_REQUEST_PLAYERS,clientAccount,address);
 

@@ -168,7 +168,7 @@ public:
 protected:
 	void setRaknetPack(RakNet::Packet* p)
 	{
-		m_pPack;
+		m_pPack=p;
 	}
 
 

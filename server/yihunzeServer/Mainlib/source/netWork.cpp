@@ -445,14 +445,14 @@ void NetWork::processGameMessage(RakNet::Packet* p)
 		m_pNetPack=new NetPack(p);
 	}
 
+	m_pNetPack->setRaknetPack(p);
+
 	unsigned int messageid=m_pNetPack->getGameMessageID();
 	if(messageid==GM_ACCEPTCOME&&m_pLinstener!=NULL)
 	{
 		m_pLinstener->onConnect(p);
 	}
 
-
-	m_pNetPack->setRaknetPack(p);
 	fireMessage( m_pNetPack->getGameMessageID() ,m_pNetPack );
 
 	return ;

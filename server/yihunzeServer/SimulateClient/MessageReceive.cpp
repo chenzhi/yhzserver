@@ -74,14 +74,9 @@ void MessageReceive::update()
 void MessageReceive::processAccountFaild(NetPack* pPack)
 {
 	NetByte* puser=reinterpret_cast<NetByte*>(pPack->getData());
-	if(puser->m_byte==0)
-	{
-		MessageBox(NULL,"用户名密码错误!","错误",MB_OK);
-	}else
-	{
-         MessageBox(NULL,"用户名正确","正确",MB_OK);
-	}
-
+	
+	MyApp* pApp=static_cast<MyApp*>(&wxGetApp());
+	pApp->m_pframe->addReceiveMessage("帐号密码错误",pPack->getAddress());
 	return ;
 }
 

@@ -172,7 +172,6 @@ void  PlayerManager::processRequestPlayer(NetPack* pPack)
 	
 	NetWorkServer::getSingletonPtr()->send(GM_REQUEST_PLAYERS,pbuffer,size,pPack->getAddress());
 
-	Application::getSingleton().addPrintMessage("发送玩家帐号消息");
 
 
 	delete [] pbuffer;

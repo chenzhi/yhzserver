@@ -220,9 +220,6 @@ void  PlayerManager::processClientConnect(NetPack* pPack)
 		strcpy(clientAccount.m_userip,pPack->getAddress().ToString());
 		NetWorkServer::getSingleton().send(GM_REQUEST_PLAYERS,clientAccount,address);
 
-		Application::getSingleton().addPrintMessage("发送玩家帐号消息给数据库服务器:");
-
-
 	}else
 	{
 		NetWorkServer::getSingletonPtr()->closeConnect(pPack->getAddress());
@@ -258,8 +255,6 @@ void PlayerManager::processDatabasePlayer(NetPack* pPack)
 	address.SetBinaryAddress(players->m_ip);
 	NetWorkServer::getSingleton().send(GM_REQUEST_PLAYERS,(const char*)pPack->getData(),pPack->getDataLength(),address);
 
-
-	Application::getSingleton().addPrintMessage(std::string("发送玩家帐号消息给客户端")+players->m_ip);
 
 	return ;
 }
